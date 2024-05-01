@@ -1,6 +1,6 @@
 {
   "name": "@aresrpg/aresrpg-sdk",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "General SDK to interract with AresRPG",
   "main": "src/index.js",
   "type": "module",
