@@ -3,7 +3,7 @@
 </p>
 <h1 align=center>@aresrpg/aresrpg-sdk</h1>
 <p align=center>
-  <img src="https://img.shields.io/badge/Made%20with-Move-blue?style=for-the-badge" alt="fully in Move"/>
+  <img src="https://img.shields.io/badge/Made%20with-Javascript-%23f7df1e?style=for-the-badge" alt="fully in javascript"/>
   <img src="https://img.shields.io/badge/Powered%20By-Dark%20Magic-blueviolet?style=for-the-badge" alt="powered by lsd"/>
   <a href="https://discord.gg/aresrpg">
     <img src="https://img.shields.io/discord/265104803531587584.svg?logo=discord&style=for-the-badge" alt="Chat"/>
