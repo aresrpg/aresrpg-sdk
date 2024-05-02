@@ -20,6 +20,9 @@
     "./spells": "./src/spells.json",
     "./types": "./src/types.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/aresrpg/aresrpg-sdk.git"
