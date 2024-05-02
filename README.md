@@ -13,7 +13,8 @@
 
 ## Installation
 
-Ensure you have Node.js installed on your machine, then run the following command in your project directory:
+This README is uncomplete!
+It is recommended to use `moduleResolution: "nodenext"` in your tsconfig
 
 ```bash
 npm install @aresrpg/aresrpg-sdk
