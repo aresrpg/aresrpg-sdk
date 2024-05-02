@@ -19,18 +19,31 @@ Ensure you have Node.js installed on your machine, then run the following comman
 npm install @aresrpg/aresrpg-sdk
 ```
 
-## Setup
+## Exports
+
+You have access to a few packages
+
+```js
+import * from '@aresrpg/aresrpg-sdk/sui'
+import * from '@aresrpg/aresrpg-sdk/chunk'
+import * from '@aresrpg/aresrpg-sdk/experience'
+import * from '@aresrpg/aresrpg-sdk/stats'
+import * from '@aresrpg/aresrpg-sdk/spells' // json file
+import * from '@aresrpg/aresrpg-sdk/types' // some additonnal types
+```
+
+## Usage (WIP)
 
 To start using the SDK, you need to configure it with the appropriate network details:
 
 ```javascript
-import { SDK } from '@aresrpg/aresrpg-sdk';
+import { SDK } from '@aresrpg/aresrpg-sdk/sui'
 
 const sdk = await SDK({
   rpc_url: 'https://fullnode.testnet.sui.io/',
   wss_url: 'wss://fullnode.testnet.sui.io/',
   network: 'testnet', // required for modules addresses
-});
+})
 ```
 
 ## Usage
@@ -40,8 +53,8 @@ const sdk = await SDK({
 Get a list of characters locked in the AresRPG extension of personal kiosks for an address:
 
 ```javascript
-const lockedCharacters = await sdk.get_locked_characters('0x00');
-console.log(lockedCharacters);
+const lockedCharacters = await sdk.get_locked_characters('0x00')
+console.log(lockedCharacters)
 ```
 
 ### Fetching Unlocked Characters
@@ -49,8 +62,8 @@ console.log(lockedCharacters);
 Get a list of characters locked in every personal kiosks (unselected):
 
 ```javascript
-const unlockedCharacters = await sdk.get_unlocked_characters('0x00');
-console.log(unlockedCharacters);
+const unlockedCharacters = await sdk.get_unlocked_characters('0x00')
+console.log(unlockedCharacters)
 ```
 
 ### Subscribing to Events
@@ -59,11 +72,10 @@ Subscribe to blockchain events:
 
 ```javascript
 const unsubscribe = await sdk.subscribe(sui_event => {
-  console.log('New event:', sui_event);
-});
+  console.log('New event:', sui_event)
+})
 ```
 
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues to improve the library or suggest new features.
-
