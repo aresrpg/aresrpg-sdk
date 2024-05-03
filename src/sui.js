@@ -16,7 +16,7 @@ const {
 function parse_sui_object(object) {
   const { fields } = object.data.content
   return {
-    _type: object.data.type,
+    _type: object.data.type ?? object.data.content.type,
     ...fields,
     id: fields.id.id,
   }
@@ -205,6 +205,16 @@ export async function SDK({ rpc_url, wss_url, network = Network.TESTNET }) {
               },
             }),
           }
+        })
+        .map(x => {
+          const {
+            kiosk: { items },
+          } = x
+          console.dir(
+            { items, parsed: parse_sui_object(items[0]) },
+            { depth: Infinity },
+          )
+          return x
         })
         // in the mean time, we fetch the objects separately
         .map(({ kiosk_id, personal_kiosk_cap_id, kiosk: { items } }) => ({
