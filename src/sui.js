@@ -1,35 +1,42 @@
-import { iter } from 'iterator-helper'
 import { KioskClient, Network } from '@mysten/kiosk'
-import { SuiClient, SuiHTTPTransport } from '@mysten/sui.js/client'
+import {
+  SuiClient,
+  SuiHTTPTransport,
+  getFullnodeUrl,
+} from '@mysten/sui.js/client'
 
 import { find_types } from './types-parser.js'
+import { get_character_by_id } from './sui/read/get_character_by_id.js'
+import { get_kiosk_id } from './sui/read/get_kiosk_id.js'
+import { get_unlocked_characters } from './sui/read/get_unlocked_characters.js'
+import { get_locked_characters } from './sui/read/get_locked_characters.js'
+import { create_character } from './sui/write/create_character.js'
+import { is_character_name_taken } from './sui/write/is_character_name_taken.js'
+import { borrow_kiosk_owner_cap } from './sui/write/borrow_kiosk_owner_cap.js'
+import { select_character } from './sui/write/select_character.js'
+import { enforce_personal_kiosk } from './sui/write/enforce_personal_kiosk.js'
+import { delete_character } from './sui/write/delete_character.js'
+import { unselect_character } from './sui/write/unselect_character.js'
+import { admin_promote } from './sui/write/admin_promote.js'
+import { admin_mint_item } from './sui/write/admin_mint_item.js'
+import { get_locked_items } from './sui/read/get_locked_items.js'
+import { get_unlocked_items } from './sui/read/get_unlocked_items.js'
+import { withdraw_items } from './sui/write/withdraw_items.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'JB7tmyWLkPG4dzfuZfvHNTwbUwpc8nvVCfQecK5gxRmW',
-  TESTNET_POLICIES_DIGEST = 'Eemb1oxDqutoHnhvmcdWzTDZJn2TNnSrsGNuu7MwB3Qx',
-  TESTNET_UPGRADE_DIGEST = '',
+  TESTNET_PUBLISH_DIGEST = 'C5fxs3dqJQVXtry81emLNrSqUcBUrNT6nPYRxxjkCGU2',
+  TESTNET_POLICIES_DIGEST = 'BQ8aiu9QkRh2ZkSJn3Uo8D8ncdsUZUDdG27NY83czxwx',
+  TESTNET_UPGRADE_DIGEST = 'FGXPM3uzsASEENEsykmdaNhhz5NsbvasmcfcrsPe6nzn',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
 } = process.env
 
-function parse_sui_object(object) {
-  const { fields } = object.data.content
-  return {
-    _type: object.data.type ?? object.data.content.type,
-    ...fields,
-    id: fields.id.id,
-  }
-}
-
-function parse_character_fields(character) {
-  return {
-    ...character,
-    position: JSON.parse(character.position),
-  }
-}
-
-export async function SDK({ rpc_url, wss_url, network = Network.TESTNET }) {
+export async function SDK({
+  rpc_url = getFullnodeUrl('testnet'),
+  wss_url = getFullnodeUrl('testnet').replace('http', 'ws'),
+  network = Network.TESTNET,
+}) {
   const sui_client = new SuiClient({
     transport: new SuiHTTPTransport({
       url: rpc_url,
@@ -43,31 +50,6 @@ export async function SDK({ rpc_url, wss_url, network = Network.TESTNET }) {
     client: sui_client,
     network,
   })
-
-  async function read_object_bag({ bag_id, content = [], cursor = undefined }) {
-    const { data, hasNextPage, nextCursor } = await sui_client.getDynamicFields(
-      {
-        parentId: bag_id,
-        ...(cursor && { cursor }),
-      },
-    )
-
-    const objects = await Promise.all(
-      data.map(({ name }) =>
-        sui_client.getDynamicFieldObject({
-          parentId: bag_id,
-          name,
-        }),
-      ),
-    )
-
-    const result = [...content, ...objects]
-
-    if (hasNextPage)
-      return read_object_bag({ bag_id, content: result, cursor: nextCursor })
-
-    return result
-  }
 
   const types = await find_types(
     {
@@ -87,172 +69,42 @@ export async function SDK({ rpc_url, wss_url, network = Network.TESTNET }) {
     sui_client,
   )
 
+  const context = {
+    sui_client,
+    kiosk_client,
+    types,
+  }
+
   return {
     sui_client,
     kiosk_client,
     ...types,
+
+    get_locked_characters: get_locked_characters(context),
+    get_unlocked_characters: get_unlocked_characters(context),
+    get_character_by_id: get_character_by_id(context),
+    get_kiosk_id: get_kiosk_id(context),
+    get_locked_items: get_locked_items(context),
+    get_unlocked_items: get_unlocked_items(context),
+
+    create_character: create_character(context),
+    select_character: select_character(context),
+    unselect_character: unselect_character(context),
+    delete_character: delete_character(context),
+    is_character_name_taken: is_character_name_taken(context),
+    borrow_kiosk_owner_cap: borrow_kiosk_owner_cap(context),
+    enforce_personal_kiosk: enforce_personal_kiosk(context),
+    withdraw_items: withdraw_items(context),
+
+    admin_promote: admin_promote(context),
+    admin_mint_item: admin_mint_item(context),
+
     async get_sui_balance(owner) {
       const { totalBalance } = await sui_client.getBalance({
         owner,
       })
 
       return BigInt(totalBalance)
-    },
-    /** @type {(address: string) => Promise<import("./types.js").SuiCharacter[]>} */
-    async get_locked_characters(address) {
-      const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
-        address,
-      })
-
-      const personal_kiosks = kioskOwnerCaps.filter(
-        ({ isPersonal }) => !!isPersonal,
-      )
-
-      const characters = await iter(personal_kiosks)
-        .toAsyncIterator()
-        .map(async ({ kioskId, objectId }) => {
-          // find the AresRPG extension for the kiosk
-          try {
-            const { storageId } = await kiosk_client.getKioskExtension({
-              kioskId,
-              type: `${types.PACKAGE_ID}::extension::AresRPG`,
-            })
-
-            return {
-              storage_id: storageId,
-              kiosk_id: kioskId,
-              personal_kiosk_cap_id: objectId,
-            }
-          } catch (error) {
-            console.error('getKioskExtension error', error.message)
-            return null
-          }
-        })
-        // in case extension is not found, filter out
-        .filter(Boolean)
-        // retrieve the ObjectBag<String, Character>
-        .map(async ({ storage_id, kiosk_id, personal_kiosk_cap_id }) => {
-          try {
-            // retrieve the ObjectBag<String, Character>
-            const { data } = await sui_client.getDynamicFieldObject({
-              parentId: storage_id,
-              name: {
-                type: 'vector<u8>',
-                value: [...new TextEncoder().encode('characters')],
-              },
-            })
-
-            return {
-              storage_id,
-              kiosk_id,
-              personal_kiosk_cap_id,
-              // @ts-ignore
-              object_bag_id: data.content.fields.value.fields.id.id,
-            }
-          } catch (error) {
-            console.error('getDynamicFieldObject error', error)
-            return null
-          }
-        })
-        .filter(Boolean)
-        .flatMap(
-          async ({
-            storage_id,
-            kiosk_id,
-            object_bag_id,
-            personal_kiosk_cap_id,
-          }) => {
-            const characters = await read_object_bag({
-              bag_id: object_bag_id,
-            })
-
-            return characters
-              .flat()
-              .map(parse_sui_object)
-              .map(character => ({
-                ...parse_character_fields(character),
-                storage_id,
-                kiosk_id,
-                personal_kiosk_cap_id,
-              }))
-          },
-        )
-        .toArray()
-
-      return characters.flat()
-    },
-    /** @type {(address: string) => Promise<import("./types.js").SuiCharacter[]>} */
-    async get_unlocked_characters(address) {
-      const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
-        address,
-      })
-
-      const personal_kiosks = kioskOwnerCaps.filter(
-        ({ isPersonal }) => !!isPersonal,
-      )
-
-      const result = await iter(personal_kiosks)
-        .toAsyncIterator()
-        .map(async ({ kioskId, objectId }) => {
-          return {
-            kiosk_id: kioskId,
-            personal_kiosk_cap_id: objectId,
-            kiosk: await kiosk_client.getKiosk({
-              id: kioskId,
-              options: {
-                withObjects: true,
-                objectOptions: { showContent: true },
-              },
-            }),
-          }
-        })
-        // in the mean time, we fetch the objects separately
-        .map(({ kiosk_id, personal_kiosk_cap_id, kiosk: { items } }) => ({
-          kiosk_id,
-          personal_kiosk_cap_id,
-          characters: items,
-        }))
-        .flatMap(({ kiosk_id, personal_kiosk_cap_id, characters }) => {
-          return characters
-            .map(parse_sui_object)
-            .filter(
-              // @ts-ignore
-              ({ _type }) =>
-                _type === `${types.PACKAGE_ID}::character::Character`,
-            )
-            .map(character => ({
-              ...parse_character_fields(character),
-              kiosk_id,
-              personal_kiosk_cap_id,
-            }))
-        })
-        .toArray()
-
-      return result.flat()
-    },
-    /** @type {(id: string) => Promise<import("./types.js").SuiCharacter>} */
-    async get_character(id) {
-      const character = parse_sui_object(
-        await sui_client.getObject({
-          id,
-          options: { showContent: true, showType: true },
-        }),
-      )
-      if (character._type !== `${types.PACKAGE_ID}::character::Character`)
-        throw new Error(`INVALID_CONTRACT`)
-      return parse_character_fields(character)
-    },
-    async get_kiosk_id(character_id) {
-      const { data } = await sui_client.getDynamicFieldObject({
-        parentId: character_id,
-        name: {
-          type: 'vector<u8>',
-          value: [...new TextEncoder().encode('kiosk_id')],
-        },
-      })
-
-      // @ts-ignore
-      return data.content.fields.value
     },
     async subscribe(on_message) {
       return sui_client.subscribeEvent({

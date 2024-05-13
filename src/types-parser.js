@@ -70,7 +70,7 @@ async function parse_created_objects(transaction, client) {
 const parse_result = parsed => {
   const result = {
     DISPLAY_CHARACTER: parsed['Display<character::Character>'],
-    NAME_REGISTRY: parsed['registry::NameRegistry'],
+    NAME_REGISTRY: parsed['character_registry::NameRegistry'],
     ADMIN_CAP: parsed['admin::AdminCap'],
     VERSION: parsed['version::Version'],
     PUBLISHER_CHARACTER: parsed['publisher (character)'],

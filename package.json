@@ -7,7 +7,8 @@
     "lint": "eslint . && prettier . --check && npm run typecheck",
     "typecheck": "tsc --build",
     "format": "prettier . --write && eslint . --fix",
-    "postversion": "git push --follow-tags"
+    "postversion": "git push --follow-tags",
+    "test": "node -r dotenv/config --test **/*.test.js"
   },
   "engines": {
     "node": ">=21.0.0"
@@ -18,7 +19,8 @@
     "./experience": "./src/experience.js",
     "./stats": "./src/stats.js",
     "./spells": "./src/spells.json",
-    "./types": "./src/types.js"
+    "./types": "./src/types.d.ts",
+    "./items": "./src/items.js"
   },
   "publishConfig": {
     "access": "public"
@@ -51,6 +53,8 @@
     "@types/node": "^20.12.8",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
+    "bignumber.js": "^9.1.2",
+    "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-config-standard": "17.1.0",
