@@ -2,6 +2,7 @@ import { iter } from 'iterator-helper'
 
 import { read_object_bag } from '../read_object_bag.js'
 import { parse_item, parse_sui_object } from '../parser.js'
+import { enforce_ares_item } from '../supported_nfts.js'
 
 /** @param {import("../../types.js").Context} context */
 export function get_locked_items({ kiosk_client, types, sui_client }) {
@@ -75,12 +76,16 @@ export function get_locked_items({ kiosk_client, types, sui_client }) {
         return items
           .flat()
           .map(parse_sui_object)
-          .map(item => ({
-            ...item,
-            is_aresrpg_item: true,
-            kiosk_id,
-            personal_kiosk_cap_id,
-          }))
+          .map(item =>
+            enforce_ares_item(
+              {
+                ...item,
+                kiosk_id,
+                personal_kiosk_cap_id,
+              },
+              types,
+            ),
+          )
       })
       .toArray()
 

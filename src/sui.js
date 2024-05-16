@@ -22,11 +22,14 @@ import { admin_mint_item } from './sui/write/admin_mint_item.js'
 import { get_locked_items } from './sui/read/get_locked_items.js'
 import { get_unlocked_items } from './sui/read/get_unlocked_items.js'
 import { withdraw_items } from './sui/write/withdraw_items.js'
+import { equip_item } from './sui/write/equip_item.js'
+import { unequip_item } from './sui/write/unequip_item.js'
+import { get_user_kiosks } from './sui/read/get_user_kiosks.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'C5fxs3dqJQVXtry81emLNrSqUcBUrNT6nPYRxxjkCGU2',
-  TESTNET_POLICIES_DIGEST = 'BQ8aiu9QkRh2ZkSJn3Uo8D8ncdsUZUDdG27NY83czxwx',
-  TESTNET_UPGRADE_DIGEST = 'FGXPM3uzsASEENEsykmdaNhhz5NsbvasmcfcrsPe6nzn',
+  TESTNET_PUBLISH_DIGEST = 'J7qe87hsBkWvU7zQuoivjKga5C84pioJ4BHGuUxAvFT6',
+  TESTNET_POLICIES_DIGEST = 'D7J7bNEaPdvBriPqp4U8RaPg5DRoTq7WqU3PxcFyWoTP',
+  TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
@@ -87,6 +90,8 @@ export async function SDK({
     get_locked_items: get_locked_items(context),
     get_unlocked_items: get_unlocked_items(context),
 
+    get_user_kiosks: get_user_kiosks(context),
+
     create_character: create_character(context),
     select_character: select_character(context),
     unselect_character: unselect_character(context),
@@ -95,6 +100,8 @@ export async function SDK({
     borrow_kiosk_owner_cap: borrow_kiosk_owner_cap(context),
     enforce_personal_kiosk: enforce_personal_kiosk(context),
     withdraw_items: withdraw_items(context),
+    equip_item: equip_item(context),
+    unequip_item: unequip_item(context),
 
     admin_promote: admin_promote(context),
     admin_mint_item: admin_mint_item(context),

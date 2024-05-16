@@ -26,6 +26,23 @@ export type SuiCharacter = {
 
   kiosk_id: string
   personal_kiosk_cap_id: string
+
+  relic_1: null
+  relic_2: null
+  relic_3: null
+  relic_4: null
+  relic_5: null
+  relic_6: null
+  title: null
+  amulet: null
+  weapon: null
+  left_ring: null
+  belt: null
+  right_ring: null
+  boots: null
+  hat: null
+  cloack: null
+  pet: null
 }
 
 export type ItemDamage = {
@@ -65,7 +82,10 @@ export type SuiItem = {
   damages: ItemDamage[]
 
   kiosk_id: string
+  is_kiosk_personal: boolean
   personal_kiosk_cap_id: string
 
   is_aresrpg_item: boolean
+  image_url: string
+  _type: string
 }

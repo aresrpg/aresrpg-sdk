@@ -45,5 +45,7 @@ export const ITEM_CATEGORY = {
   PICKAXE: 'pickaxe',
   // additionnal equipable item like skins and titles
   TITLE: 'title',
+
   KEY: 'key',
+  PET: 'pet',
 }
