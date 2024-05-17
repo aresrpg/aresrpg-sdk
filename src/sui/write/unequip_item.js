@@ -1,7 +1,6 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
-import { add_header } from '../header.js'
 
 /** @param {import("../../types.js").Context} context */
 export function unequip_item({ types }) {
@@ -14,8 +13,6 @@ export function unequip_item({ types }) {
     slot,
     item_type,
   }) => {
-    add_header(tx, types)
-
     const txb = sanitized(tx)
 
     const param_kiosk = txb._.object(kiosk)

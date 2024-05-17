@@ -26,7 +26,7 @@ import { equip_item } from './sui/write/equip_item.js'
 import { unequip_item } from './sui/write/unequip_item.js'
 import { get_user_kiosks } from './sui/read/get_user_kiosks.js'
 import { admin_freeze_contract } from './sui/write/admin_freeze_contract.js'
-import { add_header } from './sui/header.js'
+import { add_header } from './sui/write/add_header.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = '6pNs5V5AQ9RFYzMkLELA5gCzGp2JgyVhauhD3223Ljyo',
@@ -105,7 +105,7 @@ export async function SDK({
     equip_item: equip_item(context),
     unequip_item: unequip_item(context),
 
-    add_header: tx => add_header(tx, types),
+    add_header: add_header(context),
 
     admin_promote: admin_promote(context),
     admin_mint_item: admin_mint_item(context),

@@ -1,7 +1,6 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
-import { add_header } from '../header.js'
 
 /** @param {import("../../types.js").Context} context */
 export function create_character({ types }) {
@@ -13,8 +12,6 @@ export function create_character({ types }) {
     kiosk_id,
     kiosk_cap,
   }) => {
-    add_header(tx, types)
-
     const txb = sanitized(tx)
     const [character_id] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_manager::create_and_lock_character`,

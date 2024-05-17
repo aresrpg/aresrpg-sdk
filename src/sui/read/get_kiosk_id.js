@@ -1,4 +1,3 @@
-
 /** @param {import("../../types.js").Context} context */
 export function get_kiosk_id({ sui_client }) {
   return async character_id => {

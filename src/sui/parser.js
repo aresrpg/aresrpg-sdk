@@ -94,6 +94,7 @@ export function parse_item({ sui_client, types }) {
       },
     })
 
+    // @ts-ignore
     const extracted_damages = damages.data?.content.fields.value.map(
       ({ fields }) => fields,
     )
