@@ -1,7 +1,7 @@
 import { ITEM_CATEGORY } from '../items.js'
 
 const BULLSHARK =
-  '0xee496a0cc04d06a345982ba6697c90c619020de9e274408c7819f787ff66e1a1::suifrens::SuiFren<0x8894fa02fc6f36cbc485ae9145d05f247a78e220814fb8419ab261bd81f08f32::bullshark::Bullshark>'
+  '0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>'
 const PRIME_MACHIN =
   '0x034c162f6b594cb5a1805264dd01ca5d80ce3eca6522e6ee37fd9ebfb9d3ddca::factory::PrimeMachin'
 
@@ -24,8 +24,9 @@ const SUPPORTED_NFTS = {
     item_category: ITEM_CATEGORY.PET,
     item_set: 'SuiFrens',
     item_type: 'bullshark',
-    level: 1,
+    level: 3,
     vitality: 20,
+    name: 'Suifren',
   },
   [PRIME_MACHIN]: {
     item_category: ITEM_CATEGORY.PET,

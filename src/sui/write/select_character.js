@@ -1,6 +1,7 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
+import { add_header } from '../header.js'
 
 /** @param {import("../../types.js").Context} context */
 export function select_character({ types }) {
@@ -10,6 +11,8 @@ export function select_character({ types }) {
     kiosk_cap,
     tx = new TransactionBlock(),
   }) => {
+    add_header(tx, types)
+
     const txb = sanitized(tx)
 
     tx.moveCall({

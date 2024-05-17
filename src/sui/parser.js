@@ -1,3 +1,4 @@
+import { get_dynamic_field_object, get_object } from './cache.js'
 import { enforce_ares_item } from './supported_nfts.js'
 
 export function parse_sui_object(object) {
@@ -9,7 +10,7 @@ export function parse_sui_object(object) {
     _type: object.data.type ?? object.data.content.type,
     ...fields,
     image_url: display?.data?.image_url,
-    name: fields.name || display?.data?.name,
+    name: display?.data?.name || fields.name,
     id: fields.id.id,
   }
 }
@@ -37,12 +38,12 @@ export function parse_character({ sui_client, types }) {
     const items = Object.fromEntries(
       await Promise.all(
         inventory.data.map(async ({ objectId, name: { value } }) => {
-          const purchase_cap = await sui_client.getObject({
+          const purchase_cap = await get_object(sui_client, {
             id: objectId,
             options: { showContent: true },
           })
           const { item_id, kiosk_id } = parse_sui_object(purchase_cap)
-          const item = await sui_client.getObject({
+          const item = await get_object(sui_client, {
             id: item_id,
             options: { showContent: true, showDisplay: true },
           })
@@ -73,7 +74,7 @@ export function parse_character({ sui_client, types }) {
 export function parse_item({ sui_client, types }) {
   /** @return {Promise<import("../types.js").SuiItem>} */
   return async item => {
-    const stats = await sui_client.getDynamicFieldObject({
+    const stats = await get_dynamic_field_object(sui_client, {
       parentId: item.id,
       name: {
         type: `${types.PACKAGE_ID}::item_stats::StatsKey`,
@@ -83,7 +84,7 @@ export function parse_item({ sui_client, types }) {
       },
     })
 
-    const damages = await sui_client.getDynamicFieldObject({
+    const damages = await get_dynamic_field_object(sui_client, {
       parentId: item.id,
       name: {
         type: `${types.PACKAGE_ID}::item_damages::DamagesKey`,
@@ -108,7 +109,7 @@ export function parse_item({ sui_client, types }) {
     if (!item.image_url) {
       const {
         data: { display },
-      } = await sui_client.getObject({
+      } = await get_object(sui_client, {
         id: item.id,
         options: { showDisplay: true },
       })

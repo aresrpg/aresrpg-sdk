@@ -25,10 +25,11 @@ import { withdraw_items } from './sui/write/withdraw_items.js'
 import { equip_item } from './sui/write/equip_item.js'
 import { unequip_item } from './sui/write/unequip_item.js'
 import { get_user_kiosks } from './sui/read/get_user_kiosks.js'
+import { admin_freeze_contract } from './sui/write/admin_freeze_contract.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'J7qe87hsBkWvU7zQuoivjKga5C84pioJ4BHGuUxAvFT6',
-  TESTNET_POLICIES_DIGEST = 'D7J7bNEaPdvBriPqp4U8RaPg5DRoTq7WqU3PxcFyWoTP',
+  TESTNET_PUBLISH_DIGEST = '6pNs5V5AQ9RFYzMkLELA5gCzGp2JgyVhauhD3223Ljyo',
+  TESTNET_POLICIES_DIGEST = '9vF98yEkSaz5ZkKUUtrxQYm6W8CEZ9Y5kpq6Mj2R9x5o',
   TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
@@ -105,6 +106,7 @@ export async function SDK({
 
     admin_promote: admin_promote(context),
     admin_mint_item: admin_mint_item(context),
+    admin_freeze_contract: admin_freeze_contract(context),
 
     async get_sui_balance(owner) {
       const { totalBalance } = await sui_client.getBalance({

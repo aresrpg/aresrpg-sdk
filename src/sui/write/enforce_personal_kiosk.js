@@ -1,9 +1,13 @@
 import { KioskTransaction } from '@mysten/kiosk'
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
+import { add_header } from '../header.js'
+
 /** @param {import("../../types.js").Context} context */
-export function enforce_personal_kiosk({ kiosk_client }) {
+export function enforce_personal_kiosk({ kiosk_client, types }) {
   return async ({ tx = new TransactionBlock(), recipient }) => {
+    add_header(tx, types)
+
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
       address: recipient,
     })

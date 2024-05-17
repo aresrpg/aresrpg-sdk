@@ -1,14 +1,16 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
+import { add_header } from '../header.js'
 
 /** @param {import("../../types.js").Context} context */
-export function borrow_kiosk_owner_cap({ kiosk_client }) {
+export function borrow_kiosk_owner_cap({ kiosk_client, types }) {
   return ({ personal_kiosk_cap_id, tx = new TransactionBlock(), handler }) => {
     const personal_kiosk_package_id = kiosk_client.getRulePackageId(
       'personalKioskRulePackageId',
     )
 
+    add_header(tx, types)
     const txb = sanitized(tx)
 
     const [kiosk_cap, promise] = tx.moveCall({
