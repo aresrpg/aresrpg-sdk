@@ -23,7 +23,7 @@ const SUPPORTED_NFTS = {
   [BULLSHARK]: {
     item_category: ITEM_CATEGORY.PET,
     item_set: 'SuiFrens',
-    item_type: 'bullshark',
+    item_type: 'suifrens_bullshark',
     level: 3,
     vitality: 20,
     name: 'Suifren',

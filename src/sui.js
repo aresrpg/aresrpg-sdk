@@ -27,6 +27,7 @@ import { unequip_item } from './sui/write/unequip_item.js'
 import { get_user_kiosks } from './sui/read/get_user_kiosks.js'
 import { admin_freeze_contract } from './sui/write/admin_freeze_contract.js'
 import { add_header } from './sui/write/add_header.js'
+import { get_item_by_id } from './sui/read/get_item_by_id.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = '6pNs5V5AQ9RFYzMkLELA5gCzGp2JgyVhauhD3223Ljyo',
@@ -91,6 +92,7 @@ export async function SDK({
     get_kiosk_id: get_kiosk_id(context),
     get_locked_items: get_locked_items(context),
     get_unlocked_items: get_unlocked_items(context),
+    get_item_by_id: get_item_by_id(context),
 
     get_user_kiosks: get_user_kiosks(context),
 

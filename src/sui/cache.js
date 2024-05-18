@@ -1,7 +1,7 @@
 import { LRUCache } from 'lru-cache'
 
 const DFIELD_CACHE = new LRUCache({ max: 10000, ttl: 1000 * 60 * 15 })
-const OBJECT_CACHE = new LRUCache({ max: 1000, ttl: 1000 * 60 * 15 })
+const OBJECT_CACHE = new LRUCache({ max: 5000, ttl: 1000 * 60 * 15 })
 
 /** @return {Promise<import("@mysten/sui.js/client").SuiObjectResponse>} */
 export async function get_dynamic_field_object(sui_client, params) {
