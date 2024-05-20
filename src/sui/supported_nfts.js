@@ -1,5 +1,7 @@
 import { ITEM_CATEGORY } from '../items.js'
 
+import { get_suifren_stats } from './suifrens.js'
+
 const BULLSHARK =
   '0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>'
 const PRIME_MACHIN =
@@ -12,7 +14,7 @@ const SUPPORTED_NFTS = {
   [EGGDENIYI]: {
     item_category: ITEM_CATEGORY.PET,
     item_set: 'Aftermath',
-    item_type: 'eggdeniyi',
+    item_type: 'afegg',
     level: 5,
     wisdom: 30,
     earth_resistance: 3,
@@ -23,10 +25,9 @@ const SUPPORTED_NFTS = {
   [BULLSHARK]: {
     item_category: ITEM_CATEGORY.PET,
     item_set: 'SuiFrens',
-    item_type: 'suifrens_bullshark',
+    item_type: 'suifren_capy',
     level: 3,
-    vitality: 20,
-    name: 'Suifren',
+    name: 'Capy',
   },
   [PRIME_MACHIN]: {
     item_category: ITEM_CATEGORY.PET,
@@ -39,17 +40,27 @@ const SUPPORTED_NFTS = {
   },
 }
 
-export function enforce_ares_item(item, types) {
-  item.is_aresrpg_item = item._type === `${types.PACKAGE_ID}::item::Item`
+/** @param {import("../types.js").Context} context */
+export async function enforce_ares_item(context, item) {
+  const { types } = context
 
+  item.is_aresrpg_item = item._type === `${types.PACKAGE_ID}::item::Item`
   if (item.is_aresrpg_item) return item
 
   const external_item = SUPPORTED_NFTS[item._type]
 
   if (!external_item) return null
 
-  return {
+  const final_item = {
     ...item,
     ...external_item,
+  }
+
+  if (item._type === BULLSHARK) {
+    const stats = await get_suifren_stats(context, final_item)
+    return {
+      ...final_item,
+      ...stats,
+    }
   }
 }

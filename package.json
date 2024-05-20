@@ -22,6 +22,7 @@
     "./types": "./src/types.d.ts",
     "./items": "./src/items.js"
   },
+  "types": "./src/types.d.ts",
   "publishConfig": {
     "access": "public"
   },

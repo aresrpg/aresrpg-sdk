@@ -12,7 +12,7 @@ import { get_unlocked_characters } from './sui/read/get_unlocked_characters.js'
 import { get_locked_characters } from './sui/read/get_locked_characters.js'
 import { create_character } from './sui/write/create_character.js'
 import { is_character_name_taken } from './sui/write/is_character_name_taken.js'
-import { borrow_kiosk_owner_cap } from './sui/write/borrow_kiosk_owner_cap.js'
+import { borrow_personal_kiosk_cap } from './sui/write/borrow_personal_kiosk_cap.js'
 import { select_character } from './sui/write/select_character.js'
 import { enforce_personal_kiosk } from './sui/write/enforce_personal_kiosk.js'
 import { delete_character } from './sui/write/delete_character.js'
@@ -28,10 +28,13 @@ import { get_user_kiosks } from './sui/read/get_user_kiosks.js'
 import { admin_freeze_contract } from './sui/write/admin_freeze_contract.js'
 import { add_header } from './sui/write/add_header.js'
 import { get_item_by_id } from './sui/read/get_item_by_id.js'
+import { feed_suifren } from './sui/write/feed_suifren.js'
+import { get_suifren_object_accessory } from './sui/read/get_suifren_accessories.js'
+import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = '6pNs5V5AQ9RFYzMkLELA5gCzGp2JgyVhauhD3223Ljyo',
-  TESTNET_POLICIES_DIGEST = '9vF98yEkSaz5ZkKUUtrxQYm6W8CEZ9Y5kpq6Mj2R9x5o',
+  TESTNET_PUBLISH_DIGEST = '4tqNPLMmgVBsXMWZEgRwkSmMh7DEQTNyyZDbXcJsx8YF',
+  TESTNET_POLICIES_DIGEST = 'AyWHXZbEaG1FKut3h7DFLW3dJuWsD8XTPTR6yAsaSWbf',
   TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
@@ -79,6 +82,7 @@ export async function SDK({
     sui_client,
     kiosk_client,
     types,
+    network,
   }
 
   return {
@@ -93,6 +97,8 @@ export async function SDK({
     get_locked_items: get_locked_items(context),
     get_unlocked_items: get_unlocked_items(context),
     get_item_by_id: get_item_by_id(context),
+    get_suifren_object_accessory: get_suifren_object_accessory(context),
+    get_pet_feed_value: get_pet_feed_value(context),
 
     get_user_kiosks: get_user_kiosks(context),
 
@@ -101,11 +107,12 @@ export async function SDK({
     unselect_character: unselect_character(context),
     delete_character: delete_character(context),
     is_character_name_taken: is_character_name_taken(context),
-    borrow_kiosk_owner_cap: borrow_kiosk_owner_cap(context),
+    borrow_personal_kiosk_cap: borrow_personal_kiosk_cap(context),
     enforce_personal_kiosk: enforce_personal_kiosk(context),
     withdraw_items: withdraw_items(context),
     equip_item: equip_item(context),
     unequip_item: unequip_item(context),
+    feed_suifren: feed_suifren(context),
 
     add_header: add_header(context),
 

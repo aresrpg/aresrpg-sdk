@@ -2,6 +2,7 @@ export type Context = {
   sui_client: import('@mysten/sui.js/client').SuiClient
   kiosk_client: import('@mysten/kiosk').KioskClient
   types: import('./types-parser.js').SuiIds
+  network: import('@mysten/kiosk').Network
 }
 
 export type ItemDamage = {
@@ -47,6 +48,10 @@ export type SuiItem = {
   is_aresrpg_item: boolean
   image_url: string
   _type: string
+
+  // for pets
+  last_feed?: number
+  feed_level?: number
 }
 
 export type SuiCharacter = {

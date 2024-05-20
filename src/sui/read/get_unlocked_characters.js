@@ -1,5 +1,3 @@
-import { iter } from 'iterator-helper'
-
 import { parse_character, parse_sui_object } from '../parser.js'
 
 /** @param {import("../../types.js").Context} context */
@@ -15,28 +13,18 @@ export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
     )
 
     // sequential to avoid huge node spam
-    const result = await iter(personal_kiosks)
-      .toAsyncIterator()
-      .map(async ({ kioskId, objectId }) => {
-        return {
-          kiosk_id: kioskId,
-          personal_kiosk_cap_id: objectId,
-          kiosk: await kiosk_client.getKiosk({
-            id: kioskId,
-            options: {
-              withObjects: true,
-              objectOptions: { showContent: true },
-            },
-          }),
-        }
-      })
-      // in the mean time, we fetch the objects separately
-      .map(({ kiosk_id, personal_kiosk_cap_id, kiosk: { items } }) => ({
-        kiosk_id,
-        personal_kiosk_cap_id,
-        characters: items,
-      }))
-      .map(({ kiosk_id, personal_kiosk_cap_id, characters }) => {
+    const result = await Promise.all(
+      personal_kiosks.map(async ({ kioskId, objectId }) => {
+        const kiosk_id = kioskId
+        const personal_kiosk_cap_id = objectId
+        // in the mean time, we fetch the objects separately
+        const { items: characters } = await kiosk_client.getKiosk({
+          id: kioskId,
+          options: {
+            withObjects: true,
+            objectOptions: { showContent: true },
+          },
+        })
         return characters
           .map(parse_sui_object)
           .filter(
@@ -49,14 +37,12 @@ export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
             kiosk_id,
             personal_kiosk_cap_id,
           }))
-      })
-      .toArray()
+          .map(parse_character({ sui_client, types }))
+      }),
+    )
 
-    // flatMap doesn't work in iterator-helper, so we double step
+    const characters = await Promise.all(result.flat())
 
-    return await iter(result.flat())
-      .toAsyncIterator()
-      .map(parse_character({ sui_client, types }))
-      .toArray()
+    return characters.filter(Boolean)
   }
 }

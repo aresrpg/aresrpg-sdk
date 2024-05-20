@@ -15,7 +15,9 @@ export function parse_sui_object(object) {
   }
 }
 
-export function parse_character({ sui_client, types }) {
+export function parse_character(context) {
+  const { sui_client, types } = context
+
   /** @return {Promise<import("../types.js").SuiCharacter>} */
   return async character => {
     const stats = await sui_client.getDynamicFieldObject({
@@ -48,15 +50,12 @@ export function parse_character({ sui_client, types }) {
             options: { showContent: true, showDisplay: true },
           })
 
-          const parsed_item = enforce_ares_item(
-            {
-              ...parse_sui_object(item),
-              kiosk_id,
-            },
-            types,
-          )
+          const parsed_item = await enforce_ares_item(context, {
+            ...parse_sui_object(item),
+            kiosk_id,
+          })
           const parsed = await parse_item({ sui_client, types })(parsed_item)
-          return [value, parsed]
+          return [value.slot, parsed]
         }),
       ),
     )
