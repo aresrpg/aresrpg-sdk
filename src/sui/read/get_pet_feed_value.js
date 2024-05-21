@@ -1,4 +1,4 @@
-import { parse_sui_object } from '../parser.js'
+import { parse_sui_object } from '../cache.js'
 
 /** @param {import("../../types.js").Context} context */
 export function get_pet_feed_value({ sui_client, types }) {
@@ -16,7 +16,7 @@ export function get_pet_feed_value({ sui_client, types }) {
     if (!result.data) return { last_feed: 0, stomach: 0 }
 
     // @ts-ignore
-    const { last_feed = 0, stomach = 0 } = parse_sui_object(result)
+    const { last_feed = 0, stomach = 0 } = parse_sui_object({ types }, result)
     return { last_feed, stomach }
   }
 }

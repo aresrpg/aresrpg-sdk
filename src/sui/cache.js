@@ -1,7 +1,26 @@
 import { LRUCache } from 'lru-cache'
 
-const DFIELD_CACHE = new LRUCache({ max: 10000, ttl: 1000 * 60 * 15 })
-const OBJECT_CACHE = new LRUCache({ max: 5000, ttl: 1000 * 60 * 15 })
+import { BULLSHARK, SUPPORTED_NFTS } from './supported_nfts.js'
+import { get_suifren_stats } from './suifrens.js'
+
+const DFIELD_CACHE = new LRUCache({ max: 10000 })
+const OBJECT_CACHE = new LRUCache({ max: 10000 })
+
+export function parse_sui_object({ types }, object) {
+  const {
+    content: { fields },
+    display,
+  } = object.data
+  const type = object.data.type ?? object.data.content.type
+  return {
+    _type: type,
+    ...fields,
+    is_aresrpg_item: type === `${types.PACKAGE_ID}::item::Item`,
+    image_url: display?.data?.image_url,
+    name: display?.data?.name || fields.name,
+    id: fields.id.id,
+  }
+}
 
 /** @return {Promise<import("@mysten/sui.js/client").SuiObjectResponse>} */
 export async function get_dynamic_field_object(sui_client, params) {
@@ -15,14 +34,143 @@ export async function get_dynamic_field_object(sui_client, params) {
   return result
 }
 
-/** @return {Promise<import("@mysten/sui.js/client").SuiObjectResponse>} */
-export async function get_object(sui_client, params) {
-  const key = JSON.stringify(params)
-  const cached = OBJECT_CACHE.get(key)
-  if (cached) return cached
+export async function get_purchase_caps(context, caps) {
+  const { sui_client } = context
+  const parsed_caps = await sui_client.multiGetObjects({
+    ids: caps.map(({ id }) => id),
+    options: { showContent: true },
+  })
 
-  const result = await sui_client.getObject(params)
-  OBJECT_CACHE.set(key, result)
+  return parsed_caps
+    .map(cap => parse_sui_object(context, cap))
+    .map(({ item_id, kiosk_id }, index) => {
+      const cap = caps[index]
+      return {
+        ...cap,
+        item_id,
+        kiosk_id,
+      }
+    })
+}
 
-  return result
+async function tailed_multi_get_objects(sui_client, ids) {
+  if (ids.length === 0) return []
+
+  const current_chunk = ids.slice(0, 50)
+  const rest = ids.slice(50)
+
+  const [current_result, rest_result] = await Promise.all([
+    sui_client.multiGetObjects({
+      ids: current_chunk,
+      options: { showContent: true, showDisplay: true, showType: true },
+    }),
+    tailed_multi_get_objects(sui_client, rest),
+  ])
+
+  return [...current_result, ...rest_result]
+}
+
+// Example usage:
+// const result = await tailed_multi_get_objects(sui_client, ids);
+
+/**
+ * ORDER IS NOT GUARANTEED
+ * @type {(context: import("../types.js").Context, ids: string[]) => Promise<Map<string, import("../types.js").SuiItem>>} */
+export async function get_items(context, ids) {
+  const { sui_client, types } = context
+  const unknown_ids = ids.filter(id => !OBJECT_CACHE.has(id))
+
+  const unknown_objects = await tailed_multi_get_objects(
+    sui_client,
+    unknown_ids,
+  )
+
+  const parsed_objects = unknown_objects.map(object =>
+    parse_sui_object({ types }, object),
+  )
+
+  const { ares: ares_item, others: other_items } = parsed_objects.reduce(
+    ({ ares, others }, object) => {
+      if (object.is_aresrpg_item) ares.push(object)
+      else others.push(object)
+      return { ares, others }
+    },
+    { ares: [], others: [] },
+  )
+
+  const external_items = await Promise.all(
+    other_items.map(async item => {
+      const whitelisted_item = SUPPORTED_NFTS[item._type]
+      if (!whitelisted_item) return null
+
+      if (item._type === BULLSHARK) {
+        const stats = await get_suifren_stats(context, item)
+        return {
+          ...item,
+          ...whitelisted_item,
+          ...stats,
+        }
+      }
+
+      // if not a bullshark (feedable) item, save in cache ===
+
+      const final_item = {
+        ...item,
+        ...whitelisted_item,
+      }
+
+      OBJECT_CACHE.set(item.id, final_item)
+
+      return final_item
+    }),
+  ).then(items => items.filter(Boolean))
+
+  const internal_items = await Promise.all(
+    ares_item.map(async item => {
+      // cached stats
+      const stats = await get_dynamic_field_object(sui_client, {
+        parentId: item.id,
+        name: {
+          type: `${types.PACKAGE_ID}::item_stats::StatsKey`,
+          value: {
+            dummy_field: false,
+          },
+        },
+      })
+
+      // cached damages
+      const damages = await get_dynamic_field_object(sui_client, {
+        parentId: item.id,
+        name: {
+          type: `${types.PACKAGE_ID}::item_damages::DamagesKey`,
+          value: {
+            dummy_field: false,
+          },
+        },
+      })
+
+      // @ts-ignore
+      const extracted_damages = damages.data?.content.fields.value.map(
+        ({ fields }) => fields,
+      )
+
+      return {
+        ...item,
+        // @ts-ignore
+        ...stats.data?.content.fields.value.fields,
+        // @ts-ignore
+        ...(extracted_damages && { damages: extracted_damages }),
+      }
+    }),
+  )
+
+  return new Map(
+    [
+      ...ids.map(id => OBJECT_CACHE.get(id)),
+      ...external_items,
+      ...internal_items,
+    ]
+      .filter(Boolean)
+      .map(item => [item.id, item]),
+  )
 }

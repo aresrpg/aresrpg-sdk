@@ -1,6 +1,6 @@
 import { read_object_bag } from '../read_object_bag.js'
-import { parse_character, parse_sui_object } from '../parser.js'
-import { get_dynamic_field_object } from '../cache.js'
+import { parse_character } from '../parser.js'
+import { get_dynamic_field_object, parse_sui_object } from '../cache.js'
 
 /** @param {import("../../types.js").Context} context */
 export function get_locked_characters({ kiosk_client, types, sui_client }) {
@@ -51,7 +51,7 @@ export function get_locked_characters({ kiosk_client, types, sui_client }) {
 
           return all_characters
             .flat()
-            .map(parse_sui_object)
+            .map(object => parse_sui_object({ types }, object))
             .map(character => ({
               ...character,
               kiosk_id,

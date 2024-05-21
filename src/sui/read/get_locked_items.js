@@ -1,7 +1,5 @@
 import { read_object_bag } from '../read_object_bag.js'
-import { parse_item, parse_sui_object } from '../parser.js'
-import { enforce_ares_item } from '../supported_nfts.js'
-import { get_dynamic_field_object } from '../cache.js'
+import { get_dynamic_field_object, get_items } from '../cache.js'
 
 /** @param {import("../../types.js").Context} context */
 export function get_locked_items(context) {
@@ -50,22 +48,14 @@ export function get_locked_items(context) {
             // @ts-ignore
             bag_id: data.content.fields.value.fields.id.id,
           })
+          const ids = items.flat().map(({ data: { objectId } }) => objectId)
 
-          return Promise.all(
-            items
-              .flat()
-              .map(parse_sui_object)
-              .map(async item =>
-                enforce_ares_item(context, {
-                  ...item,
-                  kiosk_id,
-                  personal_kiosk_cap_id,
-                  storage_id,
-                }),
-              ),
-          )
-            .then(result => result.filter(Boolean))
-            .then(result => result.map(parse_item({ types, sui_client })))
+          const parsed_items = await get_items(context, ids)
+          return [...parsed_items.values()].map(item => ({
+            ...item,
+            kiosk_id,
+            personal_kiosk_cap_id,
+          }))
         } catch (error) {
           console.error('getKioskExtension error', error.message)
           return null

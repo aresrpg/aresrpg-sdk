@@ -1,4 +1,5 @@
-import { parse_character, parse_sui_object } from '../parser.js'
+import { parse_sui_object } from '../cache.js'
+import { parse_character } from '../parser.js'
 
 /** @param {import("../../types.js").Context} context */
 export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
@@ -26,7 +27,7 @@ export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
           },
         })
         return characters
-          .map(parse_sui_object)
+          .map(object => parse_sui_object({ types }, object))
           .filter(
             // @ts-ignore
             ({ _type }) =>

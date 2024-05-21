@@ -41,10 +41,12 @@ export type SuiItem = {
 
   damages: ItemDamage[]
 
+  // kiosk related
   kiosk_id: string
   is_kiosk_personal: boolean
   personal_kiosk_cap_id: string
 
+  // type related
   is_aresrpg_item: boolean
   image_url: string
   _type: string

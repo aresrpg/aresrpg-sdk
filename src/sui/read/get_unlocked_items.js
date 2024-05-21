@@ -1,9 +1,8 @@
-import { parse_item, parse_sui_object } from '../parser.js'
-import { enforce_ares_item } from '../supported_nfts.js'
+import { get_items } from '../cache.js'
 
 /** @param {import("../../types.js").Context} context */
 export function get_unlocked_items(context) {
-  const { kiosk_client, types, sui_client } = context
+  const { kiosk_client } = context
   /** @type {(address: string) => Promise<import("../../types.js").SuiItem[]>} */
   return async address => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
@@ -19,26 +18,39 @@ export function get_unlocked_items(context) {
         const { items } = await kiosk_client.getKiosk({
           id: kioskId,
           options: {
-            withObjects: true,
-            objectOptions: { showContent: true, showDisplay: true },
+            withObjects: false,
           },
         })
-        return Promise.all(
-          items.map(parse_sui_object).map(async item =>
-            enforce_ares_item(context, {
-              ...item,
-              kiosk_id,
-              is_kiosk_personal,
-              personal_kiosk_cap_id,
-            }),
-          ),
-        )
-          .then(result => result.filter(Boolean))
-          .then(result => result.map(parse_item({ types, sui_client })))
+
+        return items
+          .filter(({ listing }) => !listing)
+          .map(({ objectId }) => ({
+            id: objectId,
+            kiosk_id,
+            personal_kiosk_cap_id,
+            is_kiosk_personal,
+          }))
       }),
     )
 
-    const items = await Promise.all(result.flat())
-    return items.filter(Boolean)
+    const objects = result.flat()
+    const items = await get_items(
+      context,
+      objects.map(({ id }) => id),
+    )
+
+    return objects
+      .map(item => {
+        const { id, ...rest } = item
+        const parsed = items.get(id)
+        if (!parsed) return null
+
+        return {
+          id,
+          ...parsed,
+          ...rest,
+        }
+      })
+      .filter(Boolean)
   }
 }

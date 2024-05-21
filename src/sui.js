@@ -33,8 +33,8 @@ import { get_suifren_object_accessory } from './sui/read/get_suifren_accessories
 import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = '4tqNPLMmgVBsXMWZEgRwkSmMh7DEQTNyyZDbXcJsx8YF',
-  TESTNET_POLICIES_DIGEST = 'AyWHXZbEaG1FKut3h7DFLW3dJuWsD8XTPTR6yAsaSWbf',
+  TESTNET_PUBLISH_DIGEST = 'EEztDkyUmhVGZpAkXWypSB2bbvJKWR3Yk7LdaMuraGMg',
+  TESTNET_POLICIES_DIGEST = '9fQ7Fme3c176gz4nTXWytBUzW7XzzUKHxJfV89PcKrUh',
   TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
