@@ -14,7 +14,7 @@ export function get_locked_characters_by_ids({ sui_client, types }) {
       objects
         // filter out the objects that are not found (maybe deleted)
         .filter(({ error }) => !error)
-        .map(object => parse_sui_object({ types })(object))
+        .map(object => parse_sui_object({ types }, object))
         // filter out the characters that are not selected
         .filter(({ selected }) => !!selected)
         .map(object => parse_character({ sui_client, types })(object)),
@@ -22,6 +22,7 @@ export function get_locked_characters_by_ids({ sui_client, types }) {
 
     return new Map(
       characters
+        .filter(Boolean)
         .filter(
           character =>
             character._type === `${types.PACKAGE_ID}::character::Character`,

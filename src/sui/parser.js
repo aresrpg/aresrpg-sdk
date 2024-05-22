@@ -5,6 +5,9 @@ export function parse_character(context) {
 
   /** @return {Promise<import("../../types.js").SuiCharacter>} */
   return async character => {
+    if (character._type !== `${types.PACKAGE_ID}::character::Character`)
+      return null
+
     const stats = await sui_client.getDynamicFieldObject({
       parentId: character.id,
       name: {
