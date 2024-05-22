@@ -45,10 +45,14 @@ export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
   wss_url = getFullnodeUrl('testnet').replace('http', 'ws'),
   network = Network.TESTNET,
+  websocket_constructor = undefined,
 }) {
   const sui_client = new SuiClient({
     transport: new SuiHTTPTransport({
       url: rpc_url,
+      ...(websocket_constructor && {
+        WebSocketConstructor: websocket_constructor,
+      }),
       websocket: {
         reconnectTimeout: 1000,
         url: wss_url,
