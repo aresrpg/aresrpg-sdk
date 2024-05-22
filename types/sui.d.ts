@@ -4,18 +4,19 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     network?: Network;
     websocket_constructor?: any;
 }): Promise<{
-    get_locked_characters: (address: string) => Promise<import("./types.js").SuiCharacter[]>;
-    get_unlocked_characters: (address: string) => Promise<import("./types.js").SuiCharacter[]>;
-    get_character_by_id: (id: any) => Promise<import("./types.js").SuiCharacter>;
+    get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
+    get_unlocked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
+    get_character_by_id: (id: any) => Promise<import("../types.js").SuiCharacter>;
     get_kiosk_id: (character_id: any) => Promise<any>;
-    get_locked_items: (address: string) => Promise<import("./types.js").SuiItem[]>;
-    get_unlocked_items: (address: string) => Promise<import("./types.js").SuiItem[]>;
-    get_item_by_id: (id: string) => Promise<import("./types.js").SuiItem>;
+    get_locked_items: (address: string) => Promise<import("../types.js").SuiItem[]>;
+    get_unlocked_items: (address: string) => Promise<import("../types.js").SuiItem[]>;
+    get_item_by_id: (id: string) => Promise<import("../types.js").SuiItem>;
     get_suifren_object_accessory: (suifren_id: any) => Promise<any>;
     get_pet_feed_value: (pet_id: any) => Promise<{
         last_feed: any;
         stomach: any;
     }>;
+    get_locked_characters_by_ids: (ids: string[]) => Promise<Map<string, import("../types.js").SuiCharacter>>;
     get_user_kiosks: ({ tx, address }: {
         tx?: import("@mysten/sui.js/transactions").TransactionBlock;
         address: any;

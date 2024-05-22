@@ -1,6 +1,6 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function admin_freeze_contract({ types }) {
   return ({ tx = new TransactionBlock() }) => {
     tx.moveCall({

@@ -1,5 +1,5 @@
-/** @param {import("../../types.js").Context} context */
-export function enforce_personal_kiosk({ kiosk_client, types }: import("../../types.js").Context): ({ tx, recipient }: {
+/** @param {import("../../../types.js").Context} context */
+export function enforce_personal_kiosk({ kiosk_client, types }: import("../../../types.js").Context): ({ tx, recipient }: {
     tx?: TransactionBlock;
     recipient: any;
 }) => Promise<{

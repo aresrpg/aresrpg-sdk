@@ -1,5 +1,5 @@
-export function get_total_stat(character: import("./types.js").SuiCharacter, stat: string): number;
-export function get_max_health(character: import("./types.js").SuiCharacter): number;
+export function get_total_stat(character: import("./../types.js").SuiCharacter, stat: string): number;
+export function get_max_health(character: import("./../types.js").SuiCharacter): number;
 export namespace STATISTICS {
     let VITALITY: string;
     let WISDOM: string;

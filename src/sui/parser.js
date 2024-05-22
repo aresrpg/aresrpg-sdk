@@ -3,7 +3,7 @@ import { get_items, get_purchase_caps } from './cache.js'
 export function parse_character(context) {
   const { sui_client, types } = context
 
-  /** @return {Promise<import("../types.js").SuiCharacter>} */
+  /** @return {Promise<import("../../types.js").SuiCharacter>} */
   return async character => {
     const stats = await sui_client.getDynamicFieldObject({
       parentId: character.id,

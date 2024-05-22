@@ -2,7 +2,7 @@ import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function merge_items({ types }) {
   return ({
     tx = new TransactionBlock(),

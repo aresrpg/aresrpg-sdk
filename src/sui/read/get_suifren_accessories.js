@@ -4,7 +4,7 @@ const SUIFREN_ACCESSORY_MAINNET =
 const SUIFREN_ACCESSORY_TESTNET =
   '0x15a2fe781ae848c3f108eddc0298649ed9e76da4e9103b5e0bd6f363cca1d56d'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function get_suifren_object_accessory({ sui_client, network }) {
   const SUIFREN_ACCESSORY =
     network === 'mainnet'

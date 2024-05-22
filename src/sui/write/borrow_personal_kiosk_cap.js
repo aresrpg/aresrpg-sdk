@@ -2,7 +2,7 @@ import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function borrow_personal_kiosk_cap({ kiosk_client }) {
   return ({ personal_kiosk_cap_id, tx = new TransactionBlock(), handler }) => {
     const personal_kiosk_package_id = kiosk_client.getRulePackageId(

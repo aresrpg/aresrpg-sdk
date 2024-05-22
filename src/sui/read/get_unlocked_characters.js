@@ -1,9 +1,9 @@
 import { parse_sui_object } from '../cache.js'
 import { parse_character } from '../parser.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
-  /** @type {(address: string) => Promise<import("../../types.js").SuiCharacter[]>} */
+  /** @type {(address: string) => Promise<import("../../../types.js").SuiCharacter[]>} */
   return async address => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
       address,

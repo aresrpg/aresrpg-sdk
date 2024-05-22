@@ -2,9 +2,9 @@ import { read_object_bag } from '../read_object_bag.js'
 import { parse_character } from '../parser.js'
 import { get_dynamic_field_object, parse_sui_object } from '../cache.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function get_locked_characters({ kiosk_client, types, sui_client }) {
-  /** @type {(address: string) => Promise<import("../../types.js").SuiCharacter[]>} */
+  /** @type {(address: string) => Promise<import("../../../types.js").SuiCharacter[]>} */
   return async address => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
       address,

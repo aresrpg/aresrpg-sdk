@@ -31,6 +31,7 @@ import { get_item_by_id } from './sui/read/get_item_by_id.js'
 import { feed_suifren } from './sui/write/feed_suifren.js'
 import { get_suifren_object_accessory } from './sui/read/get_suifren_accessories.js'
 import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
+import { get_locked_characters_by_ids } from './sui/read/get_locked_characters_by_ids.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = 'EEztDkyUmhVGZpAkXWypSB2bbvJKWR3Yk7LdaMuraGMg',
@@ -103,6 +104,7 @@ export async function SDK({
     get_item_by_id: get_item_by_id(context),
     get_suifren_object_accessory: get_suifren_object_accessory(context),
     get_pet_feed_value: get_pet_feed_value(context),
+    get_locked_characters_by_ids: get_locked_characters_by_ids(context),
 
     get_user_kiosks: get_user_kiosks(context),
 

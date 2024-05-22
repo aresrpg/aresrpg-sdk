@@ -31,13 +31,12 @@
       "types": "./types/stats.d.ts"
     },
     "./spells": "./src/spells.json",
-    "./types": "./src/types.d.ts",
+    "./types": "./types.d.ts",
     "./items": {
       "import": "./src/items.js",
       "types": "./types/items.d.ts"
     }
   },
-  "types": "./src/types.d.ts",
   "publishConfig": {
     "access": "public"
   },

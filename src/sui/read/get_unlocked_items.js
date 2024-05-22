@@ -1,9 +1,9 @@
 import { get_items } from '../cache.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function get_unlocked_items(context) {
   const { kiosk_client } = context
-  /** @type {(address: string) => Promise<import("../../types.js").SuiItem[]>} */
+  /** @type {(address: string) => Promise<import("../../../types.js").SuiItem[]>} */
   return async address => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
       address,

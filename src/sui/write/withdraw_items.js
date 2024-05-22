@@ -2,7 +2,7 @@ import { TransactionBlock } from '@mysten/sui.js/transactions'
 
 import { sanitized } from '../sanitize.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function withdraw_items({ types }) {
   return ({ tx = new TransactionBlock(), kiosk_id, kiosk_cap, item_ids }) => {
     const txb = sanitized(tx)

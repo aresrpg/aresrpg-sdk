@@ -75,7 +75,7 @@ async function tailed_multi_get_objects(sui_client, ids) {
 
 /**
  * ORDER IS NOT GUARANTEED
- * @type {(context: import("../types.js").Context, ids: string[]) => Promise<Map<string, import("../types.js").SuiItem>>} */
+ * @type {(context: import("../../types.js").Context, ids: string[]) => Promise<Map<string, import("../../types.js").SuiItem>>} */
 export async function get_items(context, ids) {
   const { sui_client, types } = context
   const unknown_ids = ids.filter(id => !OBJECT_CACHE.has(id))

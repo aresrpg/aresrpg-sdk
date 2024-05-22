@@ -14,7 +14,7 @@ const BULLSHARK_TYPE_MAINNET =
   '0x8894fa02fc6f36cbc485ae9145d05f247a78e220814fb8419ab261bd81f08f32::bullshark::Bullshark'
 const BULLSHARK_TYPE_TESTNET = '' // ??
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function feed_suifren({ types, network }) {
   return ({
     tx = new TransactionBlock(),

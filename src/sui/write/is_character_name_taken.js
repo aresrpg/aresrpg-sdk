@@ -1,6 +1,6 @@
 import { TransactionBlock } from '@mysten/sui.js/transactions'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function is_character_name_taken({ types, sui_client }) {
   return async ({ address, name }) => {
     const txb = new TransactionBlock()

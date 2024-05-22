@@ -1,5 +1,5 @@
-/** @param {import("../../types.js").Context} context */
-export function admin_mint_item({ types }: import("../../types.js").Context): ({ tx, recipient_kiosk, admin_cap, name, item_category, item_set, item_type, level, amount, stackable, stats, damages, }: {
+/** @param {import("../../../types.js").Context} context */
+export function admin_mint_item({ types }: import("../../../types.js").Context): ({ tx, recipient_kiosk, admin_cap, name, item_category, item_set, item_type, level, amount, stackable, stats, damages, }: {
     tx?: TransactionBlock;
     recipient_kiosk: any;
     admin_cap?: any;

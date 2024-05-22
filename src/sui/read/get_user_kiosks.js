@@ -23,7 +23,7 @@ function borrow_kiosk_cap({ kiosk_client, tx, personal_kiosk_cap_id }) {
 
 /**
  * Returns all users kiosks and their kiosk caps, (borrow personal ones if needed)
- * @param {import("../../types.js").Context} context */
+ * @param {import("../../../types.js").Context} context */
 export function get_user_kiosks({ kiosk_client }) {
   return async ({ tx = new TransactionBlock(), address }) => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({

@@ -1,6 +1,6 @@
 import { parse_sui_object } from '../cache.js'
 
-/** @param {import("../../types.js").Context} context */
+/** @param {import("../../../types.js").Context} context */
 export function get_pet_feed_value({ sui_client, types }) {
   return async pet_id => {
     const result = await sui_client.getDynamicFieldObject({

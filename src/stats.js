@@ -3,12 +3,12 @@ import { experience_to_level } from './experience.js'
 const LIFE_PER_LEVEL = 5
 const BASE_LIFE = 30
 
-/** @type {(item: import("./types.js").SuiItem, stat: string) => number} */
+/** @type {(item: import("./../types.js").SuiItem, stat: string) => number} */
 function get_item_stat(item, stat) {
   return item?.[stat] ?? 0
 }
 
-/** @type {(character: import("./types.js").SuiCharacter, stat: string) => number} */
+/** @type {(character: import("./../types.js").SuiCharacter, stat: string) => number} */
 export function get_total_stat(character, stat) {
   const base = character[stat]
   const {
@@ -52,7 +52,7 @@ export function get_total_stat(character, stat) {
   return base + item_stats.reduce((acc, val) => acc + val, 0)
 }
 
-/** @type {(character: import("./types.js").SuiCharacter) => number} */
+/** @type {(character: import("./../types.js").SuiCharacter) => number} */
 export function get_max_health(character) {
   const level = experience_to_level(character.experience)
   const vitality = get_total_stat(character, 'vitality')

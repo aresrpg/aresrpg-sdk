@@ -1,5 +1,5 @@
-/** @param {import("../../types.js").Context} context */
-export function merge_items({ types }: import("../../types.js").Context): ({ tx, kiosk, kiosk_cap, target_item_id, items_ids, }: {
+/** @param {import("../../../types.js").Context} context */
+export function merge_items({ types }: import("../../../types.js").Context): ({ tx, kiosk, kiosk_cap, target_item_id, items_ids, }: {
     tx?: TransactionBlock;
     kiosk: any;
     kiosk_cap: any;
