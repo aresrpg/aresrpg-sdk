@@ -1,7 +1,8 @@
-export function SDK({ rpc_url, wss_url, network, }: {
+export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     rpc_url?: "https://fullnode.mainnet.sui.io:443" | "https://fullnode.testnet.sui.io:443" | "https://fullnode.devnet.sui.io:443" | "http://127.0.0.1:9000";
     wss_url?: string;
     network?: Network;
+    websocket_constructor?: any;
 }): Promise<{
     get_locked_characters: (address: string) => Promise<import("./types.js").SuiCharacter[]>;
     get_unlocked_characters: (address: string) => Promise<import("./types.js").SuiCharacter[]>;
