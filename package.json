@@ -14,13 +14,28 @@
     "node": ">=21.0.0"
   },
   "exports": {
-    "./sui": "./src/sui.js",
-    "./chunk": "./src/chunk.js",
-    "./experience": "./src/experience.js",
-    "./stats": "./src/stats.js",
+    "./sui": {
+      "import": "./src/sui.js",
+      "types": "./types/sui.d.ts"
+    },
+    "./chunk": {
+      "import": "./src/chunk.js",
+      "types": "./types/chunk.d.ts"
+    },
+    "./experience": {
+      "import": "./src/experience.js",
+      "types": "./types/experience.d.ts"
+    },
+    "./stats": {
+      "import": "./src/stats.js",
+      "types": "./types/stats.d.ts"
+    },
     "./spells": "./src/spells.json",
     "./types": "./src/types.d.ts",
-    "./items": "./src/items.js"
+    "./items": {
+      "import": "./src/items.js",
+      "types": "./types/items.d.ts"
+    }
   },
   "types": "./src/types.d.ts",
   "publishConfig": {
