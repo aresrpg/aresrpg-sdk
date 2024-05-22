@@ -1,11 +1,10 @@
 import { MIST_PER_SUI } from '@mysten/sui.js/utils'
-import BN from 'bignumber.js'
+import { BigNumber as BN } from 'bignumber.js'
 
 import { get_pet_feed_value } from './read/get_pet_feed_value.js'
 import { get_suifren_object_accessory } from './read/get_suifren_accessories.js'
 
 function mists_to_sui(balance) {
-  // @ts-ignore
   return BN(balance).dividedBy(MIST_PER_SUI.toString()).toNumber()
 }
 
