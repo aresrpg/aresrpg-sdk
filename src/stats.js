@@ -9,7 +9,7 @@ function get_item_stat(item, stat) {
 }
 
 /** @type {(character: import("./types.js").SuiCharacter, stat: string) => number} */
-function get_total_stat(character, stat) {
+export function get_total_stat(character, stat) {
   const base = character[stat]
   const {
     hat,
@@ -59,4 +59,24 @@ export function get_max_health(character) {
   // it's okay to include lvl 1 here, let's start at 25
   const life_level_bonus = level * LIFE_PER_LEVEL
   return BASE_LIFE + life_level_bonus + vitality
+}
+
+export const STATISTICS = {
+  VITALITY: 'vitality',
+  WISDOM: 'wisdom',
+  STRENGTH: 'strength',
+  INTELLIGENCE: 'intelligence',
+  CHANCE: 'chance',
+  AGILITY: 'agility',
+  RANGE: 'range',
+  MOVEMENT: 'movement',
+  ACTION: 'action',
+  CRITICAL: 'critical',
+  RAW_DAMAGE: 'raw_damage',
+  CRITICAL_CHANCE: 'critical_chance',
+  CRITICAL_OUTCOMES: 'critical_outcomes',
+  EARTH_RESISTANCE: 'earth_resistance',
+  FIRE_RESISTANCE: 'fire_resistance',
+  WATER_RESISTANCE: 'water_resistance',
+  AIR_RESISTANCE: 'air_resistance',
 }
