@@ -19,6 +19,7 @@ export const SUPPORTED_NFTS = {
     fire_resistance: 3,
     water_resistance: 3,
     air_resistance: 3,
+    amount: 1,
   },
   [BULLSHARK]: {
     item_category: ITEM_CATEGORY.PET,
@@ -26,6 +27,7 @@ export const SUPPORTED_NFTS = {
     item_type: 'suifren_capy',
     level: 3,
     name: 'Capy',
+    amount: 1,
   },
   [PRIME_MACHIN]: {
     item_category: ITEM_CATEGORY.PET,
@@ -35,5 +37,6 @@ export const SUPPORTED_NFTS = {
     strength: 40,
     intelligence: 40,
     raw_damage: 3,
+    amount: 1,
   },
 }

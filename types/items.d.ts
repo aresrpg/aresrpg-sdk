@@ -1,6 +1,4 @@
 export namespace ITEM_CATEGORY {
-    let MISC: string;
-    let CONSUMABLE: string;
     let RELIC: string;
     let RUNE: string;
     let MOUNT: string;
@@ -10,6 +8,8 @@ export namespace ITEM_CATEGORY {
     let RING: string;
     let BELT: string;
     let BOOTS: string;
+    let TITLE: string;
+    let PET: string;
     let BOW: string;
     let WAND: string;
     let STAFF: string;
@@ -21,7 +21,10 @@ export namespace ITEM_CATEGORY {
     let HAMMER: string;
     let FISHING_ROD: string;
     let PICKAXE: string;
-    let TITLE: string;
     let KEY: string;
-    let PET: string;
+    let ORB: string;
 }
+export const EQUIPMENTS: string[];
+export const WEAPONS: string[];
+export const MISC: string[];
+export const CONSUMABLES: string[];

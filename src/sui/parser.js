@@ -53,6 +53,11 @@ export function parse_character(context) {
 
     return {
       ...character,
+      item_type: 'character',
+      item_category: 'character',
+      item_set: 'none',
+      amount: 1,
+      inventory: null,
       position: JSON.parse(character.position),
       // @ts-ignore
       ...stats.data.content.fields.value.fields,

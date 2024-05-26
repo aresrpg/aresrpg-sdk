@@ -12,6 +12,7 @@ export const SUPPORTED_NFTS: {
         fire_resistance: number;
         water_resistance: number;
         air_resistance: number;
+        amount: number;
     };
     "0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>": {
         item_category: string;
@@ -19,6 +20,7 @@ export const SUPPORTED_NFTS: {
         item_type: string;
         level: number;
         name: string;
+        amount: number;
     };
     "0x034c162f6b594cb5a1805264dd01ca5d80ce3eca6522e6ee37fd9ebfb9d3ddca::factory::PrimeMachin": {
         item_category: string;
@@ -28,5 +30,6 @@ export const SUPPORTED_NFTS: {
         strength: number;
         intelligence: number;
         raw_damage: number;
+        amount: number;
     };
 };

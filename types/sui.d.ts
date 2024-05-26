@@ -9,7 +9,7 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     get_character_by_id: (id: any) => Promise<import("../types.js").SuiCharacter>;
     get_kiosk_id: (character_id: any) => Promise<any>;
     get_locked_items: (address: string) => Promise<import("../types.js").SuiItem[]>;
-    get_unlocked_items: (address: string) => Promise<import("../types.js").SuiItem[]>;
+    get_unlocked_items: (address: string, only_listed: any) => Promise<import("../types.js").SuiItem[]>;
     get_item_by_id: (id: string) => Promise<import("../types.js").SuiItem>;
     get_suifren_object_accessory: (suifren_id: any) => Promise<any>;
     get_pet_feed_value: (pet_id: any) => Promise<{
@@ -102,6 +102,21 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
         coin: any;
         fren_type: any;
     }) => void;
+    list_item: ({ tx, kiosk, kiosk_cap, item_id, item_type, price, }: {
+        tx?: import("@mysten/sui.js/transactions").TransactionBlock;
+        kiosk: any;
+        kiosk_cap: any;
+        item_id: any;
+        item_type: any;
+        price: any;
+    }) => void;
+    delist_item: ({ tx, kiosk, kiosk_cap, item_id, item_type, }: {
+        tx?: import("@mysten/sui.js/transactions").TransactionBlock;
+        kiosk: any;
+        kiosk_cap: any;
+        item_id: any;
+        item_type: any;
+    }) => void;
     add_header: (tx: any) => any;
     admin_promote: ({ tx, recipient }: {
         tx?: import("@mysten/sui.js/transactions").TransactionBlock;
@@ -124,6 +139,7 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     admin_freeze_contract: ({ tx }: {
         tx?: import("@mysten/sui.js/transactions").TransactionBlock;
     }) => import("@mysten/sui.js/transactions").TransactionBlock;
+    get_items: (ids: any) => Promise<Map<string, import("../types.js").SuiItem>>;
     get_sui_balance(owner: any): Promise<bigint>;
     subscribe(on_message: any): Promise<import("@mysten/sui.js/client").Unsubscribe>;
     DISPLAY_CHARACTER: any;
@@ -143,6 +159,8 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     sui_client: SuiClient;
     kiosk_client: KioskClient;
 }>;
+export { SUPPORTED_NFTS };
 import { Network } from '@mysten/kiosk';
 import { SuiClient } from '@mysten/sui.js/client';
 import { KioskClient } from '@mysten/kiosk';
+import { SUPPORTED_NFTS } from './sui/supported_nfts.js';

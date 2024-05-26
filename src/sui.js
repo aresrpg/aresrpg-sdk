@@ -32,6 +32,10 @@ import { feed_suifren } from './sui/write/feed_suifren.js'
 import { get_suifren_object_accessory } from './sui/read/get_suifren_accessories.js'
 import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
 import { get_locked_characters_by_ids } from './sui/read/get_locked_characters_by_ids.js'
+import { list_item } from './sui/write/list_item.js'
+import { SUPPORTED_NFTS } from './sui/supported_nfts.js'
+import { get_items } from './sui/cache.js'
+import { delist_item } from './sui/write/delist_item.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = 'EEztDkyUmhVGZpAkXWypSB2bbvJKWR3Yk7LdaMuraGMg',
@@ -42,6 +46,11 @@ const {
   MAINNET_UPGRADE_DIGEST = '',
 } = process.env
 
+const item_listed = type => `0x2::kiosk::ItemListed<${type}>`
+const item_purchased = type => `0x2::kiosk::ItemPurchased<${type}>`
+const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
+
+export { SUPPORTED_NFTS }
 export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
   wss_url = getFullnodeUrl('testnet').replace('http', 'ws'),
@@ -119,12 +128,16 @@ export async function SDK({
     equip_item: equip_item(context),
     unequip_item: unequip_item(context),
     feed_suifren: feed_suifren(context),
+    list_item: list_item(),
+    delist_item: delist_item(),
 
     add_header: add_header(context),
 
     admin_promote: admin_promote(context),
     admin_mint_item: admin_mint_item(context),
     admin_freeze_contract: admin_freeze_contract(context),
+
+    get_items: ids => get_items(context, ids, { allow_characters: true }),
 
     async get_sui_balance(owner) {
       const { totalBalance } = await sui_client.getBalance({
@@ -134,9 +147,23 @@ export async function SDK({
       return BigInt(totalBalance)
     },
     async subscribe(on_message) {
+      const supported_types = [
+        `${types.PACKAGE_ID}::character::Character`,
+        `${types.PACKAGE_ID}::item::Item`,
+        ...Object.keys(SUPPORTED_NFTS),
+      ]
       return sui_client.subscribeEvent({
         onMessage: on_message,
-        filter: { Package: types.PACKAGE_ID },
+        filter: {
+          Any: [
+            { Package: types.PACKAGE_ID },
+            ...supported_types.flatMap(type => [
+              { MoveEventType: item_listed(type) },
+              { MoveEventType: item_purchased(type) },
+              { MoveEventType: item_delisted(type) },
+            ]),
+          ],
+        },
       })
     },
   }

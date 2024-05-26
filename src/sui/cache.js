@@ -2,11 +2,13 @@ import { LRUCache } from 'lru-cache'
 
 import { BULLSHARK, SUPPORTED_NFTS } from './supported_nfts.js'
 import { get_suifren_stats } from './suifrens.js'
+import { parse_character } from './parser.js'
 
 const DFIELD_CACHE = new LRUCache({ max: 10000 })
 const OBJECT_CACHE = new LRUCache({ max: 10000 })
 
 export function parse_sui_object({ types }, object) {
+  if (object.error) return null
   const {
     content: { fields },
     display,
@@ -16,9 +18,11 @@ export function parse_sui_object({ types }, object) {
     _type: type,
     ...fields,
     is_aresrpg_item: type === `${types.PACKAGE_ID}::item::Item`,
+    is_aresrpg_character: type === `${types.PACKAGE_ID}::character::Character`,
     image_url: display?.data?.image_url,
     name: display?.data?.name || fields.name,
     id: fields.id.id,
+    list_price: 0n,
   }
 }
 
@@ -75,8 +79,12 @@ async function tailed_multi_get_objects(sui_client, ids) {
 
 /**
  * ORDER IS NOT GUARANTEED
- * @type {(context: import("../../types.js").Context, ids: string[]) => Promise<Map<string, import("../../types.js").SuiItem>>} */
-export async function get_items(context, ids) {
+ * @type {(context: import("../../types.js").Context, ids: string[], options?: { allow_characters?: boolean }) => Promise<Map<string, import("../../types.js").SuiItem>>} */
+export async function get_items(
+  context,
+  ids,
+  { allow_characters = false } = {},
+) {
   const { sui_client, types } = context
   const unknown_ids = ids.filter(id => !OBJECT_CACHE.has(id))
 
@@ -85,13 +93,15 @@ export async function get_items(context, ids) {
     unknown_ids,
   )
 
-  const parsed_objects = unknown_objects.map(object =>
-    parse_sui_object({ types }, object),
-  )
+  const parsed_objects = unknown_objects
+    .map(object => parse_sui_object({ types }, object))
+    .filter(Boolean)
 
   const { ares: ares_item, others: other_items } = parsed_objects.reduce(
     ({ ares, others }, object) => {
       if (object.is_aresrpg_item) ares.push(object)
+      else if (allow_characters && object.is_aresrpg_character)
+        ares.push(object)
       else others.push(object)
       return { ares, others }
     },
@@ -131,6 +141,8 @@ export async function get_items(context, ids) {
 
   const internal_items = await Promise.all(
     ares_item.map(async item => {
+      if (item.is_aresrpg_character) return parse_character(context)(item)
+
       // cached stats
       const stats = await get_dynamic_field_object(sui_client, {
         parentId: item.id,
@@ -168,7 +180,10 @@ export async function get_items(context, ids) {
     }),
   )
 
-  internal_items.forEach(item => OBJECT_CACHE.set(item.id, item))
+  internal_items
+    // ignore characters
+    .filter(item => item.is_aresrpg_item)
+    .forEach(item => OBJECT_CACHE.set(item.id, item))
 
   return new Map(
     [

@@ -1,51 +1,65 @@
 export const ITEM_CATEGORY = {
-  // uncategorized item, usually simple resources
-  MISC: 'misc',
-  // consumable items, like potions
-  CONSUMABLE: 'consumable',
-  // rare relics
+  // equipment
   RELIC: 'relic',
-  // used to improve items
   RUNE: 'rune',
-  // mounts
   MOUNT: 'mount',
-  // equipment
   HAT: 'hat',
-  // equipment
   CLOACK: 'cloack',
-  // equipment
   AMULET: 'amulet',
-  // equipment
   RING: 'ring',
-  // equipment
   BELT: 'belt',
-  // equipment
   BOOTS: 'boots',
-  // weapon
-  BOW: 'bow',
-  // weapon
-  WAND: 'wand',
-  // weapon
-  STAFF: 'staff',
-  // weapon
-  DAGGER: 'dagger',
-  // weapon
-  SHOVEL: 'shovel',
-  // weapon
-  SWORD: 'sword',
-  // weapon & tool
-  SCYTHE: 'scythe',
-  // weapon & tool
-  AXE: 'axe',
-  // weapon & tool
-  HAMMER: 'hammer',
-  // weapon & tool
-  FISHING_ROD: 'fishing_rod',
-  // weapon & tool
-  PICKAXE: 'pickaxe',
-  // additionnal equipable item like skins and titles
   TITLE: 'title',
-
-  KEY: 'key',
   PET: 'pet',
+
+  // weapons
+  BOW: 'bow',
+  WAND: 'wand',
+  STAFF: 'staff',
+  DAGGER: 'dagger',
+  SHOVEL: 'shovel',
+  SWORD: 'sword',
+  SCYTHE: 'scythe',
+  AXE: 'axe',
+  HAMMER: 'hammer',
+  FISHING_ROD: 'fishing_rod',
+  PICKAXE: 'pickaxe',
+
+  // misc
+  KEY: 'key',
+
+  // consumables
+  ORB: 'orb',
 }
+
+export const EQUIPMENTS = [
+  ITEM_CATEGORY.RELIC,
+  ITEM_CATEGORY.RUNE,
+  ITEM_CATEGORY.MOUNT,
+  ITEM_CATEGORY.HAT,
+  ITEM_CATEGORY.CLOACK,
+  ITEM_CATEGORY.AMULET,
+  ITEM_CATEGORY.RING,
+  ITEM_CATEGORY.BELT,
+  ITEM_CATEGORY.BOOTS,
+  ITEM_CATEGORY.TITLE,
+  ITEM_CATEGORY.PET,
+]
+
+export const WEAPONS = [
+  ITEM_CATEGORY.BOW,
+  ITEM_CATEGORY.WAND,
+  ITEM_CATEGORY.STAFF,
+  ITEM_CATEGORY.DAGGER,
+  ITEM_CATEGORY.SHOVEL,
+  ITEM_CATEGORY.SWORD,
+  ITEM_CATEGORY.SCYTHE,
+  ITEM_CATEGORY.AXE,
+  ITEM_CATEGORY.HAMMER,
+  ITEM_CATEGORY.FISHING_ROD,
+  ITEM_CATEGORY.PICKAXE,
+]
+
+export const MISC = ['character', ITEM_CATEGORY.KEY]
+
+export const CONSUMABLES = [ITEM_CATEGORY.ORB]

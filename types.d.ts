@@ -1,7 +1,7 @@
 export type Context = {
   sui_client: import('@mysten/sui.js/client').SuiClient
   kiosk_client: import('@mysten/kiosk').KioskClient
-  types: import('./types-parser.js').SuiIds
+  types: import('./src/types-parser.js').SuiIds
   network: import('@mysten/kiosk').Network
 }
 
@@ -41,13 +41,18 @@ export type SuiItem = {
 
   damages: ItemDamage[]
 
+  amount: number
+
   // kiosk related
   kiosk_id: string
   is_kiosk_personal: boolean
   personal_kiosk_cap_id: string
+  list_price?: bigint
+  seller?: string
 
   // type related
   is_aresrpg_item: boolean
+  is_aresrpg_character: boolean
   image_url: string
   _type: string
 

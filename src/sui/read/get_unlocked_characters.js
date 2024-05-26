@@ -23,10 +23,11 @@ export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
           id: kioskId,
           options: {
             withObjects: true,
-            objectOptions: { showContent: true },
+            objectOptions: { showContent: true, showDisplay: true },
           },
         })
         return characters
+          .filter(({ listing }) => !listing)
           .map(object => parse_sui_object({ types }, object))
           .filter(
             // @ts-ignore

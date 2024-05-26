@@ -4,7 +4,7 @@ import { get_items } from '../cache.js'
 export function get_unlocked_items(context) {
   const { kiosk_client } = context
   /** @type {(address: string) => Promise<import("../../../types.js").SuiItem[]>} */
-  return async address => {
+  return async (address, only_listed) => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
       address,
     })
@@ -19,16 +19,26 @@ export function get_unlocked_items(context) {
           id: kioskId,
           options: {
             withObjects: false,
+            withListingPrices: true,
           },
         })
 
         return items
-          .filter(({ listing }) => !listing)
-          .map(({ objectId }) => ({
+          .filter(({ listing }) => {
+            if (only_listed) {
+              // here we only want listed items
+              if (!listing) return false
+              // if the listing is exclusive, we don't want it
+              return !listing.isExclusive
+            }
+            return !listing
+          })
+          .map(({ objectId, listing }) => ({
             id: objectId,
             kiosk_id,
             personal_kiosk_cap_id,
             is_kiosk_personal,
+            ...(listing && { list_price: BigInt(listing.price) }),
           }))
       }),
     )
@@ -37,6 +47,7 @@ export function get_unlocked_items(context) {
     const items = await get_items(
       context,
       objects.map(({ id }) => id),
+      { allow_characters: true },
     )
 
     return objects
