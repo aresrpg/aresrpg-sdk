@@ -174,10 +174,3 @@ export async function SDK({
     },
   }
 }
-
-const sdk = await SDK({
-  rpc_url: getFullnodeUrl('testnet'),
-  network: Network.TESTNET,
-})
-
-await sdk.get_policies_profit()
