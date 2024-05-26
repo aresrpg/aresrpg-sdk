@@ -17,6 +17,11 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
         stomach: any;
     }>;
     get_locked_characters_by_ids: (ids: string[]) => Promise<Map<string, import("../types.js").SuiCharacter>>;
+    get_policies_profit: (address: any) => Promise<{
+        is_owner: boolean;
+        character_profits: any;
+        item_profits: any;
+    }>;
     get_user_kiosks: ({ tx, address }: {
         tx?: import("@mysten/sui.js/transactions").TransactionBlock;
         address: any;
@@ -139,6 +144,14 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     admin_freeze_contract: ({ tx }: {
         tx?: import("@mysten/sui.js/transactions").TransactionBlock;
     }) => import("@mysten/sui.js/transactions").TransactionBlock;
+    admin_delete_admin_cap: ({ tx, admin_cap }: {
+        tx?: import("@mysten/sui.js/transactions").TransactionBlock;
+        admin_cap: any;
+    }) => import("@mysten/sui.js/transactions").TransactionBlock;
+    admin_withdraw_profit: ({ tx, address }: {
+        tx?: import("@mysten/sui.js/transactions").TransactionBlock;
+        address: any;
+    }) => Promise<import("@mysten/sui.js/transactions").TransactionBlock>;
     get_items: (ids: any) => Promise<Map<string, import("../types.js").SuiItem>>;
     get_sui_balance(owner: any): Promise<bigint>;
     subscribe(on_message: any): Promise<import("@mysten/sui.js/client").Unsubscribe>;

@@ -36,10 +36,13 @@ import { list_item } from './sui/write/list_item.js'
 import { SUPPORTED_NFTS } from './sui/supported_nfts.js'
 import { get_items } from './sui/cache.js'
 import { delist_item } from './sui/write/delist_item.js'
+import { admin_delete_admin_cap } from './sui/write/admin_delete_admin_cap.js'
+import { admin_withdraw_profit } from './sui/write/admin_withdraw_profit.js'
+import { get_policies_profit } from './sui/read/get_policies_profit.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'EEztDkyUmhVGZpAkXWypSB2bbvJKWR3Yk7LdaMuraGMg',
-  TESTNET_POLICIES_DIGEST = '9fQ7Fme3c176gz4nTXWytBUzW7XzzUKHxJfV89PcKrUh',
+  TESTNET_PUBLISH_DIGEST = 'EzvVf9spp5TjWdtwMLt4hkiJMa6Qfura1Z47aDKpPSxa',
+  TESTNET_POLICIES_DIGEST = 'Eb3HXdwdS1scJhC1ynzsnEGEBnfDZiEv4geHuZrvTawT',
   TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
@@ -114,6 +117,7 @@ export async function SDK({
     get_suifren_object_accessory: get_suifren_object_accessory(context),
     get_pet_feed_value: get_pet_feed_value(context),
     get_locked_characters_by_ids: get_locked_characters_by_ids(context),
+    get_policies_profit: get_policies_profit(context),
 
     get_user_kiosks: get_user_kiosks(context),
 
@@ -136,6 +140,8 @@ export async function SDK({
     admin_promote: admin_promote(context),
     admin_mint_item: admin_mint_item(context),
     admin_freeze_contract: admin_freeze_contract(context),
+    admin_delete_admin_cap: admin_delete_admin_cap(context),
+    admin_withdraw_profit: admin_withdraw_profit(context),
 
     get_items: ids => get_items(context, ids, { allow_characters: true }),
 
@@ -168,3 +174,10 @@ export async function SDK({
     },
   }
 }
+
+const sdk = await SDK({
+  rpc_url: getFullnodeUrl('testnet'),
+  network: Network.TESTNET,
+})
+
+await sdk.get_policies_profit()
