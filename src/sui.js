@@ -39,11 +39,12 @@ import { delist_item } from './sui/write/delist_item.js'
 import { admin_delete_admin_cap } from './sui/write/admin_delete_admin_cap.js'
 import { admin_withdraw_profit } from './sui/write/admin_withdraw_profit.js'
 import { get_policies_profit } from './sui/read/get_policies_profit.js'
+import { delete_item } from './sui/write/delete_item.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = 'EzvVf9spp5TjWdtwMLt4hkiJMa6Qfura1Z47aDKpPSxa',
   TESTNET_POLICIES_DIGEST = 'Eb3HXdwdS1scJhC1ynzsnEGEBnfDZiEv4geHuZrvTawT',
-  TESTNET_UPGRADE_DIGEST = '',
+  TESTNET_UPGRADE_DIGEST = '9LfbjXHbBtDFH1m4PLxkYAN3XUBb3FQyTgSyjLXpfb7b',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
@@ -134,6 +135,7 @@ export async function SDK({
     feed_suifren: feed_suifren(context),
     list_item: list_item(),
     delist_item: delist_item(),
+    delete_item: delete_item(context),
 
     add_header: add_header(context),
 

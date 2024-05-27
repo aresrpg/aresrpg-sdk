@@ -122,6 +122,12 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
         item_id: any;
         item_type: any;
     }) => void;
+    delete_item: ({ tx, kiosk_id, kiosk_cap, item_id }: {
+        tx?: import("@mysten/sui.js/transactions").TransactionBlock;
+        kiosk_id: any;
+        kiosk_cap: any;
+        item_id: any;
+    }) => import("@mysten/sui.js/transactions").TransactionBlock;
     add_header: (tx: any) => any;
     admin_promote: ({ tx, recipient }: {
         tx?: import("@mysten/sui.js/transactions").TransactionBlock;

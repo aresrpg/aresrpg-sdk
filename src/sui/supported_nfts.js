@@ -30,9 +30,9 @@ export const SUPPORTED_NFTS = {
     amount: 1,
   },
   [PRIME_MACHIN]: {
-    item_category: ITEM_CATEGORY.PET,
+    item_category: ITEM_CATEGORY.TITLE,
     item_set: 'Mirai',
-    item_type: 'prime_machin',
+    item_type: 'primemachin',
     level: 10,
     strength: 40,
     intelligence: 40,
