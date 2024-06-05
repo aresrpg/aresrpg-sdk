@@ -1,4 +1,4 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
+import { Transaction } from '@mysten/sui/transactions'
 
 import { borrow_kiosk_item } from '../borrow_kiosk_item.js'
 
@@ -17,7 +17,7 @@ const BULLSHARK_TYPE_TESTNET = '' // ??
 /** @param {import("../../../types.js").Context} context */
 export function feed_suifren({ types, network }) {
   return ({
-    tx = new TransactionBlock(),
+    tx = new Transaction(),
     kiosk_id,
     kiosk_cap,
     suifren_id,

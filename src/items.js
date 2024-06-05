@@ -27,6 +27,7 @@ export const ITEM_CATEGORY = {
 
   // misc
   KEY: 'key',
+  RESOURCE: 'resource',
 
   // consumables
   ORB: 'orb',
@@ -60,6 +61,6 @@ export const WEAPONS = [
   ITEM_CATEGORY.PICKAXE,
 ]
 
-export const MISC = ['character', ITEM_CATEGORY.KEY]
+export const MISC = ['character', ITEM_CATEGORY.KEY, ITEM_CATEGORY.RESOURCE]
 
 export const CONSUMABLES = [ITEM_CATEGORY.ORB]

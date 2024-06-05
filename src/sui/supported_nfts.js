@@ -1,7 +1,9 @@
 import { ITEM_CATEGORY } from '../items.js'
 
-export const BULLSHARK =
+export const CAPY =
   '0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>'
+export const BULLSHARK =
+  '0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x297d8afb6ede450529d347cf9254caeea2b685c8baef67b084122291ebaefb38::bullshark::Bullshark>'
 export const PRIME_MACHIN =
   '0x034c162f6b594cb5a1805264dd01ca5d80ce3eca6522e6ee37fd9ebfb9d3ddca::factory::PrimeMachin'
 
@@ -21,12 +23,20 @@ export const SUPPORTED_NFTS = {
     air_resistance: 3,
     amount: 1,
   },
-  [BULLSHARK]: {
+  [CAPY]: {
     item_category: ITEM_CATEGORY.PET,
     item_set: 'SuiFrens',
     item_type: 'suifren_capy',
     level: 3,
     name: 'Capy',
+    amount: 1,
+  },
+  [BULLSHARK]: {
+    item_category: ITEM_CATEGORY.PET,
+    item_set: 'SuiFrens',
+    item_type: 'suifren_bullshark',
+    level: 3,
+    name: 'Bullshark',
     amount: 1,
   },
   [PRIME_MACHIN]: {

@@ -1,4 +1,4 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
+import { Transaction } from '@mysten/sui/transactions'
 
 function borrow_kiosk_cap({ kiosk_client, tx, personal_kiosk_cap_id }) {
   const personal_kiosk_package_id = kiosk_client.getRulePackageId(
@@ -25,7 +25,7 @@ function borrow_kiosk_cap({ kiosk_client, tx, personal_kiosk_cap_id }) {
  * Returns all users kiosks and their kiosk caps, (borrow personal ones if needed)
  * @param {import("../../../types.js").Context} context */
 export function get_user_kiosks({ kiosk_client }) {
-  return async ({ tx = new TransactionBlock(), address }) => {
+  return async ({ tx = new Transaction(), address }) => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
       address,
       // take 25 first kiosks, more than that is not a normal user behavior
@@ -48,7 +48,7 @@ export function get_user_kiosks({ kiosk_client }) {
             finalizations.push(resolve_promise)
             return [kioskId, kiosk_cap]
           }
-          return [kioskId, objectId]
+          return [kioskId, tx.object(objectId)]
         }),
       ),
       finalize() {

@@ -1,4 +1,4 @@
-import { MIST_PER_SUI } from '@mysten/sui.js/utils'
+import { MIST_PER_SUI } from '@mysten/sui/utils'
 import { BigNumber as BN } from 'bignumber.js'
 
 import { get_pet_feed_value } from './read/get_pet_feed_value.js'

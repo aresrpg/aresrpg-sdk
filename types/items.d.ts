@@ -22,6 +22,7 @@ export namespace ITEM_CATEGORY {
     let FISHING_ROD: string;
     let PICKAXE: string;
     let KEY: string;
+    let RESOURCE: string;
     let ORB: string;
 }
 export const EQUIPMENTS: string[];

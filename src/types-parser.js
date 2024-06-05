@@ -1,10 +1,14 @@
-async function parse_created_objects(transaction, client) {
+/**
+ * @param {string} transaction_digest
+ * @param {import("@mysten/sui/client").SuiClient} client
+ * */
+async function parse_created_objects(transaction_digest, client) {
   try {
     const {
       digest,
       effects: { created },
     } = await client.getTransactionBlock({
-      digest: transaction,
+      digest: transaction_digest,
       options: {
         showEffects: true,
       },
@@ -41,6 +45,7 @@ async function parse_created_objects(transaction, client) {
             }
 
             if (type === '0x2::package::Publisher') {
+              // @ts-ignore
               const subtype = content.fields.module_name
               return [`publisher (${subtype})`, objectId]
             }

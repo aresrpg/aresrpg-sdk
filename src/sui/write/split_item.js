@@ -1,30 +1,20 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
-
-import { sanitized } from '../sanitize.js'
+import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function split_item({ types }) {
-  return ({
-    tx = new TransactionBlock(),
-    kiosk,
-    kiosk_cap,
-    item_id,
-    amount,
-  }) => {
-    const txb = sanitized(tx)
-
-    tx.moveCall({
+  return ({ tx = new Transaction(), kiosk, kiosk_cap, item_id, amount }) => {
+    const [result] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_manager::split_item`,
       arguments: [
-        txb._.object(kiosk),
-        txb._.object(kiosk_cap),
+        tx.object(kiosk),
+        kiosk_cap,
         tx.object(types.ITEM_POLICY),
-        txb._.pure(item_id),
+        tx.pure.id(item_id),
         tx.pure.u32(amount),
         tx.object(types.VERSION),
       ],
     })
 
-    return tx
+    return result
   }
 }

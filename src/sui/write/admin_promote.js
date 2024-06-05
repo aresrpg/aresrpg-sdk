@@ -1,15 +1,11 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
-
-import { sanitized } from '../sanitize.js'
+import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function admin_promote({ types }) {
-  return ({ tx = new TransactionBlock(), recipient }) => {
-    const txb = sanitized(tx)
-
+  return ({ tx = new Transaction(), recipient }) => {
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::admin::admin_promote_address`,
-      arguments: [txb._.object(types.ADMIN_CAP), txb._.pure(recipient)],
+      arguments: [tx.object(types.ADMIN_CAP), tx.pure.address(recipient)],
     })
 
     return tx

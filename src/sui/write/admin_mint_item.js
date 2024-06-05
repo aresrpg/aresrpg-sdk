@@ -1,31 +1,30 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
+import { Transaction } from '@mysten/sui/transactions'
 
-import { sanitized } from '../sanitize.js'
 /** @param {import("../../../types.js").Context} context */
 export function admin_mint_item({ types }) {
   return ({
-    tx = new TransactionBlock(),
+    tx = new Transaction(),
     recipient_kiosk,
     admin_cap = types.ADMIN_CAP,
     name,
     item_category,
     item_set = 'none',
     item_type,
-    level,
+    level = 1,
     amount = 1,
     stackable = false,
 
     stats = null,
     damages = [],
   }) => {
-    const txb = sanitized(tx)
-
     if (amount > 1) stackable = true
+
+    const admin = tx.object(admin_cap)
 
     const [item, promise] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_manager::admin_mint`,
       arguments: [
-        txb._.object(admin_cap),
+        admin,
         tx.pure.string(name),
         tx.pure.string(item_category),
         tx.pure.string(item_set),
@@ -60,7 +59,7 @@ export function admin_mint_item({ types }) {
       tx.moveCall({
         target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_augment_with_stats`,
         arguments: [
-          txb._.object(admin_cap),
+          admin,
           item,
           tx.pure.u16(vitality),
           tx.pure.u16(wisdom),
@@ -88,7 +87,7 @@ export function admin_mint_item({ types }) {
       const [result] = tx.moveCall({
         target: `${types.LATEST_PACKAGE_ID}::item_damages::admin_new`,
         arguments: [
-          txb._.object(admin_cap),
+          admin,
           tx.pure.u16(from),
           tx.pure.u16(to),
           tx.pure.string(damage_type),
@@ -103,10 +102,10 @@ export function admin_mint_item({ types }) {
       tx.moveCall({
         target: `${types.LATEST_PACKAGE_ID}::item_damages::admin_augment_with_damages`,
         arguments: [
-          txb._.object(admin_cap),
+          admin,
           item,
           tx.makeMoveVec({
-            objects: damage_inputs,
+            elements: damage_inputs,
             type: `${types.PACKAGE_ID}::item_damages::ItemDamages`,
           }),
         ],
@@ -114,12 +113,7 @@ export function admin_mint_item({ types }) {
 
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_manager::admin_lock_newly_minted`,
-      arguments: [
-        txb._.object(admin_cap),
-        txb._.object(recipient_kiosk),
-        item,
-        promise,
-      ],
+      arguments: [admin, tx.object(recipient_kiosk), item, promise],
     })
 
     return tx

@@ -1,26 +1,17 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
-
-import { sanitized } from '../sanitize.js'
+import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function delete_character({ types }) {
-  return ({
-    tx = new TransactionBlock(),
-    kiosk_id,
-    kiosk_cap,
-    character_id,
-  }) => {
-    const txb = sanitized(tx)
-
+  return ({ tx = new Transaction(), kiosk_id, kiosk_cap, character_id }) => {
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_manager::delete_character`,
       arguments: [
-        txb._.object(kiosk_id),
-        txb._.object(kiosk_cap),
-        txb._.object(types.NAME_REGISTRY),
-        txb._.pure(character_id),
-        txb._.object(types.CHARACTER_PROTECTED_POLICY),
-        txb._.object(types.VERSION),
+        tx.object(kiosk_id),
+        kiosk_cap,
+        tx.object(types.NAME_REGISTRY),
+        tx.pure.id(character_id),
+        tx.object(types.CHARACTER_PROTECTED_POLICY),
+        tx.object(types.VERSION),
       ],
     })
 

@@ -1,9 +1,6 @@
 import { KioskClient, Network } from '@mysten/kiosk'
-import {
-  SuiClient,
-  SuiHTTPTransport,
-  getFullnodeUrl,
-} from '@mysten/sui.js/client'
+import { SuiClient, SuiHTTPTransport, getFullnodeUrl } from '@mysten/sui/client'
+import { LRUCache } from 'lru-cache'
 
 import { find_types } from './types-parser.js'
 import { get_character_by_id } from './sui/read/get_character_by_id.js'
@@ -34,17 +31,29 @@ import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
 import { get_locked_characters_by_ids } from './sui/read/get_locked_characters_by_ids.js'
 import { list_item } from './sui/write/list_item.js'
 import { SUPPORTED_NFTS } from './sui/supported_nfts.js'
-import { get_items } from './sui/cache.js'
+import { get_items, get_recipe } from './sui/cache.js'
 import { delist_item } from './sui/write/delist_item.js'
 import { admin_delete_admin_cap } from './sui/write/admin_delete_admin_cap.js'
 import { admin_withdraw_profit } from './sui/write/admin_withdraw_profit.js'
 import { get_policies_profit } from './sui/read/get_policies_profit.js'
 import { delete_item } from './sui/write/delete_item.js'
+import { admin_create_recipe } from './sui/write/admin_create_recipe.js'
+import { admin_delete_recipe } from './sui/write/admin_delete_recipe.js'
+import { get_owned_admin_cap } from './sui/read/get_owned_admin_cap.js'
+import { get_supported_tokens } from './sui/read/get_supported_tokens.js'
+import { SUPPORTED_TOKENS } from './sui/supported_tokens.js'
+import { craft_start } from './sui/write/craft_start.js'
+import { craft_item } from './sui/write/craft_item.js'
+import { craft_prove_ingredients_used } from './sui/write/craft_prove_ingredients_used.js'
+import { craft_use_item_ingredient } from './sui/write/craft_use_item_ingredient.js'
+import { craft_use_token_ingredient } from './sui/write/craft_use_token_ingredient.js'
+import { merge_items } from './sui/write/merge_items.js'
+import { split_item } from './sui/write/split_item.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'EzvVf9spp5TjWdtwMLt4hkiJMa6Qfura1Z47aDKpPSxa',
-  TESTNET_POLICIES_DIGEST = 'Eb3HXdwdS1scJhC1ynzsnEGEBnfDZiEv4geHuZrvTawT',
-  TESTNET_UPGRADE_DIGEST = '9LfbjXHbBtDFH1m4PLxkYAN3XUBb3FQyTgSyjLXpfb7b',
+  TESTNET_PUBLISH_DIGEST = 'DzbY8HLwtHdJqUKa6FL6ooWk81jtemAA47u7YUaQfEsU',
+  TESTNET_POLICIES_DIGEST = 'ALcjRRKL1gjYvSAh34Se3B8jqrHkSaoGisQY4qobW5g7',
+  TESTNET_UPGRADE_DIGEST = '4N7V6D6uv4NYC8AKf8w2RqNk44AbrFue7yrtvoQmgYUw',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
@@ -54,7 +63,11 @@ const item_listed = type => `0x2::kiosk::ItemListed<${type}>`
 const item_purchased = type => `0x2::kiosk::ItemPurchased<${type}>`
 const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 
-export { SUPPORTED_NFTS }
+// keep fetched balances for 3s to avoid spamming the nodes
+const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
+
+export { SUPPORTED_NFTS, SUPPORTED_TOKENS }
+
 export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
   wss_url = getFullnodeUrl('testnet').replace('http', 'ws'),
@@ -119,6 +132,8 @@ export async function SDK({
     get_pet_feed_value: get_pet_feed_value(context),
     get_locked_characters_by_ids: get_locked_characters_by_ids(context),
     get_policies_profit: get_policies_profit(context),
+    get_owned_admin_cap: get_owned_admin_cap(context),
+    get_supported_tokens: get_supported_tokens(context),
 
     get_user_kiosks: get_user_kiosks(context),
 
@@ -136,6 +151,13 @@ export async function SDK({
     list_item: list_item(),
     delist_item: delist_item(),
     delete_item: delete_item(context),
+    craft_start: craft_start(context),
+    craft_item: craft_item(context),
+    craft_prove_ingredients_used: craft_prove_ingredients_used(context),
+    craft_use_item_ingredient: craft_use_item_ingredient(context),
+    craft_use_token_ingredient: craft_use_token_ingredient(context),
+    merge_items: merge_items(context),
+    split_item: split_item(context),
 
     add_header: add_header(context),
 
@@ -144,15 +166,23 @@ export async function SDK({
     admin_freeze_contract: admin_freeze_contract(context),
     admin_delete_admin_cap: admin_delete_admin_cap(context),
     admin_withdraw_profit: admin_withdraw_profit(context),
+    admin_create_recipe: admin_create_recipe(context),
+    admin_delete_recipe: admin_delete_recipe(context),
 
     get_items: ids => get_items(context, ids, { allow_characters: true }),
+    get_recipe: id => get_recipe(context, id),
 
+    /** @return {Promise<bigint>} balance */
     async get_sui_balance(owner) {
-      const { totalBalance } = await sui_client.getBalance({
-        owner,
-      })
+      if (!balances_cache.has(owner)) {
+        const { totalBalance } = await sui_client.getBalance({
+          owner,
+        })
+        balances_cache.set(owner, BigInt(totalBalance))
+      }
 
-      return BigInt(totalBalance)
+      // @ts-ignore
+      return balances_cache.get(owner)
     },
     async subscribe(on_message) {
       const supported_types = [

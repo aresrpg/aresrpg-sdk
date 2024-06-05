@@ -1,5 +1,5 @@
 export type Context = {
-  sui_client: import('@mysten/sui.js/client').SuiClient
+  sui_client: import('@mysten/sui/client').SuiClient
   kiosk_client: import('@mysten/kiosk').KioskClient
   types: import('./src/types-parser.js').SuiIds
   network: import('@mysten/kiosk').Network
@@ -12,13 +12,7 @@ export type ItemDamage = {
   element: string
 }
 
-export type SuiItem = {
-  id: string
-  name: string
-  item_category: string
-  item_set: string
-  item_type: string
-  level: number
+export type ItemStatistics = {
   vitality?: number
   wisdom?: number
   strength?: number
@@ -30,14 +24,43 @@ export type SuiItem = {
   action?: number
   critical?: number
   raw_damage?: number
-
   critical_chance?: number
   critical_outcomes?: number
-
   earth_resistance?: number
   fire_resistance?: number
   water_resistance?: number
   air_resistance?: number
+}
+
+export type Recipe = {
+  id: string
+  name: string
+  level: number
+  ingredients: {
+    item_type: string
+    amount: number
+  }[]
+  template: {
+    name: string
+    item_category: string
+    item_set: string
+    item_type: string
+    level: number
+    amount: number
+
+    stats_min: ItemStatistics
+    stats_max: ItemStatistics
+    damages: ItemDamages[]
+  }
+}
+
+export type SuiItem = {
+  id: string
+  name: string
+  item_category: string
+  item_set: string
+  item_type: string
+  level: number
 
   damages: ItemDamage[]
 
@@ -55,10 +78,24 @@ export type SuiItem = {
   is_aresrpg_character: boolean
   image_url: string
   _type: string
+  stackable: boolean
 
   // for pets
   last_feed?: number
   feed_level?: number
+} & ItemStatistics
+
+export type SuiToken = {
+  name: string
+  item_category: string
+  item_set: string
+  item_type: string
+  amount: bigint
+  decimal: number
+  image_url: string
+  ids: string[]
+  is_token: boolean
+  level: number
 }
 
 export type SuiCharacter = {

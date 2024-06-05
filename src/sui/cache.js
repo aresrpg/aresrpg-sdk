@@ -6,8 +6,9 @@ import { parse_character } from './parser.js'
 
 const DFIELD_CACHE = new LRUCache({ max: 10000 })
 const OBJECT_CACHE = new LRUCache({ max: 10000 })
+const RECIPE_CACHE = new LRUCache({ max: 1000 })
 
-export function parse_sui_object({ types }, object) {
+function parse_object_fields(object) {
   if (object.error) return null
   const {
     content: { fields },
@@ -17,16 +18,24 @@ export function parse_sui_object({ types }, object) {
   return {
     _type: type,
     ...fields,
-    is_aresrpg_item: type === `${types.PACKAGE_ID}::item::Item`,
-    is_aresrpg_character: type === `${types.PACKAGE_ID}::character::Character`,
-    image_url: display?.data?.image_url,
     name: display?.data?.name || fields.name,
     id: fields.id.id,
+  }
+}
+
+export function parse_sui_object({ types }, object) {
+  if (object.error) return null
+  const type = object.data.type ?? object.data.content.type
+  return {
+    ...parse_object_fields(object),
+    image_url: object.data.display?.data?.image_url,
+    is_aresrpg_item: type === `${types.PACKAGE_ID}::item::Item`,
+    is_aresrpg_character: type === `${types.PACKAGE_ID}::character::Character`,
     list_price: 0n,
   }
 }
 
-/** @return {Promise<import("@mysten/sui.js/client").SuiObjectResponse>} */
+/** @return {Promise<import("@mysten/sui/client").SuiObjectResponse>} */
 export async function get_dynamic_field_object(sui_client, params) {
   const key = JSON.stringify(params)
   const cached = DFIELD_CACHE.get(key)
@@ -55,6 +64,35 @@ export async function get_purchase_caps(context, caps) {
         kiosk_id,
       }
     })
+}
+
+/** @type {(context: import("../../types.js").Context, id: string) => Promise<import("../../types.js").Recipe>} */
+export async function get_recipe(context, recipe_id) {
+  const { sui_client } = context
+  const cached = RECIPE_CACHE.get(recipe_id)
+  // @ts-ignore
+  if (cached) return cached
+
+  const recipe = await sui_client.getObject({
+    id: recipe_id,
+    options: { showContent: true },
+  })
+
+  const parsed_recipe = parse_object_fields(recipe)
+
+  parsed_recipe.ingredients = parsed_recipe.ingredients.map(
+    ({ fields }) => fields,
+  )
+  parsed_recipe.template = parsed_recipe.template.fields
+  parsed_recipe.template.stats_min = parsed_recipe.template.stats_min.fields
+  parsed_recipe.template.stats_max = parsed_recipe.template.stats_max.fields
+  parsed_recipe.template.damages = parsed_recipe.template.damages.map(
+    ({ fields }) => fields,
+  )
+
+  RECIPE_CACHE.set(parsed_recipe.id, parsed_recipe)
+
+  return parsed_recipe
 }
 
 async function tailed_multi_get_objects(sui_client, ids) {
@@ -183,6 +221,7 @@ export async function get_items(
   internal_items
     // ignore characters
     .filter(item => item.is_aresrpg_item)
+    .filter(item => !item.stackable)
     .forEach(item => OBJECT_CACHE.set(item.id, item))
 
   return new Map(

@@ -1,9 +1,9 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
+import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function is_character_name_taken({ types, sui_client }) {
   return async ({ address, name }) => {
-    const txb = new TransactionBlock()
+    const txb = new Transaction()
     txb.setSender(address)
     txb.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_registry::assert_name_available`,

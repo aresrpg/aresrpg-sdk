@@ -1,20 +1,16 @@
-import { TransactionBlock } from '@mysten/sui.js/transactions'
-
-import { sanitized } from '../sanitize.js'
+import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function delete_item({ types }) {
-  return ({ tx = new TransactionBlock(), kiosk_id, kiosk_cap, item_id }) => {
-    const txb = sanitized(tx)
-
+  return ({ tx = new Transaction(), kiosk_id, kiosk_cap, item_id }) => {
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_manager::destroy_item`,
       arguments: [
-        txb._.object(kiosk_id),
-        txb._.object(kiosk_cap),
-        txb._.object(types.ITEM_PROTECTED_POLICY),
-        txb._.pure(item_id),
-        txb._.object(types.VERSION),
+        tx.object(kiosk_id),
+        kiosk_cap,
+        tx.object(types.ITEM_PROTECTED_POLICY),
+        tx.pure.id(item_id),
+        tx.object(types.VERSION),
       ],
     })
 

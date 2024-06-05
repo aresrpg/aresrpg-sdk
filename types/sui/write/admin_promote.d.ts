@@ -1,6 +1,6 @@
 /** @param {import("../../../types.js").Context} context */
 export function admin_promote({ types }: import("../../../types.js").Context): ({ tx, recipient }: {
-    tx?: TransactionBlock;
+    tx?: Transaction;
     recipient: any;
-}) => TransactionBlock;
-import { TransactionBlock } from '@mysten/sui.js/transactions';
+}) => Transaction;
+import { Transaction } from '@mysten/sui/transactions';
