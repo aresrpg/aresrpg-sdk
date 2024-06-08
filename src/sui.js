@@ -41,7 +41,7 @@ import { admin_create_recipe } from './sui/write/admin_create_recipe.js'
 import { admin_delete_recipe } from './sui/write/admin_delete_recipe.js'
 import { get_owned_admin_cap } from './sui/read/get_owned_admin_cap.js'
 import { get_supported_tokens } from './sui/read/get_supported_tokens.js'
-import { SUPPORTED_TOKENS } from './sui/supported_tokens.js'
+import { SUPPORTED_TOKENS, USDC } from './sui/supported_tokens.js'
 import { craft_start } from './sui/write/craft_start.js'
 import { craft_item } from './sui/write/craft_item.js'
 import { craft_prove_ingredients_used } from './sui/write/craft_prove_ingredients_used.js'
@@ -49,11 +49,12 @@ import { craft_use_item_ingredient } from './sui/write/craft_use_item_ingredient
 import { craft_use_token_ingredient } from './sui/write/craft_use_token_ingredient.js'
 import { merge_items } from './sui/write/merge_items.js'
 import { split_item } from './sui/write/split_item.js'
+import { get_finished_crafts } from './sui/read/get_finished_crafts.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'DzbY8HLwtHdJqUKa6FL6ooWk81jtemAA47u7YUaQfEsU',
-  TESTNET_POLICIES_DIGEST = 'ALcjRRKL1gjYvSAh34Se3B8jqrHkSaoGisQY4qobW5g7',
-  TESTNET_UPGRADE_DIGEST = '4N7V6D6uv4NYC8AKf8w2RqNk44AbrFue7yrtvoQmgYUw',
+  TESTNET_PUBLISH_DIGEST = '7vUEceCTjTwhH6h97shMneKgPQt99gMUTf6N54dwdNJb',
+  TESTNET_POLICIES_DIGEST = 'EJdXLVaaS6d1EnQNxT8GXiNnReFp3fEhzLcDJjz3mttT',
+  TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
@@ -66,7 +67,7 @@ const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
 
-export { SUPPORTED_NFTS, SUPPORTED_TOKENS }
+export { SUPPORTED_NFTS, SUPPORTED_TOKENS, USDC }
 
 export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
@@ -134,6 +135,7 @@ export async function SDK({
     get_policies_profit: get_policies_profit(context),
     get_owned_admin_cap: get_owned_admin_cap(context),
     get_supported_tokens: get_supported_tokens(context),
+    get_finished_crafts: get_finished_crafts(context),
 
     get_user_kiosks: get_user_kiosks(context),
 

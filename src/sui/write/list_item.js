@@ -10,6 +10,7 @@ export function list_item() {
     price,
   }) => {
     const kiosk_ref = tx.object(kiosk)
+
     tx.moveCall({
       target: '0x2::kiosk::set_owner',
       arguments: [kiosk_ref, kiosk_cap],

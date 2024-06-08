@@ -2,9 +2,11 @@ import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function craft_start({ types }) {
-  return ({ tx = new Transaction(), recipe }) =>
-    tx.moveCall({
+  return ({ tx = new Transaction(), recipe }) => {
+    console.log('start craft', recipe)
+    return tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_recipe::start_craft`,
-      arguments: [tx.object(recipe)],
+      arguments: [tx.object(recipe), tx.object(types.VERSION)],
     })
+  }
 }

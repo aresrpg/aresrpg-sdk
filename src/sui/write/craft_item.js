@@ -13,10 +13,10 @@ export function craft_item({ types }) {
       target: `${types.LATEST_PACKAGE_ID}::item_recipe::craft_item`,
       arguments: [
         tx.object(recipe),
-        finished_craft,
+        tx.object(finished_craft),
         tx.object('0x8'),
         tx.object(kiosk),
-        kiosk_cap,
+        tx.object(kiosk_cap),
         tx.object(types.ITEM_POLICY),
         tx.object(types.VERSION),
       ],

@@ -33,13 +33,15 @@ export function get_unlocked_items(context) {
             }
             return !listing
           })
-          .map(({ objectId, listing }) => ({
-            id: objectId,
-            kiosk_id,
-            personal_kiosk_cap_id,
-            is_kiosk_personal,
-            ...(listing && { list_price: BigInt(listing.price) }),
-          }))
+          .map(({ objectId, listing }) => {
+            return {
+              id: objectId,
+              kiosk_id,
+              personal_kiosk_cap_id,
+              is_kiosk_personal,
+              ...(listing && { list_price: BigInt(listing.price) }),
+            }
+          })
       }),
     )
 

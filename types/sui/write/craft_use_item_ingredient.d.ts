@@ -5,5 +5,5 @@ export function craft_use_item_ingredient({ types }: import("../../../types.js")
     kiosk: any;
     kiosk_cap: any;
     item_id: any;
-}) => import("@mysten/sui/transactions").TransactionResult;
+}) => void;
 import { Transaction } from '@mysten/sui/transactions';

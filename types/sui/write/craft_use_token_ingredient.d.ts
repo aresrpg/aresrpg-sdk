@@ -4,5 +4,5 @@ export function craft_use_token_ingredient({ types }: import("../../../types.js"
     craft: any;
     coin: any;
     coin_type: any;
-}) => import("@mysten/sui/transactions").TransactionResult;
+}) => void;
 import { Transaction } from '@mysten/sui/transactions';
