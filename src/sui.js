@@ -50,11 +50,13 @@ import { craft_use_token_ingredient } from './sui/write/craft_use_token_ingredie
 import { merge_items } from './sui/write/merge_items.js'
 import { split_item } from './sui/write/split_item.js'
 import { get_finished_crafts } from './sui/read/get_finished_crafts.js'
+import { get_kiosk_owner_cap } from './sui/read/get_kiosk_owner_cap.js'
+import { get_aresrpg_kiosk } from './sui/read/get_aresrpg_kiosk.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = '7vUEceCTjTwhH6h97shMneKgPQt99gMUTf6N54dwdNJb',
-  TESTNET_POLICIES_DIGEST = 'EJdXLVaaS6d1EnQNxT8GXiNnReFp3fEhzLcDJjz3mttT',
-  TESTNET_UPGRADE_DIGEST = '',
+  TESTNET_PUBLISH_DIGEST = 'AAiuwyAUgLBzNxHKuMtccsL4JbmDdsmKdh49riw3FevM',
+  TESTNET_POLICIES_DIGEST = 'AmkdzPWwcBeVsxWJwTWJmCb6BCsVkFdgrvXctJacyEbm',
+  TESTNET_UPGRADE_DIGEST = 'FphZznx5gFHuammQMrwU8UuDmD2yyEcLNRyH3TKtzW4Q',
   MAINNET_PUBLISH_DIGEST = '',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
@@ -136,6 +138,8 @@ export async function SDK({
     get_owned_admin_cap: get_owned_admin_cap(context),
     get_supported_tokens: get_supported_tokens(context),
     get_finished_crafts: get_finished_crafts(context),
+    get_kiosk_owner_cap: get_kiosk_owner_cap(context),
+    get_aresrpg_kiosk: get_aresrpg_kiosk(context),
 
     get_user_kiosks: get_user_kiosks(context),
 

@@ -39,7 +39,7 @@ export function parse_character(context) {
 
     // @ts-ignore
     const items = purchase_caps
-      .map(({ item_id, kiosk_id, id, slot }) => {
+      .map(({ item_id, kiosk_id, slot }) => {
         const item = corresponding_items.get(item_id)
         if (!item) return null
         return {

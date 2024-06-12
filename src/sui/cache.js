@@ -1,6 +1,6 @@
 import { LRUCache } from 'lru-cache'
 
-import { BULLSHARK, SUPPORTED_NFTS } from './supported_nfts.js'
+import { BULLSHARK, CAPY, SUPPORTED_NFTS } from './supported_nfts.js'
 import { get_suifren_stats } from './suifrens.js'
 import { parse_character } from './parser.js'
 
@@ -155,7 +155,7 @@ export async function get_items(
         return null
       }
 
-      if (item._type === BULLSHARK) {
+      if (item._type === BULLSHARK || item._type === CAPY) {
         const stats = await get_suifren_stats(context, item)
         return {
           ...item,
