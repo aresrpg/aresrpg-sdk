@@ -56,11 +56,10 @@ export function admin_mint_item({ types }) {
         air_resistance = 0,
       } = stats
 
-      tx.moveCall({
-        target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_augment_with_stats`,
+      const [stat_ref] = tx.moveCall({
+        target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_new`,
         arguments: [
           admin,
-          item,
           tx.pure.u16(vitality),
           tx.pure.u16(wisdom),
           tx.pure.u16(strength),
@@ -80,6 +79,11 @@ export function admin_mint_item({ types }) {
           tx.pure.u8(water_resistance),
           tx.pure.u8(air_resistance),
         ],
+      })
+
+      tx.moveCall({
+        target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_augment_with_stats`,
+        arguments: [admin, item, stat_ref],
       })
     }
 
