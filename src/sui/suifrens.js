@@ -9,19 +9,37 @@ function mists_to_sui(balance) {
 }
 
 function get_element_from_hex(hex_color) {
-  hex_color = hex_color.replace('#', '')
-  if (hex_color.length !== 6) return 'invalid hex color'
+  switch (hex_color) {
+    case '#42FF00':
+    case '#6B956C':
+      return 'agility'
+    case '#707070':
+    case '#A17E52':
+      return 'strength'
+    case '#5E44FF':
+    case '#AC90F8':
+      return 'wisdom'
+    case '#6FBBEE':
+    case '#ADC0F4':
+    case '#AEE0F5':
+    case '#4FCAC0':
+      return 'chance'
+    case '#FF008A':
+    case '#C75151':
+      return 'vitality'
+    case '#DA8E2F':
+    case '#FCE370':
+    case '#FF5C00':
+      return 'intelligence'
+    default:
+      return 'chance'
+  }
+}
 
-  const [r, g, b] = [0, 2, 4].map(i => parseInt(hex_color.slice(i, i + 2), 16))
-
-  if (r > g && r > b && r - g < 50 && r - b < 50) return 'strength' // Check for brown tones
-  return g > r && g > b
-    ? 'agility'
-    : b > r && b > g
-      ? 'chance'
-      : r > g && r > b
-        ? 'intelligence'
-        : 'strength'
+function get_divide_factor(powerfull, element) {
+  if (element === 'wisdom') return powerfull ? 3 : 5
+  if (element === 'vitality') return powerfull ? 1.1 : 1.4
+  return powerfull ? 1.5 : 2
 }
 
 export async function get_suifren_stats(context, suifren) {
@@ -31,7 +49,7 @@ export async function get_suifren_stats(context, suifren) {
   // I just like this object :D #basecamp
   const powerfull = accessory === 'bonsoir shark pote doll'
   // having the shark doll allows more stats on the fren
-  const divide_factor = powerfull ? 1.5 : 2
+  const divide_factor = get_divide_factor(powerfull, element)
   const feed_level = mists_to_sui(stomach)
   const stat_value = Math.floor(feed_level / divide_factor)
 
