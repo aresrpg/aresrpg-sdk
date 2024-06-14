@@ -1,6 +1,7 @@
 import { KioskClient, Network } from '@mysten/kiosk'
 import { SuiClient, SuiHTTPTransport, getFullnodeUrl } from '@mysten/sui/client'
 import { LRUCache } from 'lru-cache'
+import { iter } from 'iterator-helper'
 
 import { find_types } from './types-parser.js'
 import { get_character_by_id } from './sui/read/get_character_by_id.js'
@@ -41,7 +42,7 @@ import { admin_create_recipe } from './sui/write/admin_create_recipe.js'
 import { admin_delete_recipe } from './sui/write/admin_delete_recipe.js'
 import { get_owned_admin_cap } from './sui/read/get_owned_admin_cap.js'
 import { get_supported_tokens } from './sui/read/get_supported_tokens.js'
-import { SUPPORTED_TOKENS, USDC } from './sui/supported_tokens.js'
+import { SUPPORTED_TOKENS } from './sui/supported_tokens.js'
 import { craft_start } from './sui/write/craft_start.js'
 import { craft_item } from './sui/write/craft_item.js'
 import { craft_prove_ingredients_used } from './sui/write/craft_prove_ingredients_used.js'
@@ -52,6 +53,7 @@ import { split_item } from './sui/write/split_item.js'
 import { get_finished_crafts } from './sui/read/get_finished_crafts.js'
 import { get_kiosk_owner_cap } from './sui/read/get_kiosk_owner_cap.js'
 import { get_aresrpg_kiosk } from './sui/read/get_aresrpg_kiosk.js'
+import { ITEM_CATEGORY } from './items.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = 'AAiuwyAUgLBzNxHKuMtccsL4JbmDdsmKdh49riw3FevM',
@@ -69,7 +71,7 @@ const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
 
-export { SUPPORTED_NFTS, SUPPORTED_TOKENS, USDC }
+export { SUPPORTED_NFTS, SUPPORTED_TOKENS }
 
 export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
@@ -118,6 +120,24 @@ export async function SDK({
     types,
     network,
   }
+
+  await iter(Object.values(SUPPORTED_TOKENS))
+    .toAsyncIterator()
+    .forEach(async token => {
+      const { decimals, iconUrl, symbol } = await sui_client.getCoinMetadata({
+        coinType: token.item_type,
+      })
+
+      Object.assign(token, {
+        decimal: decimals,
+        image_url: iconUrl,
+        name: symbol,
+        is_token: true,
+        item_set: 'none',
+        item_category: ITEM_CATEGORY.RESOURCE,
+        level: 1,
+      })
+    })
 
   return {
     sui_client,

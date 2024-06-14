@@ -1,17 +1,15 @@
-import { ITEM_CATEGORY } from '../items.js'
-
-export const USDC =
-  '0x02264251ff808fbf55c06f60fd1174814fd787bd32dc539531894deb497029c7::usdc::USDC'
+const HSUI =
+  '0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::hsui::HSUI'
+const FUD =
+  '0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::fud::FUD'
+const AFSUI =
+  '0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::afsui::AFSUI'
+const KARES =
+  '0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::kares::KARES'
 
 export const SUPPORTED_TOKENS = {
-  [USDC]: {
-    item_category: ITEM_CATEGORY.RESOURCE,
-    item_set: 'none',
-    item_type: USDC,
-    decimal: 9,
-    image_url: 'https://strapi-dev.scand.app/uploads/FUD_Logo_46c0468f49.jpg', // temp
-    is_token: true,
-    name: 'usdc',
-    level: 1,
-  },
+  [HSUI]: { item_type: HSUI },
+  [FUD]: { item_type: FUD },
+  [AFSUI]: { item_type: AFSUI },
+  [KARES]: { item_type: KARES },
 }

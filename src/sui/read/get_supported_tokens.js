@@ -30,6 +30,7 @@ export function get_supported_tokens(context) {
   const { sui_client } = context
   /** @type {(address: string) => Promise<import("../../../types.js").SuiToken[]>} */
   return async address =>
+    // @ts-ignore
     Promise.all(
       Object.entries(SUPPORTED_TOKENS).map(async ([token_type, token]) => {
         const coins = await get_all_coins({

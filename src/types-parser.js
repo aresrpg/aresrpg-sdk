@@ -66,6 +66,7 @@ async function parse_created_objects(transaction_digest, client) {
       ),
     }
   } catch (error) {
+    console.error(error)
     return {}
   }
 }
