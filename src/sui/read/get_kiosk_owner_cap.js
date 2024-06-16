@@ -24,7 +24,7 @@ export function get_kiosk_owner_cap({ kiosk_client }) {
   return async ({ address, kiosk_id }) => {
     const cached = cache.get(kiosk_id)
     // @ts-ignore
-    if (cached) return cached.objectId
+    if (cached) return cached
 
     const kiosks = await get_caps({ address, kiosk_client })
 
@@ -32,11 +32,13 @@ export function get_kiosk_owner_cap({ kiosk_client }) {
 
     if (!kiosk) return
 
-    cache.set(kiosk_id, kiosk)
-
-    return {
+    const value = {
       id: kiosk.objectId,
       personal: kiosk.isPersonal,
     }
+
+    cache.set(kiosk_id, value)
+
+    return value
   }
 }
