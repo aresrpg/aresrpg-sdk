@@ -1,13 +1,14 @@
-export const USDC: "0x02264251ff808fbf55c06f60fd1174814fd787bd32dc539531894deb497029c7::usdc::USDC";
 export const SUPPORTED_TOKENS: {
-    "0x02264251ff808fbf55c06f60fd1174814fd787bd32dc539531894deb497029c7::usdc::USDC": {
-        item_category: string;
-        item_set: string;
+    "0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::hsui::HSUI": {
         item_type: string;
-        decimal: number;
-        image_url: string;
-        is_token: boolean;
-        name: string;
-        level: number;
+    };
+    "0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::fud::FUD": {
+        item_type: string;
+    };
+    "0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::afsui::AFSUI": {
+        item_type: string;
+    };
+    "0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::kares::KARES": {
+        item_type: string;
     };
 };

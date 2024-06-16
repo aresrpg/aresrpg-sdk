@@ -255,5 +255,4 @@ import { SuiClient } from '@mysten/sui/client';
 import { KioskClient } from '@mysten/kiosk';
 import { SUPPORTED_NFTS } from './sui/supported_nfts.js';
 import { SUPPORTED_TOKENS } from './sui/supported_tokens.js';
-import { USDC } from './sui/supported_tokens.js';
-export { SUPPORTED_NFTS, SUPPORTED_TOKENS, USDC };
+export { SUPPORTED_NFTS, SUPPORTED_TOKENS };
