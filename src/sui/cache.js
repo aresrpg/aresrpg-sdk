@@ -78,6 +78,8 @@ export async function get_recipe(context, recipe_id) {
     options: { showContent: true },
   })
 
+  if (recipe.error) return null
+
   const parsed_recipe = parse_object_fields(recipe)
 
   parsed_recipe.ingredients = parsed_recipe.ingredients.map(
