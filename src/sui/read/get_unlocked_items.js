@@ -1,4 +1,7 @@
 import { get_items } from '../cache.js'
+import { SUPPORTED_NFTS } from '../supported_nfts.js'
+
+const SUPPORTED_NFT_KEYS = Object.keys(SUPPORTED_NFTS)
 
 /** @param {import("../../../types.js").Context} context */
 export function get_unlocked_items(context) {
@@ -24,6 +27,10 @@ export function get_unlocked_items(context) {
         })
 
         return items
+          .filter(({ type }) => {
+            if (type.includes(context.types.PACKAGE_ID)) return true
+            return SUPPORTED_NFT_KEYS.some(key => type.includes(key))
+          })
           .filter(({ listing }) => {
             if (only_listed) {
               // here we only want listed items
@@ -46,6 +53,7 @@ export function get_unlocked_items(context) {
     )
 
     const objects = result.flat()
+
     const items = await get_items(
       context,
       objects.map(({ id }) => id),

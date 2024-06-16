@@ -22,18 +22,24 @@ export function get_unlocked_characters({ kiosk_client, types, sui_client }) {
         const { items: characters } = await kiosk_client.getKiosk({
           id: kioskId,
           options: {
-            withObjects: true,
-            objectOptions: { showContent: true, showDisplay: true },
+            withObjects: false,
           },
         })
-        return characters
-          .filter(({ listing }) => !listing)
+
+        const all_characters = await sui_client.multiGetObjects({
+          ids: characters
+            .filter(
+              // @ts-ignore
+              ({ type }) =>
+                type === `${types.PACKAGE_ID}::character::Character`,
+            )
+            .filter(({ listing }) => !listing)
+            .map(({ objectId }) => objectId),
+          options: { showContent: true, showDisplay: true },
+        })
+
+        return all_characters
           .map(object => parse_sui_object({ types }, object))
-          .filter(
-            // @ts-ignore
-            ({ _type }) =>
-              _type === `${types.PACKAGE_ID}::character::Character`,
-          )
           .map(character => ({
             ...character,
             kiosk_id,
