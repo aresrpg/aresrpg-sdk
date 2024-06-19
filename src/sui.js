@@ -71,6 +71,30 @@ const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
 
+async function get_client(rpc_url, wss_url, network) {
+  const sui_client = new SuiClient({
+    transport: new SuiHTTPTransport({
+      url: rpc_url,
+      websocket: {
+        reconnectTimeout: 1000,
+        url: wss_url,
+      },
+    }),
+  })
+
+  try {
+    await sui_client.getLatestCheckpointSequenceNumber()
+    return sui_client
+  } catch (error) {
+    console.error('Node unresponsive, defaulting to public node')
+    return get_client(
+      getFullnodeUrl(network),
+      getFullnodeUrl(network).replace('http', 'ws'),
+      network,
+    )
+  }
+}
+
 export { SUPPORTED_NFTS, SUPPORTED_TOKENS }
 
 export async function SDK({
@@ -79,18 +103,7 @@ export async function SDK({
   network = Network.TESTNET,
   websocket_constructor = undefined,
 }) {
-  const sui_client = new SuiClient({
-    transport: new SuiHTTPTransport({
-      url: rpc_url,
-      ...(websocket_constructor && {
-        WebSocketConstructor: websocket_constructor,
-      }),
-      websocket: {
-        reconnectTimeout: 1000,
-        url: wss_url,
-      },
-    }),
-  })
+  const sui_client = await get_client(rpc_url, wss_url, network)
   const kiosk_client = new KioskClient({
     client: sui_client,
     network,
