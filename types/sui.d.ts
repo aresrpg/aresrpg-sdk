@@ -1,8 +1,9 @@
-export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
+export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fallback, }: {
     rpc_url?: "https://fullnode.mainnet.sui.io:443" | "https://fullnode.testnet.sui.io:443" | "https://fullnode.devnet.sui.io:443" | "http://127.0.0.1:9000";
     wss_url?: string;
     network?: Network;
     websocket_constructor?: any;
+    allow_fallback?: boolean;
 }): Promise<{
     get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
     get_unlocked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
@@ -28,7 +29,7 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, }: {
     get_kiosk_owner_cap: ({ address, kiosk_id }: {
         address: any;
         kiosk_id: any;
-    }) => Promise<any>;
+    }) => Promise<{}>;
     get_aresrpg_kiosk: (address: any) => Promise<import("@mysten/kiosk").KioskOwnerCap>;
     get_user_kiosks: ({ tx, address }: {
         tx?: import("@mysten/sui/transactions").Transaction;

@@ -71,7 +71,7 @@ const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
 
-async function get_client(rpc_url, wss_url, network) {
+async function get_client(rpc_url, wss_url, network, allow_fallback) {
   const sui_client = new SuiClient({
     transport: new SuiHTTPTransport({
       url: rpc_url,
@@ -86,6 +86,7 @@ async function get_client(rpc_url, wss_url, network) {
     await sui_client.getLatestCheckpointSequenceNumber()
     return sui_client
   } catch (error) {
+    if (!allow_fallback) throw new Error('SUI node is offline')
     console.error('Node unresponsive, defaulting to public node')
     return get_client(
       getFullnodeUrl(network),
@@ -102,8 +103,9 @@ export async function SDK({
   wss_url = getFullnodeUrl('testnet').replace('http', 'ws'),
   network = Network.TESTNET,
   websocket_constructor = undefined,
+  allow_fallback = true,
 }) {
-  const sui_client = await get_client(rpc_url, wss_url, network)
+  const sui_client = await get_client(rpc_url, wss_url, network, allow_fallback)
   const kiosk_client = new KioskClient({
     client: sui_client,
     network,
