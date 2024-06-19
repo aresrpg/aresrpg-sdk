@@ -2,6 +2,8 @@ import { KioskClient, Network } from '@mysten/kiosk'
 import { SuiClient, SuiHTTPTransport, getFullnodeUrl } from '@mysten/sui/client'
 import { LRUCache } from 'lru-cache'
 import { iter } from 'iterator-helper'
+import { SuiGraphQLClient } from '@mysten/sui/graphql'
+import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
 import { find_types } from './types-parser.js'
 import { get_character_by_id } from './sui/read/get_character_by_id.js'
@@ -109,6 +111,10 @@ export async function SDK({
     network,
   })
 
+  const gql_client = new SuiGraphQLClient({
+    url: `https://sui-${network}.mystenlabs.com/graphql`,
+  })
+
   const types = await find_types(
     {
       publish_digest:
@@ -213,6 +219,36 @@ export async function SDK({
 
     get_items: ids => get_items(context, ids, { allow_characters: true }),
     get_recipe: id => get_recipe(context, id),
+
+    async verify_zk_personal_message({ bytes, signature, sender }) {
+      const { data } = await gql_client.query({
+        query: graphql(`
+          query verifyZkPersonalMessage(
+            $bytes: String!
+            $signature: String!
+            $sender: String!
+            $scope: String!
+          ) {
+            verifyZkloginSignature(
+              bytes: $bytes
+              signature: $signature
+              intentScope: $scope
+              author: $sender
+            ) {
+              success
+            }
+          }
+        `),
+        variables: {
+          bytes,
+          signature,
+          sender,
+          scope: 'PERSONAL_MESSAGE',
+        },
+      })
+
+      return data?.verifyZkloginSignature?.success
+    },
 
     /** @return {Promise<bigint>} balance */
     async get_sui_balance(owner) {

@@ -284,6 +284,11 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
     }) => import("@mysten/sui/transactions").Transaction;
     get_items: (ids: any) => Promise<Map<string, import("../types.js").SuiItem>>;
     get_recipe: (id: any) => Promise<import("../types.js").Recipe>;
+    verify_zk_personal_message({ bytes, signature, sender }: {
+        bytes: any;
+        signature: any;
+        sender: any;
+    }): Promise<import("@mysten/sui/graphql").GraphQLQueryResult<Record<string, unknown>>>;
     /** @return {Promise<bigint>} balance */
     get_sui_balance(owner: any): Promise<bigint>;
     subscribe(on_message: any): Promise<import("@mysten/sui/client").Unsubscribe>;
