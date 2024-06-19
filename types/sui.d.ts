@@ -5,6 +5,59 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
     websocket_constructor?: any;
     allow_fallback?: boolean;
 }): Promise<{
+    SUPPORTED_TOKENS: {
+        [x: number]: {
+            item_type: any;
+        };
+    };
+    SUPPORTED_NFTS: {
+        [x: number]: {
+            item_category: string;
+            item_set: string;
+            item_type: string;
+            level: number;
+            wisdom: number;
+            earth_resistance: number;
+            fire_resistance: number;
+            water_resistance: number;
+            air_resistance: number;
+            amount: number;
+            name?: undefined;
+            strength?: undefined;
+            intelligence?: undefined;
+            raw_damage?: undefined;
+        } | {
+            item_category: string;
+            item_set: string;
+            item_type: string;
+            level: number;
+            name: string;
+            amount: number;
+            wisdom?: undefined;
+            earth_resistance?: undefined;
+            fire_resistance?: undefined;
+            water_resistance?: undefined;
+            air_resistance?: undefined;
+            strength?: undefined;
+            intelligence?: undefined;
+            raw_damage?: undefined;
+        } | {
+            item_category: string;
+            item_set: string;
+            item_type: string;
+            level: number;
+            strength: number;
+            intelligence: number;
+            raw_damage: number;
+            amount: number;
+            wisdom?: undefined;
+            earth_resistance?: undefined;
+            fire_resistance?: undefined;
+            water_resistance?: undefined;
+            air_resistance?: undefined;
+            name?: undefined;
+        };
+    };
     get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
     get_unlocked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
     get_character_by_id: (id: any) => Promise<import("../types.js").SuiCharacter>;
@@ -254,6 +307,3 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
 import { Network } from '@mysten/kiosk';
 import { SuiClient } from '@mysten/sui/client';
 import { KioskClient } from '@mysten/kiosk';
-import { SUPPORTED_NFTS } from './sui/supported_nfts.js';
-import { SUPPORTED_TOKENS } from './sui/supported_tokens.js';
-export { SUPPORTED_NFTS, SUPPORTED_TOKENS };

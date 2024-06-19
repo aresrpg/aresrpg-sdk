@@ -1,11 +1,11 @@
 import { get_items } from '../cache.js'
 import { SUPPORTED_NFTS } from '../supported_nfts.js'
 
-const SUPPORTED_NFT_KEYS = Object.keys(SUPPORTED_NFTS)
-
 /** @param {import("../../../types.js").Context} context */
 export function get_unlocked_items(context) {
   const { kiosk_client } = context
+  const SUPPORTED_NFT_KEYS = Object.keys(SUPPORTED_NFTS(context.network))
+
   /** @type {(address: string) => Promise<import("../../../types.js").SuiItem[]>} */
   return async (address, only_listed) => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({

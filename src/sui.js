@@ -59,7 +59,7 @@ const {
   TESTNET_PUBLISH_DIGEST = 'AAiuwyAUgLBzNxHKuMtccsL4JbmDdsmKdh49riw3FevM',
   TESTNET_POLICIES_DIGEST = 'AmkdzPWwcBeVsxWJwTWJmCb6BCsVkFdgrvXctJacyEbm',
   TESTNET_UPGRADE_DIGEST = 'DTXtvRMpvk3nvFAEhzA3Sabd5vVRkc4uEHgbWtxqAb3i',
-  MAINNET_PUBLISH_DIGEST = '',
+  MAINNET_PUBLISH_DIGEST = '4BSMGH5Mf62rNXB9Wi1YJvjtMVBNWe8RvvDaHgF47qQX',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
 } = process.env
@@ -95,8 +95,6 @@ async function get_client(rpc_url, wss_url, network, allow_fallback) {
     )
   }
 }
-
-export { SUPPORTED_NFTS, SUPPORTED_TOKENS }
 
 export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
@@ -153,11 +151,14 @@ export async function SDK({
         level: 1,
       })
     })
+    .catch(console.error)
 
   return {
     sui_client,
     kiosk_client,
     ...types,
+    SUPPORTED_TOKENS: SUPPORTED_TOKENS(network),
+    SUPPORTED_NFTS: SUPPORTED_NFTS(network),
 
     get_locked_characters: get_locked_characters(context),
     get_unlocked_characters: get_unlocked_characters(context),
@@ -229,7 +230,7 @@ export async function SDK({
       const supported_types = [
         `${types.PACKAGE_ID}::character::Character`,
         `${types.PACKAGE_ID}::item::Item`,
-        ...Object.keys(SUPPORTED_NFTS),
+        ...Object.keys(SUPPORTED_NFTS(network)),
       ]
       return sui_client.subscribeEvent({
         onMessage: on_message,

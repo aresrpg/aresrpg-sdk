@@ -1,6 +1,7 @@
 /** @param {import("../../../types.js").Context} context */
 export function get_owned_admin_cap({ sui_client, types }) {
   return async address => {
+    if (!types.PACKAGE_ID) return []
     const result = await sui_client.getOwnedObjects({
       owner: address,
       options: { showContent: true },

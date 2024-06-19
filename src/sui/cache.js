@@ -150,14 +150,17 @@ export async function get_items(
 
   const external_items = await Promise.all(
     other_items.map(async item => {
-      const whitelisted_item = SUPPORTED_NFTS[item._type]
+      const whitelisted_item = SUPPORTED_NFTS(context.network)[item._type]
       if (!whitelisted_item) {
         // those items are not wanted, just put them in the cache as null
         OBJECT_CACHE.set(item.id, null)
         return null
       }
 
-      if (item._type === BULLSHARK || item._type === CAPY) {
+      if (
+        item._type === BULLSHARK[context.network] ||
+        item._type === CAPY[context.network]
+      ) {
         const stats = await get_suifren_stats(context, item)
         return {
           ...item,

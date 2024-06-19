@@ -1,9 +1,27 @@
-export const CAPY: "0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>";
-export const BULLSHARK: "0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x297d8afb6ede450529d347cf9254caeea2b685c8baef67b084122291ebaefb38::bullshark::Bullshark>";
-export const PRIME_MACHIN: "0x034c162f6b594cb5a1805264dd01ca5d80ce3eca6522e6ee37fd9ebfb9d3ddca::factory::PrimeMachin";
-export const EGGDENIYI: "0xe638169c0c173d069996cace570b44cf6cb48365c77a058cb4a9bf8ad757a51d::eggdeniyi::AfEggdeniyi";
-export const SUPPORTED_NFTS: {
-    "0xe638169c0c173d069996cace570b44cf6cb48365c77a058cb4a9bf8ad757a51d::eggdeniyi::AfEggdeniyi": {
+export namespace CAPY {
+    let mainnet: string;
+    let testnet: string;
+}
+export namespace BULLSHARK {
+    let mainnet_1: string;
+    export { mainnet_1 as mainnet };
+    let testnet_1: string;
+    export { testnet_1 as testnet };
+}
+export namespace PRIME_MACHIN {
+    let testnet_2: string;
+    export { testnet_2 as testnet };
+    let mainnet_2: string;
+    export { mainnet_2 as mainnet };
+}
+export namespace AFEGG {
+    let mainnet_3: string;
+    export { mainnet_3 as mainnet };
+    let testnet_3: string;
+    export { testnet_3 as testnet };
+}
+export function SUPPORTED_NFTS(network: any): {
+    [x: number]: {
         item_category: string;
         item_set: string;
         item_type: string;
@@ -14,24 +32,26 @@ export const SUPPORTED_NFTS: {
         water_resistance: number;
         air_resistance: number;
         amount: number;
-    };
-    "0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>": {
+        name?: undefined;
+        strength?: undefined;
+        intelligence?: undefined;
+        raw_damage?: undefined;
+    } | {
         item_category: string;
         item_set: string;
         item_type: string;
         level: number;
         name: string;
         amount: number;
-    };
-    "0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x297d8afb6ede450529d347cf9254caeea2b685c8baef67b084122291ebaefb38::bullshark::Bullshark>": {
-        item_category: string;
-        item_set: string;
-        item_type: string;
-        level: number;
-        name: string;
-        amount: number;
-    };
-    "0x034c162f6b594cb5a1805264dd01ca5d80ce3eca6522e6ee37fd9ebfb9d3ddca::factory::PrimeMachin": {
+        wisdom?: undefined;
+        earth_resistance?: undefined;
+        fire_resistance?: undefined;
+        water_resistance?: undefined;
+        air_resistance?: undefined;
+        strength?: undefined;
+        intelligence?: undefined;
+        raw_damage?: undefined;
+    } | {
         item_category: string;
         item_set: string;
         item_type: string;
@@ -40,5 +60,11 @@ export const SUPPORTED_NFTS: {
         intelligence: number;
         raw_damage: number;
         amount: number;
+        wisdom?: undefined;
+        earth_resistance?: undefined;
+        fire_resistance?: undefined;
+        water_resistance?: undefined;
+        air_resistance?: undefined;
+        name?: undefined;
     };
 };
