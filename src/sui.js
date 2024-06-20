@@ -140,7 +140,10 @@ export async function SDK({
     network,
   }
 
-  await iter(Object.values(SUPPORTED_TOKENS))
+  const supported_tokens = SUPPORTED_TOKENS(network)
+  const supported_nfts = SUPPORTED_NFTS(network)
+
+  await iter(Object.values(supported_tokens))
     .toAsyncIterator()
     .forEach(async token => {
       const { decimals, iconUrl, symbol } = await sui_client.getCoinMetadata({
@@ -163,8 +166,8 @@ export async function SDK({
     sui_client,
     kiosk_client,
     ...types,
-    SUPPORTED_TOKENS: SUPPORTED_TOKENS(network),
-    SUPPORTED_NFTS: SUPPORTED_NFTS(network),
+    SUPPORTED_TOKENS: supported_tokens,
+    SUPPORTED_NFTS: supported_nfts,
 
     get_locked_characters: get_locked_characters(context),
     get_unlocked_characters: get_unlocked_characters(context),
