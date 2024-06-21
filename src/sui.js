@@ -133,13 +133,6 @@ export async function SDK({
     sui_client,
   )
 
-  const context = {
-    sui_client,
-    kiosk_client,
-    types,
-    network,
-  }
-
   const supported_tokens = SUPPORTED_TOKENS(network)
   const supported_nfts = SUPPORTED_NFTS(network)
 
@@ -161,6 +154,14 @@ export async function SDK({
       })
     })
     .catch(console.error)
+
+  const context = {
+    sui_client,
+    kiosk_client,
+    types,
+    network,
+    supported_tokens,
+  }
 
   return {
     sui_client,

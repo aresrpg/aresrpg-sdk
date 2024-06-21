@@ -1,5 +1,3 @@
-import { SUPPORTED_TOKENS } from '../supported_tokens.js'
-
 /** @return {Promise<import("@mysten/sui/client").CoinStruct[]>} */
 async function get_all_coins({
   sui_client,
@@ -27,12 +25,13 @@ async function get_all_coins({
 
 /** @param {import("../../../types.js").Context} context */
 export function get_supported_tokens(context) {
-  const { sui_client, network } = context
+  const { sui_client } = context
   /** @type {(address: string) => Promise<import("../../../types.js").SuiToken[]>} */
   return async address =>
     // @ts-ignore
     Promise.all(
-      Object.entries(SUPPORTED_TOKENS(network)).map(
+      // @ts-ignore
+      Object.entries(context.supported_tokens).map(
         async ([token_type, token]) => {
           const coins = await get_all_coins({
             sui_client,
