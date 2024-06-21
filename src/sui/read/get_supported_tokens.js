@@ -27,25 +27,30 @@ async function get_all_coins({
 
 /** @param {import("../../../types.js").Context} context */
 export function get_supported_tokens(context) {
-  const { sui_client } = context
+  const { sui_client, network } = context
   /** @type {(address: string) => Promise<import("../../../types.js").SuiToken[]>} */
   return async address =>
     // @ts-ignore
     Promise.all(
-      Object.entries(SUPPORTED_TOKENS).map(async ([token_type, token]) => {
-        const coins = await get_all_coins({
-          sui_client,
-          type: token_type,
-          address,
-        })
+      Object.entries(SUPPORTED_TOKENS(network)).map(
+        async ([token_type, token]) => {
+          const coins = await get_all_coins({
+            sui_client,
+            type: token_type,
+            address,
+          })
 
-        if (!coins.length) return null
+          if (!coins.length) return null
 
-        return {
-          ...token,
-          amount: coins.reduce((acc, { balance }) => acc + BigInt(balance), 0n),
-          ids: coins.map(({ coinObjectId }) => coinObjectId),
-        }
-      }),
+          return {
+            ...token,
+            amount: coins.reduce(
+              (acc, { balance }) => acc + BigInt(balance),
+              0n,
+            ),
+            ids: coins.map(({ coinObjectId }) => coinObjectId),
+          }
+        },
+      ),
     ).then(tokens => tokens.filter(Boolean))
 }
