@@ -56,6 +56,21 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
             water_resistance?: undefined;
             air_resistance?: undefined;
             name?: undefined;
+        } | {
+            item_category: string;
+            item_set: string;
+            item_type: string;
+            level: number;
+            amount: number;
+            wisdom?: undefined;
+            earth_resistance?: undefined;
+            fire_resistance?: undefined;
+            water_resistance?: undefined;
+            air_resistance?: undefined;
+            name?: undefined;
+            strength?: undefined;
+            intelligence?: undefined;
+            raw_damage?: undefined;
         };
     };
     get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;

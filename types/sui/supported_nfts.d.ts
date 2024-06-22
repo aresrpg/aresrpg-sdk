@@ -20,6 +20,10 @@ export namespace AFEGG {
     let testnet_3: string;
     export { testnet_3 as testnet };
 }
+export namespace VAPOREON {
+    let testnet_4: string;
+    export { testnet_4 as testnet };
+}
 export function SUPPORTED_NFTS(network: any): {
     [x: number]: {
         item_category: string;
@@ -66,5 +70,20 @@ export function SUPPORTED_NFTS(network: any): {
         water_resistance?: undefined;
         air_resistance?: undefined;
         name?: undefined;
+    } | {
+        item_category: string;
+        item_set: string;
+        item_type: string;
+        level: number;
+        amount: number;
+        wisdom?: undefined;
+        earth_resistance?: undefined;
+        fire_resistance?: undefined;
+        water_resistance?: undefined;
+        air_resistance?: undefined;
+        name?: undefined;
+        strength?: undefined;
+        intelligence?: undefined;
+        raw_damage?: undefined;
     };
 };

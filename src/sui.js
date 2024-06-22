@@ -33,7 +33,7 @@ import { get_suifren_object_accessory } from './sui/read/get_suifren_accessories
 import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
 import { get_locked_characters_by_ids } from './sui/read/get_locked_characters_by_ids.js'
 import { list_item } from './sui/write/list_item.js'
-import { SUPPORTED_NFTS } from './sui/supported_nfts.js'
+import { SUPPORTED_NFTS, VAPOREON } from './sui/supported_nfts.js'
 import { get_items, get_recipe } from './sui/cache.js'
 import { delist_item } from './sui/write/delist_item.js'
 import { admin_delete_admin_cap } from './sui/write/admin_delete_admin_cap.js'
@@ -277,6 +277,9 @@ export async function SDK({
         filter: {
           Any: [
             { Package: types.PACKAGE_ID },
+            {
+              MoveEventType: `${VAPOREON[network].split('::')[0]}::vaporeon::VaporeonMintEvent`,
+            },
             ...supported_types.flatMap(type => [
               { MoveEventType: item_listed(type) },
               { MoveEventType: item_purchased(type) },

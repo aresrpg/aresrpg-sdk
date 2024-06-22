@@ -25,6 +25,11 @@ export const AFEGG = {
     '0xe638169c0c173d069996cace570b44cf6cb48365c77a058cb4a9bf8ad757a51d::eggdeniyi::AfEggdeniyi',
 }
 
+export const VAPOREON = {
+  testnet:
+    '0xe3a1731e77249efa892e3a050c96f0de1be9bb5ef3c855a50766077be2d8411c::vaporeon::Vaporeon',
+}
+
 export const SUPPORTED_NFTS = network => {
   const result = {
     [AFEGG[network]]: {
@@ -63,6 +68,13 @@ export const SUPPORTED_NFTS = network => {
       strength: 40,
       intelligence: 40,
       raw_damage: 3,
+      amount: 1,
+    },
+    [VAPOREON[network]]: {
+      item_category: ITEM_CATEGORY.PET,
+      item_set: 'Hsui',
+      item_type: 'vaporeon',
+      level: 1,
       amount: 1,
     },
   }
