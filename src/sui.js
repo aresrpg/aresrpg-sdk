@@ -58,9 +58,9 @@ import { get_aresrpg_kiosk } from './sui/read/get_aresrpg_kiosk.js'
 import { ITEM_CATEGORY } from './items.js'
 
 const {
-  TESTNET_PUBLISH_DIGEST = 'AAiuwyAUgLBzNxHKuMtccsL4JbmDdsmKdh49riw3FevM',
-  TESTNET_POLICIES_DIGEST = 'AmkdzPWwcBeVsxWJwTWJmCb6BCsVkFdgrvXctJacyEbm',
-  TESTNET_UPGRADE_DIGEST = 'DTXtvRMpvk3nvFAEhzA3Sabd5vVRkc4uEHgbWtxqAb3i',
+  TESTNET_PUBLISH_DIGEST = 'A8XVjuPtAiQSPDhzcAbNHhhhpQoVUPG4ybgF1jmSCWj3',
+  TESTNET_POLICIES_DIGEST = 'Emv7hF6g9w8P8HSGYCpt9n3xcL6jNLVwSjK7DQ65wP8F',
+  TESTNET_UPGRADE_DIGEST = '',
   MAINNET_PUBLISH_DIGEST = '4BSMGH5Mf62rNXB9Wi1YJvjtMVBNWe8RvvDaHgF47qQX',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
