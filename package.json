@@ -57,8 +57,8 @@
   "homepage": "https://github.com/aresrpg/aresrpg-sdk#readme",
   "dependencies": {
     "@hydre/pino-human": "1.3.0",
-    "@mysten/kiosk": "^0.9.8",
-    "@mysten/sui": "^1.1.2",
+    "@mysten/kiosk": "^0.9.9",
+    "@mysten/sui": "^1.2.0",
     "bignumber.js": "^9.1.2",
     "iterator-helper": "^1.3.4",
     "lru-cache": "^10.2.2",
@@ -66,9 +66,9 @@
     "spiralloop": "^1.0.2"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
-    "@typescript-eslint/eslint-plugin": "^7.13.0",
-    "@typescript-eslint/parser": "^7.13.0",
+    "@types/node": "^20.14.8",
+    "@typescript-eslint/eslint-plugin": "^7.13.1",
+    "@typescript-eslint/parser": "^7.13.1",
     "dotenv": "^16.4.5",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -79,7 +79,7 @@
     "husky": "^4.3.8",
     "lint-staged": "15.2.7",
     "prettier": "3.3.2",
-    "typescript": "5.4.5"
+    "typescript": "5.5.2"
   },
   "husky": {
     "hooks": {
