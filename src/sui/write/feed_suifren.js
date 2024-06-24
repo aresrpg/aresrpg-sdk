@@ -16,10 +16,8 @@ export function feed_suifren({ types, network }) {
     const [suifren_package] = CAPY[network].split('::')
     const subtype =
       fren_type === 'suifren_capy'
-        ? CAPY[network].split('<')[1].slice(0, '::capy::Capy>'.length)
-        : BULLSHARK[network]
-            .split('<')[1]
-            .slice(0, '::bullshark::Bullshark>'.length)
+        ? CAPY[network].split('<')[1].slice(0, -1)
+        : BULLSHARK[network].split('<')[1].slice(0, -1)
 
     borrow_kiosk_item({
       tx,

@@ -83,6 +83,9 @@ export type SuiItem = {
   // for pets
   last_feed?: number
   feed_level?: number
+  max_feed_level?: number
+  food_name?: string
+  required_food?: number
 } & ItemStatistics
 
 export type SuiToken = {

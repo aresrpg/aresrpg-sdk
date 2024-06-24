@@ -44,7 +44,7 @@ import { admin_create_recipe } from './sui/write/admin_create_recipe.js'
 import { admin_delete_recipe } from './sui/write/admin_delete_recipe.js'
 import { get_owned_admin_cap } from './sui/read/get_owned_admin_cap.js'
 import { get_supported_tokens } from './sui/read/get_supported_tokens.js'
-import { SUPPORTED_TOKENS } from './sui/supported_tokens.js'
+import { HSUI, SUPPORTED_TOKENS } from './sui/supported_tokens.js'
 import { craft_start } from './sui/write/craft_start.js'
 import { craft_item } from './sui/write/craft_item.js'
 import { craft_prove_ingredients_used } from './sui/write/craft_prove_ingredients_used.js'
@@ -61,7 +61,7 @@ import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
 const {
   TESTNET_PUBLISH_DIGEST = 'A8XVjuPtAiQSPDhzcAbNHhhhpQoVUPG4ybgF1jmSCWj3',
   TESTNET_POLICIES_DIGEST = 'Emv7hF6g9w8P8HSGYCpt9n3xcL6jNLVwSjK7DQ65wP8F',
-  TESTNET_UPGRADE_DIGEST = '',
+  TESTNET_UPGRADE_DIGEST = 'DcQPRjMKdh9brPHWTNc3Z1fbKrueBGwokSx7f6SqkLZh',
   MAINNET_PUBLISH_DIGEST = '4BSMGH5Mf62rNXB9Wi1YJvjtMVBNWe8RvvDaHgF47qQX',
   MAINNET_POLICIES_DIGEST = '',
   MAINNET_UPGRADE_DIGEST = '',
@@ -162,6 +162,7 @@ export async function SDK({
     types,
     network,
     supported_tokens,
+    HSUI: HSUI[network],
   }
 
   return {
@@ -170,6 +171,7 @@ export async function SDK({
     ...types,
     SUPPORTED_TOKENS: supported_tokens,
     SUPPORTED_NFTS: supported_nfts,
+    HSUI: HSUI[network],
 
     get_locked_characters: get_locked_characters(context),
     get_unlocked_characters: get_unlocked_characters(context),

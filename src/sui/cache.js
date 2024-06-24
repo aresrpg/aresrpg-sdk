@@ -1,8 +1,9 @@
 import { LRUCache } from 'lru-cache'
 
-import { BULLSHARK, CAPY, SUPPORTED_NFTS } from './supported_nfts.js'
-import { get_suifren_stats } from './suifrens.js'
+import { BULLSHARK, CAPY, SUPPORTED_NFTS, VAPOREON } from './supported_nfts.js'
+import { get_suifren_stats } from './feedable_suifrens.js'
 import { parse_character } from './parser.js'
+import { get_vaporeon_stats } from './feedable_vaporeon.js'
 
 const DFIELD_CACHE = new LRUCache({ max: 10000 })
 const OBJECT_CACHE = new LRUCache({ max: 10000 })
@@ -162,6 +163,15 @@ export async function get_items(
         item._type === CAPY[context.network]
       ) {
         const stats = await get_suifren_stats(context, item)
+        return {
+          ...item,
+          ...whitelisted_item,
+          ...stats,
+        }
+      }
+
+      if (item._type === VAPOREON[context.network]) {
+        const stats = await get_vaporeon_stats(context, item)
         return {
           ...item,
           ...whitelisted_item,

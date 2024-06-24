@@ -57,5 +57,8 @@ export async function get_suifren_stats(context, suifren) {
     [element]: stat_value,
     last_feed,
     feed_level,
+    food_name: 'Sui',
+    required_food: 1,
+    max_feed_level: 100,
   }
 }
