@@ -56,6 +56,7 @@ import { get_finished_crafts } from './sui/read/get_finished_crafts.js'
 import { get_kiosk_owner_cap } from './sui/read/get_kiosk_owner_cap.js'
 import { get_aresrpg_kiosk } from './sui/read/get_aresrpg_kiosk.js'
 import { ITEM_CATEGORY } from './items.js'
+import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = 'A8XVjuPtAiQSPDhzcAbNHhhhpQoVUPG4ybgF1jmSCWj3',
@@ -200,6 +201,7 @@ export async function SDK({
     equip_item: equip_item(context),
     unequip_item: unequip_item(context),
     feed_suifren: feed_suifren(context),
+    feed_vaporeon: feed_vaporeon(context),
     list_item: list_item(),
     delist_item: delist_item(),
     delete_item: delete_item(context),

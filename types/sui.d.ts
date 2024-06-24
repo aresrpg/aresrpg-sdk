@@ -187,6 +187,13 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
         coin: any;
         fren_type: any;
     }) => void;
+    feed_vaporeon: ({ tx, kiosk_id, kiosk_cap, vaporeon_id, coin, }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        kiosk_id: any;
+        kiosk_cap: any;
+        vaporeon_id: any;
+        coin: any;
+    }) => void;
     list_item: ({ tx, kiosk, kiosk_cap, item_id, item_type, price, }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         kiosk: any;
