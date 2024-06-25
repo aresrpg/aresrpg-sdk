@@ -110,6 +110,15 @@ export async function SDK({
   const kiosk_client = new KioskClient({
     client: sui_client,
     network,
+    // seems the kiosk sdk is missing the correct rule
+    ...(network === Network.MAINNET
+      ? {
+          packageIds: {
+            personalKioskRulePackageId:
+              '0x0cb4bcc0560340eb1a1b929cabe56b33fc6449820ec8c1980d69bb98b649b802',
+          },
+        }
+      : {}),
   })
 
   const gql_client = new SuiGraphQLClient({
@@ -163,6 +172,7 @@ export async function SDK({
     network,
     supported_tokens,
     HSUI: HSUI[network],
+    VAPOREON: VAPOREON[network],
   }
 
   return {
