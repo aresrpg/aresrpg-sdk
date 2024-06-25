@@ -1,5 +1,6 @@
 export const HSUI = {
-  mainnet: '',
+  mainnet:
+    '0x8c47c0bde84b7056520a44f46c56383e714cc9b6a55e919d8736a34ec7ccb533::suicune::SUICUNE',
   testnet:
     '0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::hsui::HSUI',
 }
