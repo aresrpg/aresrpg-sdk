@@ -3,12 +3,8 @@ import { parse_character } from '../parser.js'
 import { get_dynamic_field_object, parse_sui_object } from '../cache.js'
 
 /** @param {import("../../../types.js").Context} context */
-export function get_locked_characters({
-  kiosk_client,
-  types,
-  sui_client,
-  network,
-}) {
+export function get_locked_characters(context) {
+  const { kiosk_client, types, sui_client } = context
   /** @type {(address: string) => Promise<import("../../../types.js").SuiCharacter[]>} */
   return async address => {
     const { kioskOwnerCaps } = await kiosk_client.getOwnedKiosks({
@@ -62,7 +58,7 @@ export function get_locked_characters({
               kiosk_id,
               personal_kiosk_cap_id,
             }))
-            .map(parse_character({ network, sui_client, types }))
+            .map(parse_character(context))
         } catch (error) {
           console.error('getKioskExtension error', error.message)
           return null
