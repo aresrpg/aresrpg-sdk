@@ -23,6 +23,8 @@ export namespace AFEGG {
 export namespace VAPOREON {
     let testnet_4: string;
     export { testnet_4 as testnet };
+    let mainnet_4: string;
+    export { mainnet_4 as mainnet };
 }
 export function SUPPORTED_NFTS(network: any): {
     [x: number]: {

@@ -172,6 +172,7 @@ export async function SDK({
     SUPPORTED_TOKENS: supported_tokens,
     SUPPORTED_NFTS: supported_nfts,
     HSUI: HSUI[network],
+    VAPOREON: VAPOREON[network],
 
     get_locked_characters: get_locked_characters(context),
     get_unlocked_characters: get_unlocked_characters(context),

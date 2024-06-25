@@ -74,6 +74,7 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
         };
     };
     HSUI: any;
+    VAPOREON: any;
     get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
     get_unlocked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
     get_character_by_id: (id: any) => Promise<import("../types.js").SuiCharacter>;
