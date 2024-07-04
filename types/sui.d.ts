@@ -93,6 +93,7 @@ export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fa
         character_profits: any;
         item_profits: any;
     }>;
+    get_royalty_fee: (item_type: any) => Promise<any>;
     get_owned_admin_cap: (address: any) => Promise<string[]>;
     get_supported_tokens: (address: string) => Promise<import("../types.js").SuiToken[]>;
     get_finished_crafts: (owner: any) => Promise<any[]>;

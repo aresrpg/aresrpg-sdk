@@ -39,6 +39,7 @@ import { delist_item } from './sui/write/delist_item.js'
 import { admin_delete_admin_cap } from './sui/write/admin_delete_admin_cap.js'
 import { admin_withdraw_profit } from './sui/write/admin_withdraw_profit.js'
 import { get_policies_profit } from './sui/read/get_policies_profit.js'
+import { get_royalty_fee } from './sui/read/get_royalty_fee.js'
 import { delete_item } from './sui/write/delete_item.js'
 import { admin_create_recipe } from './sui/write/admin_create_recipe.js'
 import { admin_delete_recipe } from './sui/write/admin_delete_recipe.js'
@@ -195,6 +196,7 @@ export async function SDK({
     get_pet_feed_value: get_pet_feed_value(context),
     get_locked_characters_by_ids: get_locked_characters_by_ids(context),
     get_policies_profit: get_policies_profit(context),
+    get_royalty_fee: get_royalty_fee(context),
     get_owned_admin_cap: get_owned_admin_cap(context),
     get_supported_tokens: get_supported_tokens(context),
     get_finished_crafts: get_finished_crafts(context),
