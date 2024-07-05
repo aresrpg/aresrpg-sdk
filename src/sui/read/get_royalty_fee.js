@@ -22,6 +22,7 @@ export function get_royalty_fee({ sui_client, kiosk_client }) {
       // @ts-ignore
       return dynamic_field.data.content.fields.value.fields.amount_bp
     } catch (error) {
+      console.error(error)
       return null
     }
   }
