@@ -7,4 +7,4 @@ export function square_array(center: any, max_distance: any): {
     x: number;
     z: number;
 }[];
-export const CHUNK_SIZE: 500;
+export const CHUNK_SIZE: 100;
