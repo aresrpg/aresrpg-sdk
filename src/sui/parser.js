@@ -52,6 +52,7 @@ export function parse_character(context) {
       .filter(Boolean)
 
     return {
+      realm: 'overworld',
       ...character,
       item_type: 'character',
       item_category: 'character',

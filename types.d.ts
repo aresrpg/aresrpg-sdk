@@ -106,6 +106,7 @@ export type SuiCharacter = {
   name: string
   classe: string
   sex: string
+  realm: string
 
   position: { x: number; y: number; z: number }
   experience: number

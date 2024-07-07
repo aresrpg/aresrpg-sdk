@@ -8,9 +8,28 @@ function get_item_stat(item, stat) {
   return item?.[stat] ?? 0
 }
 
+function get_base_stat(character, stat) {
+  switch (stat) {
+    case STATISTICS.ACTION:
+      return 6
+    case STATISTICS.MOVEMENT:
+      return 3
+    case STATISTICS.CRITICAL:
+      return Math.round(get_total_stat(character, STATISTICS.AGILITY) / 40)
+    case STATISTICS.RANGE:
+    case STATISTICS.RAW_DAMAGE:
+    case STATISTICS.EARTH_RESISTANCE:
+    case STATISTICS.FIRE_RESISTANCE:
+    case STATISTICS.WATER_RESISTANCE:
+    case STATISTICS.AIR_RESISTANCE:
+      return 0
+    default:
+      return character[stat]
+  }
+}
+
 /** @type {(character: import("./../types.js").SuiCharacter, stat: string) => number} */
 export function get_total_stat(character, stat) {
-  const base = character[stat]
   const {
     hat,
     amulet,
@@ -49,7 +68,10 @@ export function get_total_stat(character, stat) {
     title,
   ]
   const item_stats = items.map(item => get_item_stat(item, stat))
-  return base + item_stats.reduce((acc, val) => acc + val, 0)
+  return (
+    get_base_stat(character, stat) +
+    item_stats.reduce((acc, val) => acc + val, 0)
+  )
 }
 
 /** @type {(character: import("./../types.js").SuiCharacter) => number} */
@@ -68,9 +90,10 @@ export const STATISTICS = {
   INTELLIGENCE: 'intelligence',
   CHANCE: 'chance',
   AGILITY: 'agility',
+
   RANGE: 'range',
-  MOVEMENT: 'movement',
-  ACTION: 'action',
+  MOVEMENT: 'mp',
+  ACTION: 'ap',
   CRITICAL: 'critical',
   RAW_DAMAGE: 'raw_damage',
   CRITICAL_CHANCE: 'critical_chance',

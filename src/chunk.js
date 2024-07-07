@@ -1,6 +1,6 @@
 import spiral from 'spiralloop'
 
-export const CHUNK_SIZE = 500
+export const CHUNK_SIZE = 100
 
 export function to_chunk_position(position) {
   const x = Math.floor(position.x / CHUNK_SIZE)
