@@ -9,7 +9,7 @@ export function is_character_name_taken({ types, sui_client }) {
       target: `${types.LATEST_PACKAGE_ID}::character_registry::assert_name_available`,
       arguments: [
         txb.object(types.NAME_REGISTRY),
-        txb.pure(name.toLowerCase()),
+        txb.pure.string(name.toLowerCase()),
       ],
     })
 
