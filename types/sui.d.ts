@@ -1,9 +1,6 @@
-export function SDK({ rpc_url, wss_url, network, websocket_constructor, allow_fallback, }: {
+export function SDK({ rpc_url, network, }: {
     rpc_url?: "https://fullnode.mainnet.sui.io:443" | "https://fullnode.testnet.sui.io:443" | "https://fullnode.devnet.sui.io:443" | "http://127.0.0.1:9000";
-    wss_url?: string;
     network?: Network;
-    websocket_constructor?: any;
-    allow_fallback?: boolean;
 }): Promise<{
     SUPPORTED_TOKENS: {
         [x: number]: {

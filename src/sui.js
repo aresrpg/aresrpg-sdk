@@ -1,7 +1,6 @@
 import { KioskClient, Network } from '@mysten/kiosk'
-import { SuiClient, SuiHTTPTransport, getFullnodeUrl } from '@mysten/sui/client'
+import { SuiClient, getFullnodeUrl } from '@mysten/sui/client'
 import { LRUCache } from 'lru-cache'
-import { iter } from 'iterator-helper'
 import { SuiGraphQLClient } from '@mysten/sui/graphql'
 import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
@@ -75,39 +74,11 @@ const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
 
-async function get_client(rpc_url, wss_url, network, allow_fallback) {
-  const sui_client = new SuiClient({
-    transport: new SuiHTTPTransport({
-      url: rpc_url,
-      websocket: {
-        reconnectTimeout: 1000,
-        url: wss_url,
-      },
-    }),
-  })
-
-  try {
-    await sui_client.getLatestCheckpointSequenceNumber()
-    return sui_client
-  } catch (error) {
-    if (!allow_fallback) throw new Error('SUI node is offline')
-    console.error('Node unresponsive, defaulting to public node')
-    return get_client(
-      getFullnodeUrl(network),
-      getFullnodeUrl(network).replace('http', 'ws'),
-      network,
-    )
-  }
-}
-
 export async function SDK({
   rpc_url = getFullnodeUrl('testnet'),
-  wss_url = getFullnodeUrl('testnet').replace('http', 'ws'),
   network = Network.TESTNET,
-  websocket_constructor = undefined,
-  allow_fallback = true,
 }) {
-  const sui_client = await get_client(rpc_url, wss_url, network, allow_fallback)
+  const sui_client = new SuiClient({ url: rpc_url })
   const kiosk_client = new KioskClient({
     client: sui_client,
     network,
@@ -147,24 +118,14 @@ export async function SDK({
   const supported_tokens = SUPPORTED_TOKENS(network)
   const supported_nfts = SUPPORTED_NFTS(network)
 
-  await iter(Object.values(supported_tokens))
-    .toAsyncIterator()
-    .forEach(async token => {
-      const { decimals, iconUrl, symbol } = await sui_client.getCoinMetadata({
-        coinType: token.item_type,
-      })
-
-      Object.assign(token, {
-        decimal: decimals,
-        image_url: iconUrl,
-        name: symbol,
-        is_token: true,
-        item_set: 'none',
-        item_category: ITEM_CATEGORY.RESOURCE,
-        level: 1,
-      })
+  Object.values(supported_tokens).forEach(async token => {
+    Object.assign(token, {
+      is_token: true,
+      item_set: 'none',
+      item_category: ITEM_CATEGORY.RESOURCE,
+      level: 1,
     })
-    .catch(console.error)
+  })
 
   const context = {
     sui_client,
