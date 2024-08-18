@@ -30,6 +30,14 @@
       "import": "./src/experience.js",
       "types": "./types/experience.d.ts"
     },
+    "./plateau/line_of_sight": {
+      "import": "./src/plateau/line_of_sight.js",
+      "types": "./types/plateau/line_of_sight.d.ts"
+    },
+    "./plateau/path_finder": {
+      "import": "./src/plateau/path_finder.js",
+      "types": "./types/plateau/path_finder.d.ts"
+    },
     "./stats": {
       "import": "./src/stats.js",
       "types": "./types/stats.d.ts"
