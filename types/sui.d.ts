@@ -3,9 +3,7 @@ export function SDK({ rpc_url, network, }: {
     network?: Network;
 }): Promise<{
     SUPPORTED_TOKENS: {
-        [x: number]: {
-            item_type: any;
-        };
+        [x: number]: any;
     };
     SUPPORTED_NFTS: {
         [x: number]: {
@@ -98,7 +96,6 @@ export function SDK({ rpc_url, network, }: {
         address: any;
         kiosk_id: any;
     }) => Promise<{}>;
-    get_aresrpg_kiosk: (address: any) => Promise<import("@mysten/kiosk").KioskOwnerCap>;
     get_user_kiosks: ({ tx, address }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         address: any;
@@ -145,9 +142,8 @@ export function SDK({ rpc_url, network, }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         handler: any;
     }) => import("@mysten/sui/transactions").Transaction;
-    enforce_personal_kiosk: ({ tx, recipient }: {
+    create_personal_kiosk: ({ tx }: {
         tx?: import("@mysten/sui/transactions").Transaction;
-        recipient: any;
     }) => Promise<{
         kiosk_tx: import("@mysten/kiosk").KioskTransaction;
         kiosk_id: import("@mysten/sui/transactions").TransactionObjectArgument;

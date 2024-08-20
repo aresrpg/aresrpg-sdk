@@ -13,7 +13,6 @@ import { create_character } from './sui/write/create_character.js'
 import { is_character_name_taken } from './sui/write/is_character_name_taken.js'
 import { borrow_personal_kiosk_cap } from './sui/write/borrow_personal_kiosk_cap.js'
 import { select_character } from './sui/write/select_character.js'
-import { enforce_personal_kiosk } from './sui/write/enforce_personal_kiosk.js'
 import { delete_character } from './sui/write/delete_character.js'
 import { unselect_character } from './sui/write/unselect_character.js'
 import { admin_promote } from './sui/write/admin_promote.js'
@@ -54,9 +53,9 @@ import { merge_items } from './sui/write/merge_items.js'
 import { split_item } from './sui/write/split_item.js'
 import { get_finished_crafts } from './sui/read/get_finished_crafts.js'
 import { get_kiosk_owner_cap } from './sui/read/get_kiosk_owner_cap.js'
-import { get_aresrpg_kiosk } from './sui/read/get_aresrpg_kiosk.js'
 import { ITEM_CATEGORY } from './items.js'
 import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
+import { create_personal_kiosk } from './sui/write/create_personal_kiosk.js'
 
 const {
   TESTNET_PUBLISH_DIGEST = 'A8XVjuPtAiQSPDhzcAbNHhhhpQoVUPG4ybgF1jmSCWj3',
@@ -122,6 +121,7 @@ export async function SDK({
     Object.assign(token, {
       is_token: true,
       item_set: 'none',
+      item_type: token.address,
       item_category: ITEM_CATEGORY.RESOURCE,
       level: 1,
     })
@@ -133,7 +133,7 @@ export async function SDK({
     types,
     network,
     supported_tokens,
-    HSUI: HSUI[network],
+    HSUI: HSUI[network].address,
     VAPOREON: VAPOREON[network],
   }
 
@@ -162,7 +162,6 @@ export async function SDK({
     get_supported_tokens: get_supported_tokens(context),
     get_finished_crafts: get_finished_crafts(context),
     get_kiosk_owner_cap: get_kiosk_owner_cap(context),
-    get_aresrpg_kiosk: get_aresrpg_kiosk(context),
 
     get_user_kiosks: get_user_kiosks(context),
 
@@ -172,7 +171,7 @@ export async function SDK({
     delete_character: delete_character(context),
     is_character_name_taken: is_character_name_taken(context),
     borrow_personal_kiosk_cap: borrow_personal_kiosk_cap(context),
-    enforce_personal_kiosk: enforce_personal_kiosk(context),
+    create_personal_kiosk: create_personal_kiosk(context),
     withdraw_items: withdraw_items(context),
     equip_item: equip_item(context),
     unequip_item: unequip_item(context),

@@ -119,6 +119,6 @@ export function experience_to_level(total_experience) {
   return current_level
 }
 
-export function level_to_experience(level) {
+export function level_to_experience(level = 1) {
   return levels[level] ?? 0
 }

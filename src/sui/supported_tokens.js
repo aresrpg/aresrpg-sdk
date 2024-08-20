@@ -18,18 +18,23 @@ const AFSUI = {
   mainnet: {
     address:
       '0xf325ce1300e8dac124071d3152c5c5ee6174914f8bc2161e88329cf579246efc::afsui::AFSUI',
+    decimal: 9,
+    iconUrl: 'https://assets.aresrpg.world/tokens/afsui.jpg',
+    symbol: 'AFSUI',
   },
   testnet: {
     address:
       '0x02a56d35041b2974ec23aff7889d8f7390b53b08e8d8bb91aa55207a0d5dd723::afsui::AFSUI',
     decimal: 9,
+    iconUrl: 'https://assets.aresrpg.world/tokens/afsui.jpg',
+    symbol: 'AFSUI',
   },
 }
 
 export const SUPPORTED_TOKENS = network => {
   const result = {
-    [HSUI[network]]: { item_type: HSUI[network] },
-    [AFSUI[network]]: { item_type: AFSUI[network] },
+    [HSUI[network].address]: HSUI[network],
+    [AFSUI[network].address]: AFSUI[network],
   }
 
   delete result['']
