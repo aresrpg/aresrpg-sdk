@@ -1,7 +1,7 @@
 export type Context = {
   sui_client: import('@mysten/sui/client').SuiClient
   kiosk_client: import('@mysten/kiosk').KioskClient
-  types: import('./src/types-parser.js').SuiIds
+  types: Partial<import('./src/types-parser.js').SuiIds>
   network: import('@mysten/kiosk').Network
 }
 

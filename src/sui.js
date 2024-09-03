@@ -4,7 +4,6 @@ import { LRUCache } from 'lru-cache'
 import { SuiGraphQLClient } from '@mysten/sui/graphql'
 import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
-import { find_types } from './types-parser.js'
 import { get_character_by_id } from './sui/read/get_character_by_id.js'
 import { get_kiosk_id } from './sui/read/get_kiosk_id.js'
 import { get_unlocked_characters } from './sui/read/get_unlocked_characters.js'
@@ -56,15 +55,7 @@ import { get_kiosk_owner_cap } from './sui/read/get_kiosk_owner_cap.js'
 import { ITEM_CATEGORY } from './items.js'
 import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
 import { create_personal_kiosk } from './sui/write/create_personal_kiosk.js'
-
-const {
-  TESTNET_PUBLISH_DIGEST = 'A8XVjuPtAiQSPDhzcAbNHhhhpQoVUPG4ybgF1jmSCWj3',
-  TESTNET_POLICIES_DIGEST = 'Emv7hF6g9w8P8HSGYCpt9n3xcL6jNLVwSjK7DQ65wP8F',
-  TESTNET_UPGRADE_DIGEST = 'DcQPRjMKdh9brPHWTNc3Z1fbKrueBGwokSx7f6SqkLZh',
-  MAINNET_PUBLISH_DIGEST = '4BSMGH5Mf62rNXB9Wi1YJvjtMVBNWe8RvvDaHgF47qQX',
-  MAINNET_POLICIES_DIGEST = '',
-  MAINNET_UPGRADE_DIGEST = '',
-} = process.env
+import types from './types.json' with { type: 'json' }
 
 const item_listed = type => `0x2::kiosk::ItemListed<${type}>`
 const item_purchased = type => `0x2::kiosk::ItemPurchased<${type}>`
@@ -95,24 +86,6 @@ export async function SDK({
   const gql_client = new SuiGraphQLClient({
     url: `https://sui-${network}.mystenlabs.com/graphql`,
   })
-
-  const types = await find_types(
-    {
-      publish_digest:
-        network === Network.TESTNET
-          ? TESTNET_PUBLISH_DIGEST
-          : MAINNET_PUBLISH_DIGEST,
-      policies_digest:
-        network === Network.TESTNET
-          ? TESTNET_POLICIES_DIGEST
-          : MAINNET_POLICIES_DIGEST,
-      upgrade_digest:
-        network === Network.TESTNET
-          ? TESTNET_UPGRADE_DIGEST
-          : MAINNET_UPGRADE_DIGEST,
-    },
-    sui_client,
-  )
 
   const supported_tokens = SUPPORTED_TOKENS(network)
   const supported_nfts = SUPPORTED_NFTS(network)
