@@ -22,6 +22,10 @@
       "import": "./src/chunk.js",
       "types": "./types/chunk.d.ts"
     },
+    "./board_utils": {
+      "import": "./src/board_utils.js",
+      "types": "./types/board_utils.d.ts"
+    },
     "./experience": {
       "import": "./src/experience.js",
       "types": "./types/experience.d.ts"
