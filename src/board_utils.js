@@ -32,8 +32,8 @@ export function* iter_board_data(board) {
   const { origin, end } = get_board_bounds(board)
   let index = 0
 
-  for (let { x } = origin; x < end.x; x++) {
-    for (let { y } = origin; y < end.y; y++) {
+  for (let { y } = origin; y < end.y; y++) {
+    for (let { x } = origin; x < end.x; x++) {
       const data = board.data[index]
       if (data?.type) {
         const pos = { x, y }
@@ -56,8 +56,8 @@ export const extract_border_blocks = board => {
     const neighbours = [
       block_index - 1,
       block_index + 1,
-      block_index + board.size.y,
-      block_index - board.size.y,
+      block_index + board.size.x,
+      block_index - board.size.x,
     ].map(index => board.data[index]?.type)
     return neighbours.filter(val => val).length < neighbours.length
   }
@@ -112,11 +112,16 @@ export const sort_by_side = (input_blocks, board) => {
   return sorted_blocks
 }
 
-export const random_select_items = (board_elements, count) => {
-  const output_elements = []
-  while (output_elements.length < count) {
-    const pos_index = Math.round(Math.random() * board_elements.length)
-    output_elements.push(board_elements[pos_index])
+export const random_select_items = (items, count) => {
+  const selected = []
+  while (selected.length < count) {
+    const item_index = Math.round(Math.random() * (items.length - 1))
+    const item = items[item_index]
+    if (item) {
+      selected.push(item)
+    } else {
+      console.warn(`unexpected, selected index: ${item_index}, items: `, items)
+    }
   }
-  return output_elements
+  return selected
 }
