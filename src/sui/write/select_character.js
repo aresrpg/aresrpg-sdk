@@ -6,7 +6,7 @@ export function select_character({ types }) {
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_manager::select_character`,
       arguments: [
-        tx.object(kiosk_id),
+        typeof kiosk_id === 'string' ? tx.object(kiosk_id) : kiosk_id,
         kiosk_cap,
         tx.object(types.CHARACTER_PROTECTED_POLICY),
         typeof character_id === 'string'

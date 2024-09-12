@@ -6,20 +6,30 @@ export function create_character({ types }) {
     tx = new Transaction(),
     name,
     classe,
-    sex = 'male',
+    male = true,
     kiosk_id,
     kiosk_cap,
   }) => {
+    console.dir({
+      kiosk_id,
+      kiosk_cap,
+      register: types.NAME_REGISTRY,
+      policy: types.CHARACTER_POLICY,
+      name,
+      classe,
+      male,
+      version: types.VERSION,
+    })
     const [character_id] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_manager::create_and_lock_character`,
       arguments: [
-        tx.object(kiosk_id),
+        typeof kiosk_id === 'string' ? tx.object(kiosk_id) : kiosk_id,
         kiosk_cap,
         tx.object(types.NAME_REGISTRY),
         tx.object(types.CHARACTER_POLICY),
         tx.pure.string(name),
         tx.pure.string(classe),
-        tx.pure.string(sex),
+        tx.pure.bool(male),
         tx.object(types.VERSION),
       ],
     })

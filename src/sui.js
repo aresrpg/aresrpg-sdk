@@ -4,7 +4,6 @@ import { LRUCache } from 'lru-cache'
 import { SuiGraphQLClient } from '@mysten/sui/graphql'
 import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
-import { get_character_by_id } from './sui/read/get_character_by_id.js'
 import { get_kiosk_id } from './sui/read/get_kiosk_id.js'
 import { get_unlocked_characters } from './sui/read/get_unlocked_characters.js'
 import { get_locked_characters } from './sui/read/get_locked_characters.js'
@@ -56,10 +55,6 @@ import { ITEM_CATEGORY } from './items.js'
 import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
 import { create_personal_kiosk } from './sui/write/create_personal_kiosk.js'
 import types from './types.json' with { type: 'json' }
-
-const item_listed = type => `0x2::kiosk::ItemListed<${type}>`
-const item_purchased = type => `0x2::kiosk::ItemPurchased<${type}>`
-const item_delisted = type => `0x2::kiosk::ItemDelisted<${type}>`
 
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
@@ -121,7 +116,6 @@ export async function SDK({
 
     get_locked_characters: get_locked_characters(context),
     get_unlocked_characters: get_unlocked_characters(context),
-    get_character_by_id: get_character_by_id(context),
     get_kiosk_id: get_kiosk_id(context),
     get_locked_items: get_locked_items(context),
     get_unlocked_items: get_unlocked_items(context),
@@ -215,29 +209,6 @@ export async function SDK({
 
       // @ts-ignore
       return balances_cache.get(owner)
-    },
-    async subscribe(on_message) {
-      const supported_types = [
-        `${types.PACKAGE_ID}::character::Character`,
-        `${types.PACKAGE_ID}::item::Item`,
-        ...Object.keys(SUPPORTED_NFTS(network)),
-      ]
-      return sui_client.subscribeEvent({
-        onMessage: on_message,
-        filter: {
-          Any: [
-            { Package: types.PACKAGE_ID },
-            {
-              MoveEventType: `${VAPOREON[network].split('::')[0]}::vaporeon::VaporeonMintEvent`,
-            },
-            ...supported_types.flatMap(type => [
-              { MoveEventType: item_listed(type) },
-              { MoveEventType: item_purchased(type) },
-              { MoveEventType: item_delisted(type) },
-            ]),
-          ],
-        },
-      })
     },
   }
 }

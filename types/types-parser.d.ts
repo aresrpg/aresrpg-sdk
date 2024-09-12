@@ -1,11 +1,8 @@
-/** @return {Promise<SuiIds & { LATEST_PACKAGE_ID: string }>} */
-export function find_types({ publish_digest, policies_digest, upgrade_digest }: {
-    publish_digest: any;
-    policies_digest: any;
-    upgrade_digest: any;
-}, client: any): Promise<SuiIds & {
-    LATEST_PACKAGE_ID: string;
-}>;
+/** @return {Promise<SuiIds>} */
+export function find_types({ digest, package_id }: {
+    digest: any;
+    package_id?: any;
+}, client: any): Promise<SuiIds>;
 export type SuiIds = ReturnType<typeof parse_result>;
 /** @typedef {ReturnType<typeof parse_result>} SuiIds */
 declare function parse_result(parsed: any): {
@@ -22,5 +19,6 @@ declare function parse_result(parsed: any): {
     ITEM_PROTECTED_POLICY: any;
     CHARACTER_POLICY: any;
     ITEM_POLICY: any;
+    LATEST_PACKAGE_ID: string;
 };
 export {};

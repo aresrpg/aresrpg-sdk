@@ -72,7 +72,6 @@ export function SDK({ rpc_url, network, }: {
     VAPOREON: any;
     get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
     get_unlocked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
-    get_character_by_id: (id: any) => Promise<import("../types.js").SuiCharacter>;
     get_kiosk_id: (character_id: any) => Promise<any>;
     get_locked_items: (address: string) => Promise<import("../types.js").SuiItem[]>;
     get_unlocked_items: (address: string, only_listed: any) => Promise<import("../types.js").SuiItem[]>;
@@ -104,11 +103,11 @@ export function SDK({ rpc_url, network, }: {
         kiosks: Map<string, any>;
         finalize(): void;
     }>;
-    create_character: ({ tx, name, classe, sex, kiosk_id, kiosk_cap, }: {
+    create_character: ({ tx, name, classe, male, kiosk_id, kiosk_cap, }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         name: any;
         classe: any;
-        sex?: string;
+        male?: boolean;
         kiosk_id: any;
         kiosk_cap: any;
     }) => {
@@ -309,20 +308,19 @@ export function SDK({ rpc_url, network, }: {
     }): Promise<boolean>;
     /** @return {Promise<bigint>} balance */
     get_sui_balance(owner: any): Promise<bigint>;
-    subscribe(on_message: any): Promise<import("@mysten/sui/client").Unsubscribe>;
-    DISPLAY_CHARACTER: any;
-    NAME_REGISTRY: any;
-    ADMIN_CAP: any;
-    VERSION: any;
-    PUBLISHER_CHARACTER: any;
-    PUBLISHER_ITEM: any;
-    PACKAGE_ID: any;
-    UPGRADE_CAP: any;
-    DISPLAY_ITEM: any;
-    CHARACTER_PROTECTED_POLICY: any;
-    ITEM_PROTECTED_POLICY: any;
-    CHARACTER_POLICY: any;
-    ITEM_POLICY: any;
+    DISPLAY_CHARACTER: string;
+    NAME_REGISTRY: string;
+    ADMIN_CAP: string;
+    VERSION: string;
+    PUBLISHER_CHARACTER: string;
+    PUBLISHER_ITEM: string;
+    PACKAGE_ID: string;
+    UPGRADE_CAP: string;
+    DISPLAY_ITEM: string;
+    CHARACTER_PROTECTED_POLICY: string;
+    ITEM_PROTECTED_POLICY: string;
+    CHARACTER_POLICY: string;
+    ITEM_POLICY: string;
     LATEST_PACKAGE_ID: string;
     sui_client: SuiClient;
     kiosk_client: KioskClient;
