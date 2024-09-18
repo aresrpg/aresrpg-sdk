@@ -72,14 +72,14 @@ class PathFinder {
     ) {
       return
     }
-    if (!this.getCell(coords).walkable) {
+    if (!this.get_cell(coords).walkable) {
       return
     }
     this.origin = coords
     for (const cell of this.grid.cells) {
       cell.distance = -1
     }
-    this.getCell(this.origin).distance = 0
+    this.get_cell(this.origin).distance = 0
     const max_distance = 150
     let keep_searching = true
     for (
@@ -99,7 +99,7 @@ class PathFinder {
           cell_coords.x < this.grid.size.x;
           cell_coords.x++
         ) {
-          const cell = this.getCell(cell_coords)
+          const cell = this.get_cell(cell_coords)
           if (cell.walkable && cell.distance < 0) {
             // cell has not been reached yet
             for (const neighbour of this.get_neighbouring_cells(cell_coords)) {
@@ -143,7 +143,7 @@ class PathFinder {
     if (!this.origin) {
       throw new Error('Must specify an origin before asking for a path.')
     }
-    const target_cell = this.getCell(coords)
+    const target_cell = this.get_cell(coords)
     if (target_cell.distance < 0) {
       // no path
       return null
@@ -183,7 +183,7 @@ class PathFinder {
    * @param {GridCoord} coords
    * @returns {GridCell}
    */
-  getCell(coords) {
+  get_cell(coords) {
     if (
       coords.x < 0 ||
       coords.z < 0 ||
@@ -204,7 +204,7 @@ class PathFinder {
    */
   try_get_cell(coords) {
     try {
-      return this.getCell(coords)
+      return this.get_cell(coords)
     } catch {}
     return null
   }

@@ -62,7 +62,7 @@ export class PathFinder {
      * @param {GridCoord} coords
      * @returns {GridCell}
      */
-    private getCell;
+    private get_cell;
     /**
      * @private
      * @param {GridCoord} coords
