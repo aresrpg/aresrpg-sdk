@@ -22,7 +22,7 @@
       "import": "./src/chunk.js",
       "types": "./types/chunk.d.ts"
     },
-    "./board_utils": {
+    "./board": {
       "import": "./src/board_utils.js",
       "types": "./types/board_utils.d.ts"
     },
