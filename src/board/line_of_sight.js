@@ -71,7 +71,7 @@ class LineOfSight {
    * @param {number} max_distance
    * @returns {GridVisibility}
    */
-  computeCellsVisibility(origin, max_distance) {
+  compute_cells_visibility(origin, max_distance) {
     const result = {
       size: { ...this.grid.size },
       cells: this.grid.cells.map(cell => ({

@@ -48,5 +48,5 @@ export class LineOfSight {
      * @param {number} max_distance
      * @returns {GridVisibility}
      */
-    public computeCellsVisibility(origin: GridCoord, max_distance: number): GridVisibility;
+    public compute_cells_visibility(origin: GridCoord, max_distance: number): GridVisibility;
 }
