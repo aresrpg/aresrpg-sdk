@@ -74,5 +74,5 @@ export class PathFinder {
      * @param {GridCoord} coords
      * @returns {GridCell[]}
      */
-    private getNeighbouringCells;
+    private get_neighbouring_cells;
 }

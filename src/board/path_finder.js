@@ -102,7 +102,7 @@ class PathFinder {
           const cell = this.getCell(cell_coords)
           if (cell.walkable && cell.distance < 0) {
             // cell has not been reached yet
-            for (const neighbour of this.getNeighbouringCells(cell_coords)) {
+            for (const neighbour of this.get_neighbouring_cells(cell_coords)) {
               if (neighbour.distance === distance - 1) {
                 cell.distance = distance
                 found_new_path = true
@@ -153,7 +153,7 @@ class PathFinder {
     const reverse_path = [last_cell]
     while (last_cell.distance > 0) {
       const potential_previous_steps = []
-      for (const neighbour of this.getNeighbouringCells(last_cell)) {
+      for (const neighbour of this.get_neighbouring_cells(last_cell)) {
         if (neighbour.distance === last_cell.distance - 1) {
           const neighbour_to_origin = normalize_vec2(
             substract_vec2(neighbour, this.origin),
@@ -214,7 +214,7 @@ class PathFinder {
    * @param {GridCoord} coords
    * @returns {GridCell[]}
    */
-  getNeighbouringCells(coords) {
+  get_neighbouring_cells(coords) {
     const result = []
     for (const delta of [
       { x: -1, z: 0 },
