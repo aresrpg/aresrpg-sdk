@@ -2,10 +2,10 @@ import { vec2_dist, vec2_dot, vec2_sub } from './utils/math.js'
 
 const get_board_bounds = board => {
   const origin = { x: board.origin.x, y: board.origin.z }
-  const end = { x: origin.x + board.size.x, y: origin.y + board.size.y }
+  const end = { x: origin.x + board.size.x, y: origin.y + board.size.z }
   const center = {
     x: origin.x + board.size.x / 2,
-    y: origin.y + board.size.y / 2,
+    y: origin.y + board.size.z / 2,
   }
   return { origin, end, center }
 }
