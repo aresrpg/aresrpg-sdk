@@ -202,7 +202,7 @@ class PathFinder {
    * @param {GridCoord} coords
    * @returns {GridCell | null}
    */
-  tryGetCell(coords) {
+  try_get_cell(coords) {
     try {
       return this.getCell(coords)
     } catch {}
@@ -222,7 +222,7 @@ class PathFinder {
       { x: 0, z: -1 },
       { x: 0, z: 1 },
     ]) {
-      const neighbour = this.tryGetCell({
+      const neighbour = this.try_get_cell({
         x: coords.x + delta.x,
         z: coords.z + delta.z,
       })
