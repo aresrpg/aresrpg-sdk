@@ -23,8 +23,8 @@
       "types": "./types/chunk.d.ts"
     },
     "./board": {
-      "import": "./src/board_utils.js",
-      "types": "./types/board_utils.d.ts"
+      "import": "./src/board.js",
+      "types": "./types/board.d.ts"
     },
     "./experience": {
       "import": "./src/experience.js",
