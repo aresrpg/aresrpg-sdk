@@ -24,6 +24,7 @@ export namespace ITEM_CATEGORY {
     let KEY: string;
     let RESOURCE: string;
     let ORB: string;
+    let CHARACTER: string;
 }
 export const EQUIPMENTS: string[];
 export const WEAPONS: string[];

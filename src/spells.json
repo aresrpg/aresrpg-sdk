@@ -1,8 +1,8 @@
 {
-  "iop": {
+  "senshi": {
     "slash": {
       "name": "Slash",
-      "icon": "iop_slash",
+      "icon": "senshi_slash",
       "level": 1,
       "description": "A quick, powerful strike dealing significant damage to a single target within close range.",
       "levels": [
@@ -82,7 +82,7 @@
     },
     "jump": {
       "name": "Jump",
-      "icon": "iop_jump",
+      "icon": "senshi_jump",
       "level": 1,
       "description": "Jump to any targeted cell within range, bypassing obstacles and positioning for tactical advantages.",
       "levels": [
@@ -107,9 +107,9 @@
     },
     "rage": {
       "name": "Rage",
-      "icon": "iop_rage",
+      "icon": "senshi_rage",
       "level": 1,
-      "description": "Boosts the damage output of the Iop or an ally for several turns, enhancing any attacks.",
+      "description": "Boosts the damage output of the Senshi or an ally for several turns, enhancing any attacks.",
       "levels": [
         {
           "cost": 2,
@@ -151,10 +151,10 @@
       ]
     }
   },
-  "sram": {
+  "yajin": {
     "trap": {
       "name": "Trap",
-      "icon": "sram_trap",
+      "icon": "yajin_trap",
       "level": 1,
       "description": "Places an invisible trap on the ground that detonates for damage when an enemy steps on it.",
       "levels": [
@@ -197,9 +197,9 @@
     },
     "unfazed": {
       "name": "Unfazed",
-      "icon": "sram_unfazed",
+      "icon": "yajin_unfazed",
       "level": 1,
-      "description": "Grants immunity to trap effects for the turn and may heal or strengthen the Sram if he pass over one.",
+      "description": "Grants immunity to trap effects for the turn and may heal or strengthen the Yajin if he pass over one.",
       "levels": [
         {
           "cost": 2,
@@ -260,7 +260,7 @@
     },
     "flying_soul": {
       "name": "Flying Soul",
-      "icon": "sram_flying_soul",
+      "icon": "yajin_flying_soul",
       "level": 1,
       "description": "Sends out a soul projectile that deals damage to an enemy, effective at medium to long range.",
       "levels": [

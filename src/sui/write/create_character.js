@@ -9,17 +9,10 @@ export function create_character({ types }) {
     male = true,
     kiosk_id,
     kiosk_cap,
+    color_1,
+    color_2,
+    color_3,
   }) => {
-    console.dir({
-      kiosk_id,
-      kiosk_cap,
-      register: types.NAME_REGISTRY,
-      policy: types.CHARACTER_POLICY,
-      name,
-      classe,
-      male,
-      version: types.VERSION,
-    })
     const [character_id] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_manager::create_and_lock_character`,
       arguments: [
@@ -30,6 +23,9 @@ export function create_character({ types }) {
         tx.pure.string(name),
         tx.pure.string(classe),
         tx.pure.bool(male),
+        tx.pure.u32(color_1),
+        tx.pure.u32(color_2),
+        tx.pure.u32(color_3),
         tx.object(types.VERSION),
       ],
     })

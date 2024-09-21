@@ -103,13 +103,16 @@ export function SDK({ rpc_url, network, }: {
         kiosks: Map<string, any>;
         finalize(): void;
     }>;
-    create_character: ({ tx, name, classe, male, kiosk_id, kiosk_cap, }: {
+    create_character: ({ tx, name, classe, male, kiosk_id, kiosk_cap, color_1, color_2, color_3, }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         name: any;
         classe: any;
         male?: boolean;
         kiosk_id: any;
         kiosk_cap: any;
+        color_1: any;
+        color_2: any;
+        color_3: any;
     }) => {
         $kind: "NestedResult";
         NestedResult: [number, number];
