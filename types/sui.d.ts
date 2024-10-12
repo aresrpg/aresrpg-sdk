@@ -317,14 +317,14 @@ export function SDK({ rpc_url, network, }: {
     VERSION: string;
     PUBLISHER_CHARACTER: string;
     PUBLISHER_ITEM: string;
-    PACKAGE_ID: string;
     UPGRADE_CAP: string;
     DISPLAY_ITEM: string;
+    LATEST_PACKAGE_ID: string;
     CHARACTER_PROTECTED_POLICY: string;
     ITEM_PROTECTED_POLICY: string;
     CHARACTER_POLICY: string;
     ITEM_POLICY: string;
-    LATEST_PACKAGE_ID: string;
+    PACKAGE_ID: string;
     sui_client: SuiClient;
     kiosk_client: KioskClient;
 }>;
