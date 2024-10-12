@@ -3,7 +3,7 @@ export function admin_create_sale({ types }: import("../../../types.js").Context
     tx?: Transaction;
     admin_cap: any;
     price: any;
-    amount: any;
+    amount?: number;
     stock: any;
     template: any;
 }) => Transaction;

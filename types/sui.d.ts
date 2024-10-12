@@ -260,6 +260,13 @@ export function SDK({ rpc_url, network, }: {
         $kind: "NestedResult";
         NestedResult: [number, number];
     };
+    buy_sale_item: ({ tx, sale, coin, kiosk, kiosk_cap }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        sale: any;
+        coin: any;
+        kiosk: any;
+        kiosk_cap: any;
+    }) => void;
     add_header: (tx: any) => any;
     admin_promote: ({ tx, recipient }: {
         tx?: import("@mysten/sui/transactions").Transaction;
@@ -301,6 +308,20 @@ export function SDK({ rpc_url, network, }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         admin_cap: any;
         recipe: any;
+    }) => import("@mysten/sui/transactions").Transaction;
+    admin_create_sale: ({ tx, admin_cap, price, amount, stock, template, }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        admin_cap: any;
+        price: any;
+        amount?: number;
+        stock: any;
+        template: any;
+    }) => import("@mysten/sui/transactions").Transaction;
+    admin_delete_sale: ({ tx, recipient, admin_cap, sale }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        recipient: any;
+        admin_cap: any;
+        sale: any;
     }) => import("@mysten/sui/transactions").Transaction;
     get_items: (ids: any) => Promise<Map<string, import("../types.js").SuiItem>>;
     get_recipe: (id: any) => Promise<import("../types.js").Recipe>;

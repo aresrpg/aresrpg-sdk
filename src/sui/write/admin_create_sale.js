@@ -6,7 +6,7 @@ export function admin_create_sale({ types }) {
     tx = new Transaction(),
     admin_cap,
     price,
-    amount,
+    amount = 1,
     stock,
     template,
   }) => {

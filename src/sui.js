@@ -55,6 +55,9 @@ import { ITEM_CATEGORY } from './items.js'
 import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
 import { create_personal_kiosk } from './sui/write/create_personal_kiosk.js'
 import types from './types.json' with { type: 'json' }
+import { admin_create_sale } from './sui/write/admin_create_sale.js'
+import { admin_delete_sale } from './sui/write/admin_delete_sale.js'
+import { buy_sale_item } from './sui/write/buy_sale_item.js'
 
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
@@ -154,6 +157,7 @@ export async function SDK({
     craft_use_token_ingredient: craft_use_token_ingredient(context),
     merge_items: merge_items(context),
     split_item: split_item(context),
+    buy_sale_item: buy_sale_item(context),
 
     add_header: add_header(context),
 
@@ -164,6 +168,8 @@ export async function SDK({
     admin_withdraw_profit: admin_withdraw_profit(context),
     admin_create_recipe: admin_create_recipe(context),
     admin_delete_recipe: admin_delete_recipe(context),
+    admin_create_sale: admin_create_sale(context),
+    admin_delete_sale: admin_delete_sale(context),
 
     get_items: ids => get_items(context, ids, { allow_characters: true }),
     get_recipe: id => get_recipe(context, id),

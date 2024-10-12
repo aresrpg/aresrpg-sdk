@@ -1,7 +1,7 @@
 import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
-export function craft_item({ types }) {
+export function buy_sale_item({ types }) {
   return ({ tx = new Transaction(), sale, coin, kiosk, kiosk_cap }) => {
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_sale::buy_item`,
