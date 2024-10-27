@@ -6,7 +6,7 @@ export function get_user_kiosks({ kiosk_client }: import("../../../types.js").Co
     address: any;
 }) => Promise<{
     tx: Transaction;
-    kiosks: Map<string, any>;
+    kiosks: Map<string, () => any>;
     finalize(): void;
 }>;
 import { Transaction } from '@mysten/sui/transactions';

@@ -25,7 +25,7 @@ export function feed_vaporeon({ types, network }) {
         tx.moveCall({
           target: `${types.LATEST_PACKAGE_ID}::item_feed::feed_vaporeon`,
           arguments: [vaporeon, coin, tx.object(types.VERSION)],
-          typeArguments: [HSUI[network]],
+          typeArguments: [HSUI[network].address],
         })
       },
     })

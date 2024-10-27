@@ -39,16 +39,20 @@ export function get_user_kiosks({ kiosk_client }) {
       tx,
       kiosks: new Map(
         kioskOwnerCaps.map(({ isPersonal, kioskId, objectId }) => {
-          if (isPersonal) {
-            const { kiosk_cap, resolve_promise } = borrow_kiosk_cap({
-              kiosk_client,
-              tx,
-              personal_kiosk_cap_id: tx.object(objectId),
-            })
-            finalizations.push(resolve_promise)
-            return [kioskId, kiosk_cap]
+          const get_kiosk_cap = () => {
+            if (isPersonal) {
+              const { kiosk_cap, resolve_promise } = borrow_kiosk_cap({
+                kiosk_client,
+                tx,
+                personal_kiosk_cap_id: tx.object(objectId),
+              })
+              finalizations.push(resolve_promise)
+              return kiosk_cap
+            }
+            return tx.object(objectId)
           }
-          return [kioskId, tx.object(objectId)]
+
+          return [kioskId, get_kiosk_cap]
         }),
       ),
       finalize() {

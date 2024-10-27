@@ -1,10 +1,11 @@
-export function get_vaporeon_stats(context: any, vaporeon: any): Promise<{
+export function get_vaporeon_stats(context: any): ({ stomach, name }: {
+    stomach?: number;
+    name: any;
+}) => {
     movement: number;
     chance: number;
-    last_feed: any;
-    feed_level: BN;
+    feed_level: number;
     max_feed_level: number;
     food_name: string;
     required_food: number;
-}>;
-import { BigNumber as BN } from 'bignumber.js';
+};

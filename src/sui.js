@@ -4,9 +4,6 @@ import { LRUCache } from 'lru-cache'
 import { SuiGraphQLClient } from '@mysten/sui/graphql'
 import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
-import { get_kiosk_id } from './sui/read/get_kiosk_id.js'
-import { get_unlocked_characters } from './sui/read/get_unlocked_characters.js'
-import { get_locked_characters } from './sui/read/get_locked_characters.js'
 import { create_character } from './sui/write/create_character.js'
 import { is_character_name_taken } from './sui/write/is_character_name_taken.js'
 import { borrow_personal_kiosk_cap } from './sui/write/borrow_personal_kiosk_cap.js'
@@ -15,22 +12,15 @@ import { delete_character } from './sui/write/delete_character.js'
 import { unselect_character } from './sui/write/unselect_character.js'
 import { admin_promote } from './sui/write/admin_promote.js'
 import { admin_mint_item } from './sui/write/admin_mint_item.js'
-import { get_locked_items } from './sui/read/get_locked_items.js'
-import { get_unlocked_items } from './sui/read/get_unlocked_items.js'
 import { withdraw_items } from './sui/write/withdraw_items.js'
 import { equip_item } from './sui/write/equip_item.js'
 import { unequip_item } from './sui/write/unequip_item.js'
 import { get_user_kiosks } from './sui/read/get_user_kiosks.js'
 import { admin_freeze_contract } from './sui/write/admin_freeze_contract.js'
 import { add_header } from './sui/write/add_header.js'
-import { get_item_by_id } from './sui/read/get_item_by_id.js'
 import { feed_suifren } from './sui/write/feed_suifren.js'
-import { get_suifren_object_accessory } from './sui/read/get_suifren_accessories.js'
-import { get_pet_feed_value } from './sui/read/get_pet_feed_value.js'
-import { get_locked_characters_by_ids } from './sui/read/get_locked_characters_by_ids.js'
 import { list_item } from './sui/write/list_item.js'
 import { SUPPORTED_NFTS, VAPOREON } from './sui/supported_nfts.js'
-import { get_items, get_recipe } from './sui/cache.js'
 import { delist_item } from './sui/write/delist_item.js'
 import { admin_delete_admin_cap } from './sui/write/admin_delete_admin_cap.js'
 import { admin_withdraw_profit } from './sui/write/admin_withdraw_profit.js'
@@ -39,7 +29,6 @@ import { get_royalty_fee } from './sui/read/get_royalty_fee.js'
 import { delete_item } from './sui/write/delete_item.js'
 import { admin_create_recipe } from './sui/write/admin_create_recipe.js'
 import { admin_delete_recipe } from './sui/write/admin_delete_recipe.js'
-import { get_owned_admin_cap } from './sui/read/get_owned_admin_cap.js'
 import { get_supported_tokens } from './sui/read/get_supported_tokens.js'
 import { HSUI, SUPPORTED_TOKENS } from './sui/supported_tokens.js'
 import { craft_start } from './sui/write/craft_start.js'
@@ -49,8 +38,6 @@ import { craft_use_item_ingredient } from './sui/write/craft_use_item_ingredient
 import { craft_use_token_ingredient } from './sui/write/craft_use_token_ingredient.js'
 import { merge_items } from './sui/write/merge_items.js'
 import { split_item } from './sui/write/split_item.js'
-import { get_finished_crafts } from './sui/read/get_finished_crafts.js'
-import { get_kiosk_owner_cap } from './sui/read/get_kiosk_owner_cap.js'
 import { ITEM_CATEGORY } from './items.js'
 import { feed_vaporeon } from './sui/write/feed_vaporeon.js'
 import { create_personal_kiosk } from './sui/write/create_personal_kiosk.js'
@@ -58,6 +45,8 @@ import types from './types.json' with { type: 'json' }
 import { admin_create_sale } from './sui/write/admin_create_sale.js'
 import { admin_delete_sale } from './sui/write/admin_delete_sale.js'
 import { buy_sale_item } from './sui/write/buy_sale_item.js'
+import { get_suifren_stats } from './sui/feedable_suifrens.js'
+import { get_vaporeon_stats } from './sui/feedable_vaporeon.js'
 
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
@@ -117,21 +106,11 @@ export async function SDK({
     HSUI: HSUI[network],
     VAPOREON: VAPOREON[network],
 
-    get_locked_characters: get_locked_characters(context),
-    get_unlocked_characters: get_unlocked_characters(context),
-    get_kiosk_id: get_kiosk_id(context),
-    get_locked_items: get_locked_items(context),
-    get_unlocked_items: get_unlocked_items(context),
-    get_item_by_id: get_item_by_id(context),
-    get_suifren_object_accessory: get_suifren_object_accessory(context),
-    get_pet_feed_value: get_pet_feed_value(context),
-    get_locked_characters_by_ids: get_locked_characters_by_ids(context),
     get_policies_profit: get_policies_profit(context),
     get_royalty_fee: get_royalty_fee(context),
-    get_owned_admin_cap: get_owned_admin_cap(context),
     get_supported_tokens: get_supported_tokens(context),
-    get_finished_crafts: get_finished_crafts(context),
-    get_kiosk_owner_cap: get_kiosk_owner_cap(context),
+    get_suifren_stats,
+    get_vaporeon_stats: get_vaporeon_stats(context),
 
     get_user_kiosks: get_user_kiosks(context),
 
@@ -170,9 +149,6 @@ export async function SDK({
     admin_delete_recipe: admin_delete_recipe(context),
     admin_create_sale: admin_create_sale(context),
     admin_delete_sale: admin_delete_sale(context),
-
-    get_items: ids => get_items(context, ids, { allow_characters: true }),
-    get_recipe: id => get_recipe(context, id),
 
     async verify_zk_personal_message({ bytes, signature, sender }) {
       const { data } = await gql_client.query({

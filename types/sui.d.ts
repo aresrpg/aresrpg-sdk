@@ -70,37 +70,31 @@ export function SDK({ rpc_url, network, }: {
     };
     HSUI: any;
     VAPOREON: any;
-    get_locked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
-    get_unlocked_characters: (address: string) => Promise<import("../types.js").SuiCharacter[]>;
-    get_kiosk_id: (character_id: any) => Promise<any>;
-    get_locked_items: (address: string) => Promise<import("../types.js").SuiItem[]>;
-    get_unlocked_items: (address: string, only_listed: any) => Promise<import("../types.js").SuiItem[]>;
-    get_item_by_id: (id: string) => Promise<import("../types.js").SuiItem>;
-    get_suifren_object_accessory: (suifren_id: any) => Promise<any>;
-    get_pet_feed_value: (pet_id: any) => Promise<{
-        last_feed: any;
-        stomach: any;
-    }>;
-    get_locked_characters_by_ids: (ids: string[]) => Promise<Map<string, import("../types.js").SuiCharacter>>;
     get_policies_profit: (address: any) => Promise<{
         is_owner: boolean;
         character_profits: any;
         item_profits: any;
     }>;
     get_royalty_fee: (item_type: any) => Promise<any>;
-    get_owned_admin_cap: (address: any) => Promise<string[]>;
     get_supported_tokens: (address: string) => Promise<import("../types.js").SuiToken[]>;
-    get_finished_crafts: (owner: any) => Promise<any[]>;
-    get_kiosk_owner_cap: ({ address, kiosk_id }: {
-        address: any;
-        kiosk_id: any;
-    }) => Promise<{}>;
+    get_suifren_stats: typeof get_suifren_stats;
+    get_vaporeon_stats: ({ stomach, name }: {
+        stomach?: number;
+        name: any;
+    }) => {
+        movement: number;
+        chance: number;
+        feed_level: number;
+        max_feed_level: number;
+        food_name: string;
+        required_food: number;
+    };
     get_user_kiosks: ({ tx, address }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         address: any;
     }) => Promise<{
         tx: import("@mysten/sui/transactions").Transaction;
-        kiosks: Map<string, any>;
+        kiosks: Map<string, () => any>;
         finalize(): void;
     }>;
     create_character: ({ tx, name, classe, male, kiosk_id, kiosk_cap, color_1, color_2, color_3, }: {
@@ -323,8 +317,6 @@ export function SDK({ rpc_url, network, }: {
         admin_cap: any;
         sale: any;
     }) => import("@mysten/sui/transactions").Transaction;
-    get_items: (ids: any) => Promise<Map<string, import("../types.js").SuiItem>>;
-    get_recipe: (id: any) => Promise<import("../types.js").Recipe>;
     verify_zk_personal_message({ bytes, signature, sender }: {
         bytes: any;
         signature: any;
@@ -350,5 +342,6 @@ export function SDK({ rpc_url, network, }: {
     kiosk_client: KioskClient;
 }>;
 import { Network } from '@mysten/kiosk';
+import { get_suifren_stats } from './sui/feedable_suifrens.js';
 import { SuiClient } from '@mysten/sui/client';
 import { KioskClient } from '@mysten/kiosk';
