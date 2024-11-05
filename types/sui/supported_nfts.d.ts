@@ -26,6 +26,12 @@ export namespace VAPOREON {
     let mainnet_4: string;
     export { mainnet_4 as mainnet };
 }
+export namespace ANIMA_CHARACTER {
+    let testnet_5: string;
+    export { testnet_5 as testnet };
+    let mainnet_5: string;
+    export { mainnet_5 as mainnet };
+}
 export function SUPPORTED_NFTS(network: any): {
     [x: number]: {
         item_category: string;

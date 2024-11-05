@@ -68,6 +68,10 @@ export function SDK({ rpc_url, network, }: {
             raw_damage?: undefined;
         };
     };
+    TRANSFER_POLICIES: {
+        [x: string]: string;
+        [x: number]: any;
+    };
     HSUI: any;
     VAPOREON: any;
     get_policies_profit: (address: any) => Promise<{
@@ -330,6 +334,7 @@ export function SDK({ rpc_url, network, }: {
     VERSION: string;
     PUBLISHER_CHARACTER: string;
     PUBLISHER_ITEM: string;
+    PACKAGE_ID: string;
     UPGRADE_CAP: string;
     DISPLAY_ITEM: string;
     LATEST_PACKAGE_ID: string;
@@ -337,7 +342,6 @@ export function SDK({ rpc_url, network, }: {
     ITEM_PROTECTED_POLICY: string;
     CHARACTER_POLICY: string;
     ITEM_POLICY: string;
-    PACKAGE_ID: string;
     sui_client: SuiClient;
     kiosk_client: KioskClient;
 }>;

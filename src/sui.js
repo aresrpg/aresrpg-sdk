@@ -47,6 +47,7 @@ import { admin_delete_sale } from './sui/write/admin_delete_sale.js'
 import { buy_sale_item } from './sui/write/buy_sale_item.js'
 import { get_suifren_stats } from './sui/feedable_suifrens.js'
 import { get_vaporeon_stats } from './sui/feedable_vaporeon.js'
+import { TRANSFER_POLICIES } from './sui/transfer_policies.js'
 
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
@@ -76,6 +77,7 @@ export async function SDK({
 
   const supported_tokens = SUPPORTED_TOKENS(network)
   const supported_nfts = SUPPORTED_NFTS(network)
+  const transfer_policies = TRANSFER_POLICIES(network)
 
   Object.values(supported_tokens).forEach(async token => {
     Object.assign(token, {
@@ -103,6 +105,7 @@ export async function SDK({
     ...types,
     SUPPORTED_TOKENS: supported_tokens,
     SUPPORTED_NFTS: supported_nfts,
+    TRANSFER_POLICIES: transfer_policies,
     HSUI: HSUI[network],
     VAPOREON: VAPOREON[network],
 

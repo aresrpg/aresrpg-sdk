@@ -6,6 +6,7 @@ export const CAPY = {
   testnet:
     '0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::suifrens::SuiFren<0x80d7de9c4a56194087e0ba0bf59492aa8e6a5ee881606226930827085ddf2332::capy::Capy>',
 }
+
 export const BULLSHARK = {
   mainnet:
     '0xee496a0cc04d06a345982ba6697c90c619020de9e274408c7819f787ff66e1a1::suifrens::SuiFren<0x8894fa02fc6f36cbc485ae9145d05f247a78e220814fb8419ab261bd81f08f32::bullshark::Bullshark>',
@@ -30,6 +31,11 @@ export const VAPOREON = {
     '0xe3a1731e77249efa892e3a050c96f0de1be9bb5ef3c855a50766077be2d8411c::vaporeon::Vaporeon',
   mainnet:
     '0x270f7a64af25345c30b2f52c59b34a7d3b71c71714b4371b494cc525a3500d8b::vaporeon::Vaporeon',
+}
+
+export const ANIMA_CHARACTER = {
+  testnet: '',
+  mainnet: '',
 }
 
 export const SUPPORTED_NFTS = network => {
@@ -76,6 +82,13 @@ export const SUPPORTED_NFTS = network => {
       item_category: ITEM_CATEGORY.PET,
       item_set: 'Hsui',
       item_type: 'vaporeon',
+      level: 1,
+      amount: 1,
+    },
+    [ANIMA_CHARACTER[network]]: {
+      item_category: ITEM_CATEGORY.CHARACTER,
+      item_set: 'Anima',
+      item_type: 'anima_character',
       level: 1,
       amount: 1,
     },
