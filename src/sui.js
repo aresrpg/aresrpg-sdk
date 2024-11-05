@@ -48,6 +48,7 @@ import { buy_sale_item } from './sui/write/buy_sale_item.js'
 import { get_suifren_stats } from './sui/feedable_suifrens.js'
 import { get_vaporeon_stats } from './sui/feedable_vaporeon.js'
 import { TRANSFER_POLICIES } from './sui/transfer_policies.js'
+import { add_stats, reset_character_stats } from './sui/write/add_stats.js'
 
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
@@ -140,6 +141,8 @@ export async function SDK({
     merge_items: merge_items(context),
     split_item: split_item(context),
     buy_sale_item: buy_sale_item(context),
+    add_stats: add_stats(context),
+    reset_character_stats: reset_character_stats(context),
 
     add_header: add_header(context),
 
