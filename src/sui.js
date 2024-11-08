@@ -5,7 +5,6 @@ import { SuiGraphQLClient } from '@mysten/sui/graphql'
 import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
 import { create_character } from './sui/write/create_character.js'
-import { is_character_name_taken } from './sui/write/is_character_name_taken.js'
 import { borrow_personal_kiosk_cap } from './sui/write/borrow_personal_kiosk_cap.js'
 import { select_character } from './sui/write/select_character.js'
 import { delete_character } from './sui/write/delete_character.js'
@@ -122,7 +121,6 @@ export async function SDK({
     select_character: select_character(context),
     unselect_character: unselect_character(context),
     delete_character: delete_character(context),
-    is_character_name_taken: is_character_name_taken(context),
     borrow_personal_kiosk_cap: borrow_personal_kiosk_cap(context),
     create_personal_kiosk: create_personal_kiosk(context),
     withdraw_items: withdraw_items(context),

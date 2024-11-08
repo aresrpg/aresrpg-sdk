@@ -1,5 +1,7 @@
 import { Transaction } from '@mysten/sui/transactions'
 
+import { object_or_ref } from '../object_or_ref.js'
+
 /** @param {import("../../../types.js").Context} context */
 export function admin_mint_item({ types }) {
   return ({
@@ -117,7 +119,7 @@ export function admin_mint_item({ types }) {
 
     tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::item_manager::admin_lock_newly_minted`,
-      arguments: [admin, tx.object(recipient_kiosk), item, promise],
+      arguments: [admin, object_or_ref(tx, recipient_kiosk), item, promise],
     })
 
     return tx

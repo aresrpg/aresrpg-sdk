@@ -1,5 +1,7 @@
 import { Transaction } from '@mysten/sui/transactions'
 
+import { object_or_ref } from '../object_or_ref.js'
+
 /** @param {import("../../../types.js").Context} context */
 export function unequip_item({ types }) {
   return ({
@@ -14,8 +16,8 @@ export function unequip_item({ types }) {
     const [purchase_cap] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_inventory::unequip_item`,
       arguments: [
-        tx.object(kiosk),
-        kiosk_cap,
+        object_or_ref(tx, kiosk),
+        object_or_ref(tx, kiosk_cap),
         tx.pure.id(character_id),
         tx.pure.string(slot),
         tx.object(types.VERSION),

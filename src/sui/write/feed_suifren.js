@@ -2,6 +2,7 @@ import { Transaction } from '@mysten/sui/transactions'
 
 import { borrow_kiosk_item } from '../borrow_kiosk_item.js'
 import { BULLSHARK, CAPY } from '../supported_nfts.js'
+import { object_or_ref } from '../object_or_ref.js'
 
 /** @param {import("../../../types.js").Context} context */
 export function feed_suifren({ types, network }) {
@@ -21,8 +22,8 @@ export function feed_suifren({ types, network }) {
 
     borrow_kiosk_item({
       tx,
-      kiosk_id: tx.object(kiosk_id),
-      kiosk_cap_id: tx.object(kiosk_cap),
+      kiosk_id: object_or_ref(tx, kiosk_id),
+      kiosk_cap_id: object_or_ref(tx, kiosk_cap),
       item_id: tx.pure.id(suifren_id),
       item_type: `${suifren_package}::suifrens::SuiFren<${subtype}>`,
       handler(suifren) {

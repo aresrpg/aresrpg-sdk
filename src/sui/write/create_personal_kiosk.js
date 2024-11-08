@@ -11,6 +11,8 @@ export function create_personal_kiosk({ kiosk_client }) {
 
     kiosk_tx.createPersonal(true)
 
+    console.log('create_personal_kiosk', kiosk_tx, kiosk_tx.getKiosk(), kiosk_tx.getKioskCap())
+
     return {
       kiosk_tx,
       kiosk_id: kiosk_tx.getKiosk(),
