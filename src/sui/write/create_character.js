@@ -15,24 +15,11 @@ export function create_character({ types }) {
     color_2,
     color_3,
   }) => {
-    console.dir({
-      tx,
-      name,
-      classe,
-      male,
-      kiosk_id,
-      kiosk_cap,
-      color_1,
-      color_2,
-      color_3,
-    })
     const [character_id] = tx.moveCall({
       target: `${types.LATEST_PACKAGE_ID}::character_manager::create_and_lock_character`,
       arguments: [
-        kiosk_id,
-        kiosk_cap,
-        // object_or_ref(tx, kiosk_id),
-        // object_or_ref(tx, kiosk_cap),
+        object_or_ref(tx, kiosk_id),
+        object_or_ref(tx, kiosk_cap),
         tx.object(types.NAME_REGISTRY),
         tx.object(types.CHARACTER_POLICY),
         tx.pure.string(name),

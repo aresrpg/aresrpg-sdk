@@ -3,7 +3,7 @@ export namespace ITEM_CATEGORY {
     let RUNE: string;
     let MOUNT: string;
     let HAT: string;
-    let CLOACK: string;
+    let CLOAK: string;
     let AMULET: string;
     let RING: string;
     let BELT: string;

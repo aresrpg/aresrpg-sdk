@@ -133,10 +133,6 @@ export function SDK({ rpc_url, network, }: {
         kiosk_cap: any;
         character_id: any;
     }) => import("@mysten/sui/transactions").Transaction;
-    is_character_name_taken: ({ address, name }: {
-        address: any;
-        name: any;
-    }) => Promise<boolean>;
     borrow_personal_kiosk_cap: ({ personal_kiosk_cap_id, tx, handler }: {
         personal_kiosk_cap_id: any;
         tx?: import("@mysten/sui/transactions").Transaction;
@@ -264,6 +260,23 @@ export function SDK({ rpc_url, network, }: {
         coin: any;
         kiosk: any;
         kiosk_cap: any;
+    }) => void;
+    add_stats: ({ tx, kiosk, kiosk_cap, character_id, stat, amount, }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        kiosk: any;
+        kiosk_cap: any;
+        character_id: any;
+        stat: any;
+        amount: any;
+    }) => void;
+    reset_character_stats: ({ tx, item_kiosk, item_kiosk_cap, character_kiosk, character_kiosk_cap, character_id, item_id, }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        item_kiosk: any;
+        item_kiosk_cap: any;
+        character_kiosk: any;
+        character_kiosk_cap: any;
+        character_id: any;
+        item_id: any;
     }) => void;
     add_header: (tx: any) => any;
     admin_promote: ({ tx, recipient }: {

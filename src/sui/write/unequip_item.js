@@ -27,7 +27,7 @@ export function unequip_item({ types }) {
 
     tx.moveCall({
       target: '0x2::kiosk::return_purchase_cap',
-      arguments: [tx.object(item_kiosk), purchase_cap],
+      arguments: [object_or_ref(tx, item_kiosk), purchase_cap],
       typeArguments: [item_type],
     })
 

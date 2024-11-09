@@ -139,7 +139,7 @@ export type SuiCharacter = {
   right_ring?: SuiItem
   boots?: SuiItem
   hat?: SuiItem
-  cloack?: SuiItem
+  cloak?: SuiItem
   pet?: SuiItem
 
   _type: string

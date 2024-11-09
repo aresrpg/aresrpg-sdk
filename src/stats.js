@@ -33,7 +33,7 @@ export function get_total_stat(character, stat) {
   const {
     hat,
     amulet,
-    cloack,
+    cloak,
     left_ring,
     right_ring,
     belt,
@@ -52,7 +52,7 @@ export function get_total_stat(character, stat) {
   const items = [
     hat,
     amulet,
-    cloack,
+    cloak,
     left_ring,
     right_ring,
     belt,
