@@ -30,7 +30,7 @@ export const ITEM_CATEGORY = {
   RESOURCE: 'resource',
 
   // consumables
-  ORB: 'orb',
+  CONSUMABLE: 'consumable',
 
   CHARACTER: 'character',
 }
@@ -69,4 +69,4 @@ export const MISC = [
   ITEM_CATEGORY.RESOURCE,
 ]
 
-export const CONSUMABLES = [ITEM_CATEGORY.ORB]
+export const CONSUMABLES = [ITEM_CATEGORY.CONSUMABLE]

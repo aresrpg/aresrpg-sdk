@@ -11,7 +11,7 @@ export function delete_item({ types }) {
         object_or_ref(tx, kiosk_id),
         object_or_ref(tx, kiosk_cap),
         tx.object(types.ITEM_PROTECTED_POLICY),
-        tx.pure.id(item_id),
+        typeof item_id === 'string' ? tx.pure.id(item_id) : item_id,
         tx.object(types.VERSION),
       ],
     })

@@ -98,6 +98,7 @@ export function SDK({ rpc_url, network, }: {
         address: any;
     }) => Promise<{
         tx: import("@mysten/sui/transactions").Transaction;
+        get_kiosk_cap_ref: (kiosk_id: any) => any;
         kiosks: Map<string, () => any>;
         finalize(): void;
     }>;

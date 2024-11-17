@@ -23,7 +23,7 @@ export namespace ITEM_CATEGORY {
     let PICKAXE: string;
     let KEY: string;
     let RESOURCE: string;
-    let ORB: string;
+    let CONSUMABLE: string;
     let CHARACTER: string;
 }
 export const EQUIPMENTS: string[];

@@ -6,6 +6,7 @@ export function get_user_kiosks({ kiosk_client }: import("../../../types.js").Co
     address: any;
 }) => Promise<{
     tx: Transaction;
+    get_kiosk_cap_ref: (kiosk_id: any) => any;
     kiosks: Map<string, () => any>;
     finalize(): void;
 }>;
