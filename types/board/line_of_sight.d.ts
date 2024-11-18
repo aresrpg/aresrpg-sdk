@@ -1,3 +1,22 @@
+export class LineOfSight {
+    /**
+     * @public
+     * @param {Parameters} params
+     */
+    constructor(params: Parameters);
+    /**
+     * @private
+     * @readonly
+     */
+    private readonly grid;
+    /**
+     * @public
+     * @param {GridCoord} origin
+     * @param {number} max_distance
+     * @returns {GridVisibility}
+     */
+    public compute_cells_visibility(origin: GridCoord, max_distance: number): GridVisibility;
+}
 export type GridCoord = {
     x: number;
     z: number;
@@ -31,22 +50,3 @@ export type Vec2 = {
     x: number;
     z: number;
 };
-export class LineOfSight {
-    /**
-     * @public
-     * @param {Parameters} params
-     */
-    constructor(params: Parameters);
-    /**
-     * @private
-     * @readonly
-     */
-    private readonly grid;
-    /**
-     * @public
-     * @param {GridCoord} origin
-     * @param {number} max_distance
-     * @returns {GridVisibility}
-     */
-    public compute_cells_visibility(origin: GridCoord, max_distance: number): GridVisibility;
-}

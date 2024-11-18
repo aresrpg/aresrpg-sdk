@@ -1,28 +1,3 @@
-export type GridCoord = {
-    x: number;
-    z: number;
-};
-export type InputGrid = {
-    size: GridCoord;
-    cells: ReadonlyArray<boolean>;
-};
-export type Parameters = {
-    grid: InputGrid;
-};
-export type GridCell = {
-    walkable: boolean;
-    distance: number;
-    x: number;
-    z: number;
-};
-export type Grid = {
-    size: GridCoord;
-    cells: ReadonlyArray<GridCell>;
-};
-export type Vec2 = {
-    x: number;
-    z: number;
-};
 export class PathFinder {
     /**
      * @public
@@ -76,3 +51,28 @@ export class PathFinder {
      */
     private get_neighbouring_cells;
 }
+export type GridCoord = {
+    x: number;
+    z: number;
+};
+export type InputGrid = {
+    size: GridCoord;
+    cells: ReadonlyArray<boolean>;
+};
+export type Parameters = {
+    grid: InputGrid;
+};
+export type GridCell = {
+    walkable: boolean;
+    distance: number;
+    x: number;
+    z: number;
+};
+export type Grid = {
+    size: GridCoord;
+    cells: ReadonlyArray<GridCell>;
+};
+export type Vec2 = {
+    x: number;
+    z: number;
+};

@@ -31,7 +31,7 @@ function dot_vec2(v1, v2) {
   return v1.x * v2.x + v1.z * v2.z
 }
 
-class PathFinder {
+export class PathFinder {
   /**
    * @private
    * @readonly
@@ -233,8 +233,6 @@ class PathFinder {
     return result
   }
 }
-
-export { PathFinder }
 
 /**
  * @typedef {Object} GridCoord

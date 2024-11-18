@@ -43,7 +43,7 @@ function is_point_in_triangle(pt, v1, v2, v3) {
   return !(has_neg && has_pos)
 }
 
-class LineOfSight {
+export class LineOfSight {
   /**
    * @private
    * @readonly
@@ -154,8 +154,6 @@ class LineOfSight {
     return result
   }
 }
-
-export { LineOfSight }
 
 /**
  * @typedef {Object} GridCoord

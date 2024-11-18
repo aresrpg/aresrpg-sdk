@@ -123,3 +123,6 @@ export const random_select_items = (items, count) => {
   }
   return selected
 }
+
+export { LineOfSight } from './board/line_of_sight.js'
+export { PathFinder } from './board/path_finder.js'
