@@ -2,6 +2,8 @@ import { Transaction } from '@mysten/sui/transactions'
 
 /** @param {import("../../../types.js").Context} context */
 export function admin_create_sale({ types }) {
+  const SHIFT_U16 = 32768
+
   return ({
     tx = new Transaction(),
     admin_cap,
@@ -16,23 +18,23 @@ export function admin_create_sale({ types }) {
       target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_new`,
       arguments: [
         admin,
-        tx.pure.u16(template.stats_min.vitality ?? 0),
-        tx.pure.u16(template.stats_min.wisdom ?? 0),
-        tx.pure.u16(template.stats_min.strength ?? 0),
-        tx.pure.u16(template.stats_min.intelligence ?? 0),
-        tx.pure.u16(template.stats_min.chance ?? 0),
-        tx.pure.u16(template.stats_min.agility ?? 0),
-        tx.pure.u8(template.stats_min.range ?? 0),
-        tx.pure.u8(template.stats_min.movement ?? 0),
-        tx.pure.u8(template.stats_min.action ?? 0),
-        tx.pure.u8(template.stats_min.critical ?? 0),
-        tx.pure.u16(template.stats_min.raw_damage ?? 0),
-        tx.pure.u8(template.stats_min.critical_chance ?? 0),
-        tx.pure.u8(template.stats_min.critical_outcomes ?? 0),
-        tx.pure.u8(template.stats_min.earth_resistance ?? 0),
-        tx.pure.u8(template.stats_min.fire_resistance ?? 0),
-        tx.pure.u8(template.stats_min.water_resistance ?? 0),
-        tx.pure.u8(template.stats_min.air_resistance ?? 0),
+        tx.pure.u16((template.stats_min.vitality ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.wisdom ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.strength ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.intelligence ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.chance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.agility ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.range ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.movement ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.action ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.critical ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.raw_damage ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.critical_chance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.critical_outcomes ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.earth_resistance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.fire_resistance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.water_resistance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_min.air_resistance ?? 0) + SHIFT_U16),
       ],
     })
 
@@ -40,23 +42,23 @@ export function admin_create_sale({ types }) {
       target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_new`,
       arguments: [
         admin,
-        tx.pure.u16(template.stats_max.vitality ?? 0),
-        tx.pure.u16(template.stats_max.wisdom ?? 0),
-        tx.pure.u16(template.stats_max.strength ?? 0),
-        tx.pure.u16(template.stats_max.intelligence ?? 0),
-        tx.pure.u16(template.stats_max.chance ?? 0),
-        tx.pure.u16(template.stats_max.agility ?? 0),
-        tx.pure.u8(template.stats_max.range ?? 0),
-        tx.pure.u8(template.stats_max.movement ?? 0),
-        tx.pure.u8(template.stats_max.action ?? 0),
-        tx.pure.u8(template.stats_max.critical ?? 0),
-        tx.pure.u16(template.stats_max.raw_damage ?? 0),
-        tx.pure.u8(template.stats_max.critical_chance ?? 0),
-        tx.pure.u8(template.stats_max.critical_outcomes ?? 0),
-        tx.pure.u8(template.stats_max.earth_resistance ?? 0),
-        tx.pure.u8(template.stats_max.fire_resistance ?? 0),
-        tx.pure.u8(template.stats_max.water_resistance ?? 0),
-        tx.pure.u8(template.stats_max.air_resistance ?? 0),
+        tx.pure.u16((template.stats_max.vitality ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.wisdom ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.strength ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.intelligence ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.chance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.agility ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.range ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.movement ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.action ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.critical ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.raw_damage ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.critical_chance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.critical_outcomes ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.earth_resistance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.fire_resistance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.water_resistance ?? 0) + SHIFT_U16),
+        tx.pure.u16((template.stats_max.air_resistance ?? 0) + SHIFT_U16),
       ],
     })
 
@@ -72,7 +74,6 @@ export function admin_create_sale({ types }) {
             tx.pure.string(element),
           ],
         })
-
         return result
       },
     )
