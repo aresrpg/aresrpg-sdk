@@ -4,6 +4,8 @@ import { object_or_ref } from '../object_or_ref.js'
 
 /** @param {import("../../../types.js").Context} context */
 export function admin_mint_item({ types }) {
+  const SHIFT_U16 = 32768
+
   return ({
     tx = new Transaction(),
     recipient_kiosk,
@@ -15,12 +17,10 @@ export function admin_mint_item({ types }) {
     level = 1,
     amount = 1,
     stackable = false,
-
     stats = null,
     damages = [],
   }) => {
     if (amount > 1) stackable = true
-
     const admin = tx.object(admin_cap)
 
     const [item, promise] = tx.moveCall({
@@ -62,24 +62,23 @@ export function admin_mint_item({ types }) {
         target: `${types.LATEST_PACKAGE_ID}::item_stats::admin_new`,
         arguments: [
           admin,
-          tx.pure.u16(vitality),
-          tx.pure.u16(wisdom),
-          tx.pure.u16(strength),
-          tx.pure.u16(intelligence),
-          tx.pure.u16(chance),
-          tx.pure.u16(agility),
-          tx.pure.u8(range),
-          tx.pure.u8(movement),
-          tx.pure.u8(action),
-          tx.pure.u8(critical),
-          tx.pure.u16(raw_damage),
-          tx.pure.u8(critical_chance),
-          tx.pure.u8(critical_outcomes),
-
-          tx.pure.u8(earth_resistance),
-          tx.pure.u8(fire_resistance),
-          tx.pure.u8(water_resistance),
-          tx.pure.u8(air_resistance),
+          tx.pure.u16(vitality + SHIFT_U16),
+          tx.pure.u16(wisdom + SHIFT_U16),
+          tx.pure.u16(strength + SHIFT_U16),
+          tx.pure.u16(intelligence + SHIFT_U16),
+          tx.pure.u16(chance + SHIFT_U16),
+          tx.pure.u16(agility + SHIFT_U16),
+          tx.pure.u16(range + SHIFT_U16),
+          tx.pure.u16(movement + SHIFT_U16),
+          tx.pure.u16(action + SHIFT_U16),
+          tx.pure.u16(critical + SHIFT_U16),
+          tx.pure.u16(raw_damage + SHIFT_U16),
+          tx.pure.u16(critical_chance + SHIFT_U16),
+          tx.pure.u16(critical_outcomes + SHIFT_U16),
+          tx.pure.u16(earth_resistance + SHIFT_U16),
+          tx.pure.u16(fire_resistance + SHIFT_U16),
+          tx.pure.u16(water_resistance + SHIFT_U16),
+          tx.pure.u16(air_resistance + SHIFT_U16),
         ],
       })
 
@@ -100,7 +99,6 @@ export function admin_mint_item({ types }) {
           tx.pure.string(element),
         ],
       })
-
       return result
     })
 
