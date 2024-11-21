@@ -48,6 +48,7 @@ import { get_suifren_stats } from './sui/feedable_suifrens.js'
 import { get_vaporeon_stats } from './sui/feedable_vaporeon.js'
 import { TRANSFER_POLICIES } from './sui/transfer_policies.js'
 import { add_stats, reset_character_stats } from './sui/write/add_stats.js'
+import { admin_mint_caps } from './sui/write/admin_mint_caps.js'
 
 // keep fetched balances for 3s to avoid spamming the nodes
 const balances_cache = new LRUCache({ max: 100, ttl: 3000 })
@@ -153,6 +154,7 @@ export async function SDK({
     admin_delete_recipe: admin_delete_recipe(context),
     admin_create_sale: admin_create_sale(context),
     admin_delete_sale: admin_delete_sale(context),
+    admin_mint_caps: admin_mint_caps(context),
 
     async verify_zk_personal_message({ bytes, signature, sender }) {
       const { data } = await gql_client.query({

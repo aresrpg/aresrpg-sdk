@@ -335,6 +335,11 @@ export function SDK({ rpc_url, network, }: {
         admin_cap: any;
         sale: any;
     }) => import("@mysten/sui/transactions").Transaction;
+    admin_mint_caps: ({ tx, amount, recipient }: {
+        tx?: import("@mysten/sui/transactions").Transaction;
+        amount?: number;
+        recipient: any;
+    }) => import("@mysten/sui/transactions").Transaction;
     verify_zk_personal_message({ bytes, signature, sender }: {
         bytes: any;
         signature: any;
