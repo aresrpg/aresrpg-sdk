@@ -83,6 +83,38 @@ export async function SDK({
     VAPOREON: VAPOREON[network],
   }
 
+  async function verify_zk_signature(scope) {
+    return async ({ bytes, signature, sender }) => {
+      const { data } = await gql_client.query({
+        query: graphql(`
+          query verifyZkPersonalMessage(
+            $bytes: String!
+            $signature: String!
+            $sender: String!
+            $scope: String!
+          ) {
+            verifyZkloginSignature(
+              bytes: $bytes
+              signature: $signature
+              intentScope: $scope
+              author: $sender
+            ) {
+              success
+            }
+          }
+        `),
+        variables: {
+          bytes,
+          signature,
+          sender,
+          scope,
+        },
+      })
+
+      return data?.verifyZkloginSignature?.success
+    }
+  }
+
   return {
     sui_client,
     kiosk_client,
@@ -118,35 +150,8 @@ export async function SDK({
     admin_delete_sale: admin_delete_sale(context),
     admin_mint_caps: admin_mint_caps(context),
 
-    async verify_zk_personal_message({ bytes, signature, sender }) {
-      const { data } = await gql_client.query({
-        query: graphql(`
-          query verifyZkPersonalMessage(
-            $bytes: String!
-            $signature: String!
-            $sender: String!
-            $scope: String!
-          ) {
-            verifyZkloginSignature(
-              bytes: $bytes
-              signature: $signature
-              intentScope: $scope
-              author: $sender
-            ) {
-              success
-            }
-          }
-        `),
-        variables: {
-          bytes,
-          signature,
-          sender,
-          scope: 'PERSONAL_MESSAGE',
-        },
-      })
-
-      return data?.verifyZkloginSignature?.success
-    },
+    verify_zk_personal_message: verify_zk_signature('PERSONAL_MESSAGE'),
+    verify_zk_signature: verify_zk_signature('TRANSACTION_DATA'),
 
     /** @return {Promise<bigint>} balance */
     async get_sui_balance(owner) {
