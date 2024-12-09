@@ -83,7 +83,7 @@ export async function SDK({
     VAPOREON: VAPOREON[network],
   }
 
-  async function verify_zk_signature(scope) {
+  function verify_zk_signature(scope) {
     return async ({ bytes, signature, sender }) => {
       const { data } = await gql_client.query({
         query: graphql(`

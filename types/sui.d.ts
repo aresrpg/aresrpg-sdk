@@ -163,16 +163,16 @@ export function SDK({ rpc_url, network, }: {
         amount?: number;
         recipient: any;
     }) => import("@mysten/sui/transactions").Transaction;
-    verify_zk_personal_message: Promise<({ bytes, signature, sender }: {
+    verify_zk_personal_message: ({ bytes, signature, sender }: {
         bytes: any;
         signature: any;
         sender: any;
-    }) => Promise<boolean>>;
-    verify_zk_signature: Promise<({ bytes, signature, sender }: {
+    }) => Promise<boolean>;
+    verify_zk_signature: ({ bytes, signature, sender }: {
         bytes: any;
         signature: any;
         sender: any;
-    }) => Promise<boolean>>;
+    }) => Promise<boolean>;
     /** @return {Promise<bigint>} balance */
     get_sui_balance(owner: any): Promise<bigint>;
     DISPLAY_CHARACTER: string;
