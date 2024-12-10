@@ -174,11 +174,11 @@ export function SDK({ rpc_url, network, }: {
     PACKAGE_ID: string;
     UPGRADE_CAP: string;
     DISPLAY_ITEM: string;
-    LATEST_PACKAGE_ID: string;
     CHARACTER_PROTECTED_POLICY: string;
     ITEM_PROTECTED_POLICY: string;
     CHARACTER_POLICY: string;
     ITEM_POLICY: string;
+    LATEST_PACKAGE_ID: string;
     sui_client: SuiClient;
     kiosk_client: KioskClient;
     gql_client: SuiGraphQLClient<{}>;
