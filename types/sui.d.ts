@@ -163,16 +163,6 @@ export function SDK({ rpc_url, network, }: {
         amount?: number;
         recipient: any;
     }) => import("@mysten/sui/transactions").Transaction;
-    verify_zk_personal_message: ({ bytes, signature, sender }: {
-        bytes: any;
-        signature: any;
-        sender: any;
-    }) => Promise<boolean>;
-    verify_zk_signature: ({ bytes, signature, sender }: {
-        bytes: any;
-        signature: any;
-        sender: any;
-    }) => Promise<boolean>;
     /** @return {Promise<bigint>} balance */
     get_sui_balance(owner: any): Promise<bigint>;
     DISPLAY_CHARACTER: string;
@@ -191,8 +181,10 @@ export function SDK({ rpc_url, network, }: {
     ITEM_POLICY: string;
     sui_client: SuiClient;
     kiosk_client: KioskClient;
+    gql_client: SuiGraphQLClient<{}>;
 }>;
 import { Network } from '@mysten/kiosk';
 import { get_suifren_stats } from './sui/feedable_suifrens.js';
 import { SuiClient } from '@mysten/sui/client';
 import { KioskClient } from '@mysten/kiosk';
+import { SuiGraphQLClient } from '@mysten/sui/graphql';

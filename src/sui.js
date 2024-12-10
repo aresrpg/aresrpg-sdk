@@ -2,7 +2,6 @@ import { KioskClient, Network } from '@mysten/kiosk'
 import { SuiClient, getFullnodeUrl } from '@mysten/sui/client'
 import { LRUCache } from 'lru-cache'
 import { SuiGraphQLClient } from '@mysten/sui/graphql'
-import { graphql } from '@mysten/sui/graphql/schemas/2024.4'
 
 import { borrow_personal_kiosk_cap } from './sui/write/borrow_personal_kiosk_cap.js'
 import { admin_promote } from './sui/write/admin_promote.js'
@@ -83,41 +82,10 @@ export async function SDK({
     VAPOREON: VAPOREON[network],
   }
 
-  function verify_zk_signature(scope) {
-    return async ({ bytes, signature, sender }) => {
-      const { data } = await gql_client.query({
-        query: graphql(`
-          query verifyZkPersonalMessage(
-            $bytes: String!
-            $signature: String!
-            $sender: String!
-            $scope: String!
-          ) {
-            verifyZkloginSignature(
-              bytes: $bytes
-              signature: $signature
-              intentScope: $scope
-              author: $sender
-            ) {
-              success
-            }
-          }
-        `),
-        variables: {
-          bytes,
-          signature,
-          sender,
-          scope,
-        },
-      })
-
-      return data?.verifyZkloginSignature?.success
-    }
-  }
-
   return {
     sui_client,
     kiosk_client,
+    gql_client,
     ...types,
     SUPPORTED_TOKENS: supported_tokens,
     SUPPORTED_NFTS: supported_nfts,
@@ -149,9 +117,6 @@ export async function SDK({
     admin_create_sale: admin_create_sale(context),
     admin_delete_sale: admin_delete_sale(context),
     admin_mint_caps: admin_mint_caps(context),
-
-    verify_zk_personal_message: verify_zk_signature('PERSONAL_MESSAGE'),
-    verify_zk_signature: verify_zk_signature('TRANSACTION_DATA'),
 
     /** @return {Promise<bigint>} balance */
     async get_sui_balance(owner) {
