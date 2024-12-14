@@ -10,24 +10,19 @@ const get_board_center = board_bounds => {
   return board_center
 }
 
-export const format_board_data = board_element => ({
-  materialId: board_element.type,
-  type: board_element.category,
-})
-
 export function* iter_board_data(board) {
   const { min: origin, max: end } = board.bounds
   let index = 0
 
   for (let { y } = origin; y < end.y; y++) {
     for (let { x } = origin; x < end.x; x++) {
-      const data = board.data[index]
-      if (data?.type) {
+      const type = board.content[index]
+      if (type) {
         const pos = { x, y }
         const block = {
           index,
           pos,
-          data,
+          type,
         }
         yield block
       }
@@ -47,7 +42,7 @@ export const extract_border_blocks = board => {
       block_index + 1,
       block_index + board_size.x,
       block_index - board_size.x,
-    ].map(index => board.data[index]?.type)
+    ].map(index => board.content[index])
     return neighbours.filter(val => val).length < neighbours.length
   }
 
@@ -91,7 +86,7 @@ export const sort_by_side = (input_blocks, board) => {
     return projection < 0
   }
   for (const block of input_blocks) {
-    if (block.data.category === 0) {
+    if (block.type) {
       const is_first_side_block = is_first_side(block.pos)
       is_first_side_block
         ? sorted_blocks.first.push(block)
