@@ -111,7 +111,6 @@ export type SuiCharacter = {
   position: { x: number; y: number; z: number }
   experience: number
   health: number
-  selected: boolean
   soul: number
   available_points: number
 
