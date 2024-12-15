@@ -42,6 +42,7 @@ export function get_supported_tokens(context) {
           if (!coins.length) return null
 
           return {
+            id: token_type,
             ...token,
             amount: coins.reduce(
               (acc, { balance }) => acc + BigInt(balance),
