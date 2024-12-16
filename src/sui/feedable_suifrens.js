@@ -2,7 +2,7 @@ import { MIST_PER_SUI } from '@mysten/sui/utils'
 import { BigNumber as BN } from 'bignumber.js'
 
 function mists_to_sui(balance) {
-  return BN(balance).dividedBy(MIST_PER_SUI.toString()).toNumber()
+  return new BN(balance).dividedBy(MIST_PER_SUI.toString()).toNumber()
 }
 
 function get_divide_factor(element) {
@@ -11,7 +11,7 @@ function get_divide_factor(element) {
   return 2
 }
 
-export function get_suifren_stats({ stomach = 0, element }) {
+export function get_suifren_stats({ stomach = 0, element = '' }) {
   const divide_factor = get_divide_factor(element)
   const feed_level = mists_to_sui(stomach)
   const stat_value = Math.floor(feed_level / divide_factor)

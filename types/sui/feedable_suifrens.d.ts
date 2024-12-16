@@ -1,8 +1,8 @@
 export function get_suifren_stats({ stomach, element }: {
     stomach?: number;
-    element: any;
+    element?: string;
 }): {
-    [x: number]: number;
+    [x: string]: string | number;
     feed_level: number;
     food_name: string;
     required_food: number;
