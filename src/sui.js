@@ -99,7 +99,7 @@ export async function SDK({
     get_royalty_fee: get_royalty_fee(context),
     get_supported_tokens: get_supported_tokens(context),
     get_suifren_stats,
-    get_vaporeon_stats: get_vaporeon_stats(context),
+    get_vaporeon_stats,
 
     get_user_kiosks: get_user_kiosks(context),
 

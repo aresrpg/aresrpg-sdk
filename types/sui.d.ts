@@ -84,17 +84,7 @@ export function SDK({ rpc_url, network, }: {
     get_royalty_fee: (item_type: any) => Promise<any>;
     get_supported_tokens: (address: string) => Promise<import("../types.js").SuiToken[]>;
     get_suifren_stats: typeof get_suifren_stats;
-    get_vaporeon_stats: ({ stomach, name }: {
-        stomach?: number;
-        name: any;
-    }) => {
-        movement: number;
-        chance: number;
-        feed_level: number;
-        max_feed_level: number;
-        food_name: string;
-        required_food: number;
-    };
+    get_vaporeon_stats: typeof get_vaporeon_stats;
     get_user_kiosks: ({ tx, address }: {
         tx?: import("@mysten/sui/transactions").Transaction;
         address: any;
@@ -185,6 +175,7 @@ export function SDK({ rpc_url, network, }: {
 }>;
 import { Network } from '@mysten/kiosk';
 import { get_suifren_stats } from './sui/feedable_suifrens.js';
+import { get_vaporeon_stats } from './sui/feedable_vaporeon.js';
 import { SuiClient } from '@mysten/sui/client';
 import { KioskClient } from '@mysten/kiosk';
 import { SuiGraphQLClient } from '@mysten/sui/graphql';
