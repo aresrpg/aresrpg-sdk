@@ -1,3 +1,5 @@
+import alea from 'alea'
+
 import { vec2_dist, vec2_dot, vec2_sub } from './utils/math.js'
 
 const get_board_center = board_bounds => {
@@ -99,8 +101,10 @@ export const sort_by_side = (input_blocks, board) => {
 export const random_select_items = (items, count) => {
   const selected = []
   if (items.length > count) {
+    const prng = alea('fight_boards')
     while (selected.length < count) {
-      const item_index = Math.round(Math.random() * (items.length - 1))
+      const rand = prng()
+      const item_index = Math.round(rand * (items.length - 1))
       const item = items[item_index]
       if (item) {
         selected.push(item)
