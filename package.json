@@ -69,13 +69,13 @@
     "spiralloop": "^1.0.2"
   },
   "peerDependencies": {
-    "@mysten/sui": "^1.17.0",
-    "@mysten/kiosk": "^0.9.33"
+    "@mysten/kiosk": "^0.9.33",
+    "@mysten/sui": "^1.17.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "@typescript-eslint/eslint-plugin": "^8.18.0",
-    "@typescript-eslint/parser": "^8.18.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
     "dotenv": "^16.4.7",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "9.1.0",
