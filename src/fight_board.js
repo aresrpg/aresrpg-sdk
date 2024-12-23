@@ -2,6 +2,8 @@ import alea from 'alea'
 
 import { vec2_dist, vec2_dot, vec2_sub } from './utils/math.js'
 
+const seeded_random = alea('aresrpg')
+
 const get_board_center = board_bounds => {
   const { min: origin, max: end } = board_bounds
   const board_size = vec2_sub(end, origin)
@@ -98,29 +100,34 @@ export const sort_by_side = (input_blocks, board) => {
   return sorted_blocks
 }
 
-export const random_select_items = (items, count) => {
-  const selected = []
-  if (items.length > count) {
-    const prng = alea('fight_boards')
-    while (selected.length < count) {
-      const rand = prng()
-      const item_index = Math.round(rand * (items.length - 1))
-      const item = items[item_index]
-      if (item) {
-        selected.push(item)
-      } else {
-        console.warn(
-          `unexpected, selected index: ${item_index}, items: `,
-          items,
-        )
-      }
+export function get_fight_start_positions({
+  team_1_blocks = [],
+  team_2_blocks = [],
+  max_team_size = 0,
+}) {
+  const select_random_blocks = blocks => {
+    if (blocks.length <= max_team_size) {
+      console.warn(
+        `bad input: max_team_size ${max_team_size} must be lower than provided blocks length ${blocks.length}`,
+      )
+      return []
     }
-  } else {
-    console.warn(
-      `bad input: argument count ${count} must be higher than provided items length ${items.length} `,
-    )
+
+    return Array.from({ length: max_team_size }, () => {
+      const index = Math.floor(seeded_random() * blocks.length)
+      const block = blocks[index]
+
+      if (!block)
+        console.warn(`unexpected, selected index: ${index}, blocks:`, blocks)
+
+      return block
+    }).filter(Boolean)
   }
-  return selected
+
+  return {
+    team_1: select_random_blocks(team_1_blocks),
+    team_2: select_random_blocks(team_2_blocks),
+  }
 }
 
 export { LineOfSight } from './board/line_of_sight.js'
