@@ -111,6 +111,10 @@ export type SuiCharacter = {
   soul: number
   available_points: number
 
+  color_1: number
+  color_2: number
+  color_3: number
+
   vitality: number
   wisdom: number
   strength: number
