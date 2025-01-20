@@ -7,48 +7,15 @@ export function square_array(center: any, max_distance: any): {
     x: number;
     z: number;
 }[];
-export function compress_chunk({ chunkKey, bounds, rawData, margin }: {
-    chunkKey: any;
-    bounds: any;
-    rawData: any;
-    margin: any;
-}): {
-    chunk_key: any;
-    bounds: {
-        min: {
-            x: any;
-            y: any;
-            z: any;
-        };
-        max: {
-            x: any;
-            y: any;
-            z: any;
-        };
-    };
+export function compress_chunk_column(chunks: any): {
+    column_key: any;
+    chunks_metadata: any;
+    chunk_lengths: any;
     compressed_data: string;
-    margin: any;
 };
-export function decompress_chunk(compressed_chunk: any): {
-    chunkKey: any;
-    bounds: {
-        isBox3: boolean;
-        min: {
-            x: any;
-            y: any;
-            z: any;
-        };
-        max: {
-            x: any;
-            y: any;
-            z: any;
-        };
-    };
-    rawData: Uint16Array<ArrayBuffer>;
-    margin: any;
-};
-export function get_compression_stats(chunk: any, compressed_chunk: any): {
-    original_size_bytes: number;
+export function decompress_chunk_column(compressed_column: any): any;
+export function get_column_compression_stats(chunks: any, compressed_column: any): {
+    original_size_bytes: any;
     compressed_size_bytes: number;
     compression_ratio: string;
     space_saved_percentage: string;

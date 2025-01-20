@@ -85,91 +85,100 @@ function decode_run_length(encoded_data) {
   return new Uint16Array(result)
 }
 
-export function compress_chunk({ chunkKey, bounds, rawData, margin }) {
-  // Special case for empty chunks
-  if (rawData.length === 0) {
-    return {
-      chunk_key: chunkKey,
-      bounds: {
-        min: { x: bounds.min.x, y: bounds.min.y, z: bounds.min.z },
-        max: { x: bounds.max.x, y: bounds.max.y, z: bounds.max.z },
-      },
-      compressed_data: '',
-      margin,
-    }
-  }
+export function compress_chunk_column(chunks) {
+  // Combine all rawData from the column into a single array
+  const combined_data = new Uint16Array(
+    chunks.reduce((total, chunk) => total + chunk.rawData.length, 0),
+  )
+  let offset = 0
 
-  const rle_data = encode_run_length(rawData)
+  // Copy each chunk's rawData into the combined array
+  chunks.forEach(chunk => {
+    combined_data.set(chunk.rawData, offset)
+    offset += chunk.rawData.length
+  })
+
+  // Compress the combined data
+  const rle_data = encode_run_length(combined_data)
   const compressed_data = deflate(new Uint8Array(rle_data.buffer))
 
+  // Store the length of each chunk's rawData for reconstruction
+  const chunk_lengths = chunks.map(chunk => chunk.rawData.length)
+
   return {
-    chunk_key: chunkKey,
-    bounds: {
-      min: { x: bounds.min.x, y: bounds.min.y, z: bounds.min.z },
-      max: { x: bounds.max.x, y: bounds.max.y, z: bounds.max.z },
-    },
+    column_key: chunks[0]?.chunkKey.replace(/_\d+_/, '_column_'),
+    chunks_metadata: chunks.map(chunk => ({
+      chunk_key: chunk.chunkKey,
+      bounds: {
+        min: {
+          x: chunk.bounds.min.x,
+          y: chunk.bounds.min.y,
+          z: chunk.bounds.min.z,
+        },
+        max: {
+          x: chunk.bounds.max.x,
+          y: chunk.bounds.max.y,
+          z: chunk.bounds.max.z,
+        },
+      },
+      margin: chunk.margin,
+    })),
+    chunk_lengths,
     compressed_data: Buffer.from(compressed_data).toString('base64'),
-    margin,
   }
 }
 
-export function decompress_chunk(compressed_chunk) {
-  // Special case for empty chunks
-  if (!compressed_chunk.compressed_data) {
-    return {
-      chunkKey: compressed_chunk.chunk_key,
+export function decompress_chunk_column(compressed_column) {
+  if (!compressed_column.compressed_data) {
+    return compressed_column.chunks_metadata.map(metadata => ({
+      chunkKey: metadata.chunk_key,
       bounds: {
         isBox3: true,
-        min: {
-          x: compressed_chunk.bounds.min.x,
-          y: compressed_chunk.bounds.min.y,
-          z: compressed_chunk.bounds.min.z,
-        },
-        max: {
-          x: compressed_chunk.bounds.max.x,
-          y: compressed_chunk.bounds.max.y,
-          z: compressed_chunk.bounds.max.z,
-        },
+        min: metadata.bounds.min,
+        max: metadata.bounds.max,
       },
       rawData: new Uint16Array(),
-      margin: compressed_chunk.margin,
-    }
+      margin: metadata.margin,
+    }))
   }
 
   const compressed_buffer = Buffer.from(
-    compressed_chunk.compressed_data,
+    compressed_column.compressed_data,
     'base64',
   )
   const decompressed_data = inflate(compressed_buffer)
-  const rle_data = new Uint16Array(decompressed_data.buffer)
+  const combined_data = decode_run_length(
+    new Uint16Array(decompressed_data.buffer),
+  )
 
-  return {
-    chunkKey: compressed_chunk.chunk_key,
-    bounds: {
-      isBox3: true,
-      min: {
-        x: compressed_chunk.bounds.min.x,
-        y: compressed_chunk.bounds.min.y,
-        z: compressed_chunk.bounds.min.z,
+  let offset = 0
+  return compressed_column.chunks_metadata.map((metadata, index) => {
+    const length = compressed_column.chunk_lengths[index]
+    const chunk_data = new Uint16Array(combined_data.buffer, offset * 2, length)
+    offset += length
+
+    return {
+      chunkKey: metadata.chunk_key,
+      bounds: {
+        isBox3: true,
+        min: metadata.bounds.min,
+        max: metadata.bounds.max,
       },
-      max: {
-        x: compressed_chunk.bounds.max.x,
-        y: compressed_chunk.bounds.max.y,
-        z: compressed_chunk.bounds.max.z,
-      },
-    },
-    rawData: decode_run_length(rle_data),
-    margin: compressed_chunk.margin,
-  }
+      rawData: chunk_data,
+      margin: metadata.margin,
+    }
+  })
 }
 
-export function get_compression_stats(chunk, compressed_chunk) {
-  const original_size = chunk.rawData.length * 2 // Uint16Array = 2 bytes per element
-  const compressed_size = compressed_chunk.compressed_data
-    ? Buffer.from(compressed_chunk.compressed_data, 'base64').length
+export function get_column_compression_stats(chunks, compressed_column) {
+  const original_size = chunks.reduce(
+    (total, chunk) => total + chunk.rawData.length * 2,
+    0,
+  )
+  const compressed_size = compressed_column.compressed_data
+    ? Buffer.from(compressed_column.compressed_data, 'base64').length
     : 0
 
-  // Handle empty chunk case
   if (original_size === 0) {
     return {
       original_size_bytes: 0,
