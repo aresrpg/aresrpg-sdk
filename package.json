@@ -1,6 +1,6 @@
 {
   "name": "@aresrpg/aresrpg-sdk",
-  "version": "5.0.27",
+  "version": "5.0.28",
   "description": "General SDK to interract with AresRPG",
   "type": "module",
   "scripts": {
