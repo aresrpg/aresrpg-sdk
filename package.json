@@ -70,8 +70,7 @@
   },
   "peerDependencies": {
     "@mysten/kiosk": "^0.10.2",
-    "@mysten/sui": "^1.17.0",
-    "pako": "^2.1.0"
+    "@mysten/sui": "^1.17.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.5",

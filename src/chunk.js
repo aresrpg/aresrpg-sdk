@@ -1,5 +1,4 @@
 import spiral from 'spiralloop'
-import { deflate, inflate } from 'pako'
 
 export const CHUNK_SIZE = 100
 
@@ -85,7 +84,25 @@ function decode_run_length(encoded_data) {
   return new Uint16Array(result)
 }
 
-export function compress_chunk_column(chunks) {
+async function compress_data(data) {
+  const stream = new Blob([data]).stream()
+  const compressed_stream = stream.pipeThrough(new CompressionStream('gzip'))
+  const response = await new Response(compressed_stream)
+  const buffer = await response.arrayBuffer()
+  return Buffer.from(buffer).toString('base64')
+}
+
+async function decompress_data(base64_data) {
+  const compressed_buffer = Buffer.from(base64_data, 'base64')
+  const stream = new Blob([compressed_buffer]).stream()
+  const decompressed_stream = stream.pipeThrough(
+    new DecompressionStream('gzip'),
+  )
+  const response = await new Response(decompressed_stream)
+  return new Uint8Array(await response.arrayBuffer())
+}
+
+export async function compress_chunk_column(chunks) {
   // Combine all rawData from the column into a single array
   const combined_data = new Uint16Array(
     chunks.reduce((total, chunk) => total + chunk.rawData.length, 0),
@@ -100,7 +117,7 @@ export function compress_chunk_column(chunks) {
 
   // Compress the combined data
   const rle_data = encode_run_length(combined_data)
-  const compressed_data = deflate(new Uint8Array(rle_data.buffer))
+  const compressed_data = await compress_data(rle_data)
 
   // Store the length of each chunk's rawData for reconstruction
   const chunk_lengths = chunks.map(chunk => chunk.rawData.length)
@@ -124,11 +141,11 @@ export function compress_chunk_column(chunks) {
       margin: chunk.margin,
     })),
     chunk_lengths,
-    compressed_data: Buffer.from(compressed_data).toString('base64'),
+    compressed_data,
   }
 }
 
-export function decompress_chunk_column(compressed_column) {
+export async function decompress_chunk_column(compressed_column) {
   if (!compressed_column.compressed_data) {
     return compressed_column.chunks_metadata.map(metadata => ({
       chunkKey: metadata.chunk_key,
@@ -142,11 +159,9 @@ export function decompress_chunk_column(compressed_column) {
     }))
   }
 
-  const compressed_buffer = Buffer.from(
+  const decompressed_data = await decompress_data(
     compressed_column.compressed_data,
-    'base64',
   )
-  const decompressed_data = inflate(compressed_buffer)
   const combined_data = decode_run_length(
     new Uint16Array(decompressed_data.buffer),
   )
