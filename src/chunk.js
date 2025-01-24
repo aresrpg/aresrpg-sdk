@@ -1,3 +1,5 @@
+import { Buffer } from 'buffer'
+
 import spiral from 'spiralloop'
 
 export const CHUNK_SIZE = 100
@@ -45,154 +47,139 @@ export function square_array(center, max_distance) {
   return positions
 }
 
-function encode_run_length(raw_data) {
-  if (raw_data.length === 0) {
-    return new Uint16Array()
-  }
+export function encode_run_length(raw_data) {
+  if (raw_data.length === 0) return new Uint16Array()
 
-  const result = []
-  let [current_value] = raw_data
-  let count = 1
+  const initial_state = { result: [], current_value: raw_data[0], count: 1 }
 
-  for (let i = 1; i < raw_data.length; i++) {
-    if (raw_data[i] === current_value && count < 65535) {
-      count++
-    } else {
-      result.push(count, current_value)
-      current_value = raw_data[i]
-      count = 1
+  const final_state = raw_data.slice(1).reduce((state, value) => {
+    if (value === state.current_value && state.count < 65535) {
+      return { ...state, count: state.count + 1 }
     }
-  }
-  result.push(count, current_value)
+    return {
+      result: [...state.result, state.count, state.current_value],
+      current_value: value,
+      count: 1,
+    }
+  }, initial_state)
 
-  return new Uint16Array(result)
+  return new Uint16Array([
+    ...final_state.result,
+    final_state.count,
+    final_state.current_value,
+  ])
 }
 
-function decode_run_length(encoded_data) {
-  if (encoded_data.length === 0) {
-    return new Uint16Array()
-  }
+export function decode_run_length(encoded_data) {
+  if (encoded_data.length === 0) return new Uint16Array()
 
-  const result = []
+  const pairs = Array.from({ length: encoded_data.length / 2 }, (_, i) => ({
+    count: encoded_data[i * 2],
+    value: encoded_data[i * 2 + 1],
+  }))
 
-  for (let i = 0; i < encoded_data.length; i += 2) {
-    const count = encoded_data[i]
-    const value = encoded_data[i + 1]
-    result.push(...Array(count).fill(value))
-  }
-
-  return new Uint16Array(result)
+  const decoded = pairs.flatMap(({ count, value }) => Array(count).fill(value))
+  return new Uint16Array(decoded)
 }
 
 async function compress_data(data) {
-  const stream = new Blob([data]).stream()
-  const compressed_stream = stream.pipeThrough(new CompressionStream('gzip'))
-  const response = await new Response(compressed_stream)
-  const buffer = await response.arrayBuffer()
+  const compressed_stream = new Blob([data])
+    .stream()
+    .pipeThrough(new CompressionStream('gzip'))
+  const buffer = await new Response(compressed_stream).arrayBuffer()
   return Buffer.from(buffer).toString('base64')
 }
 
 async function decompress_data(base64_data) {
   const compressed_buffer = Buffer.from(base64_data, 'base64')
-  const stream = new Blob([compressed_buffer]).stream()
-  const decompressed_stream = stream.pipeThrough(
-    new DecompressionStream('gzip'),
-  )
-  const response = await new Response(decompressed_stream)
-  return new Uint8Array(await response.arrayBuffer())
+  const decompressed_stream = new Blob([compressed_buffer])
+    .stream()
+    .pipeThrough(new DecompressionStream('gzip'))
+  const buffer = await new Response(decompressed_stream).arrayBuffer()
+  return new Uint8Array(buffer)
+}
+
+function create_metadata_buffer(chunks) {
+  const metadata = chunks.map(chunk => ({
+    k: chunk.chunkKey,
+    b: {
+      n: chunk.bounds.min,
+      x: chunk.bounds.max,
+    },
+    m: chunk.margin,
+    l: chunk.rawData.length,
+  }))
+  return new TextEncoder().encode(JSON.stringify(metadata))
 }
 
 export async function compress_chunk_column(chunks) {
-  // Combine all rawData from the column into a single array
+  if (chunks.length === 0) return ''
+
+  const metadata_buffer = create_metadata_buffer(chunks)
+  const metadata_length_buffer = new Uint32Array([metadata_buffer.length])
+
   const combined_data = new Uint16Array(
     chunks.reduce((total, chunk) => total + chunk.rawData.length, 0),
   )
-  let offset = 0
 
-  // Copy each chunk's rawData into the combined array
+  let offset = 0
   chunks.forEach(chunk => {
     combined_data.set(chunk.rawData, offset)
     offset += chunk.rawData.length
   })
 
-  // Compress the combined data
   const rle_data = encode_run_length(combined_data)
-  const compressed_data = await compress_data(rle_data)
+  const compressed_payload = await compress_data(
+    Buffer.concat([
+      Buffer.from(metadata_length_buffer.buffer),
+      metadata_buffer,
+      Buffer.from(rle_data.buffer),
+    ]),
+  )
 
-  // Store the length of each chunk's rawData for reconstruction
-  const chunk_lengths = chunks.map(chunk => chunk.rawData.length)
-
-  return {
-    column_key: chunks[0]?.chunkKey.replace(/_\d+_/, '_column_'),
-    chunks_metadata: chunks.map(chunk => ({
-      chunk_key: chunk.chunkKey,
-      bounds: {
-        min: {
-          x: chunk.bounds.min.x,
-          y: chunk.bounds.min.y,
-          z: chunk.bounds.min.z,
-        },
-        max: {
-          x: chunk.bounds.max.x,
-          y: chunk.bounds.max.y,
-          z: chunk.bounds.max.z,
-        },
-      },
-      margin: chunk.margin,
-    })),
-    chunk_lengths,
-    compressed_data,
-  }
+  return compressed_payload
 }
 
-/** @param {Awaited<ReturnType<compress_chunk_column>>} compressed_column */
-export async function decompress_chunk_column(compressed_column) {
-  if (!compressed_column.compressed_data) {
-    return compressed_column.chunks_metadata.map(metadata => ({
-      chunkKey: metadata.chunk_key,
-      bounds: {
-        isBox3: true,
-        min: metadata.bounds.min,
-        max: metadata.bounds.max,
-      },
-      rawData: new Uint16Array(),
-      margin: metadata.margin,
-    }))
-  }
+export async function decompress_chunk_column(compressed_payload) {
+  if (!compressed_payload) return []
 
-  const decompressed_data = await decompress_data(
-    compressed_column.compressed_data,
+  const decompressed_data = await decompress_data(compressed_payload)
+  const [metadata_length] = new Uint32Array(decompressed_data.buffer, 0, 1)
+
+  const metadata_json = new TextDecoder().decode(
+    decompressed_data.slice(4, 4 + metadata_length),
   )
-  const combined_data = decode_run_length(
-    new Uint16Array(decompressed_data.buffer),
-  )
+  const metadata_list = JSON.parse(metadata_json)
+
+  const data_buffer = decompressed_data.slice(4 + metadata_length)
+  const combined_data = decode_run_length(new Uint16Array(data_buffer.buffer))
 
   let offset = 0
-  return compressed_column.chunks_metadata.map((metadata, index) => {
-    const length = compressed_column.chunk_lengths[index]
-    const chunk_data = new Uint16Array(combined_data.buffer, offset * 2, length)
-    offset += length
+  return metadata_list.map(meta => {
+    const chunk_data = new Uint16Array(combined_data.buffer, offset * 2, meta.l)
+    offset += meta.l
 
     return {
-      chunkKey: metadata.chunk_key,
+      chunkKey: meta.k,
       bounds: {
         isBox3: true,
-        min: metadata.bounds.min,
-        max: metadata.bounds.max,
+        min: meta.b.n,
+        max: meta.b.x,
       },
       rawData: chunk_data,
-      margin: metadata.margin,
+      margin: meta.m,
     }
   })
 }
 
-export function get_column_compression_stats(chunks, compressed_column) {
+export function get_compression_stats(chunks, compressed_payload) {
   const original_size = chunks.reduce(
     (total, chunk) => total + chunk.rawData.length * 2,
     0,
   )
-  const compressed_size = compressed_column.compressed_data
-    ? Buffer.from(compressed_column.compressed_data, 'base64').length
+
+  const compressed_size = compressed_payload
+    ? Buffer.from(compressed_payload, 'base64').length
     : 0
 
   if (original_size === 0) {

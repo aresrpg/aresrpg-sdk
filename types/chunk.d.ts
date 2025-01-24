@@ -7,15 +7,11 @@ export function square_array(center: any, max_distance: any): {
     x: number;
     z: number;
 }[];
-export function compress_chunk_column(chunks: any): Promise<{
-    column_key: any;
-    chunks_metadata: any;
-    chunk_lengths: any;
-    compressed_data: string;
-}>;
-/** @param {Awaited<ReturnType<compress_chunk_column>>} compressed_column */
-export function decompress_chunk_column(compressed_column: Awaited<ReturnType<typeof compress_chunk_column>>): Promise<any>;
-export function get_column_compression_stats(chunks: any, compressed_column: any): {
+export function encode_run_length(raw_data: any): Uint16Array<ArrayBuffer>;
+export function decode_run_length(encoded_data: any): Uint16Array<ArrayBuffer>;
+export function compress_chunk_column(chunks: any): Promise<string>;
+export function decompress_chunk_column(compressed_payload: any): Promise<any>;
+export function get_compression_stats(chunks: any, compressed_payload: any): {
     original_size_bytes: any;
     compressed_size_bytes: number;
     compression_ratio: string;
