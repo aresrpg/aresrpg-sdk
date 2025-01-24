@@ -145,6 +145,7 @@ export async function compress_chunk_column(chunks) {
   }
 }
 
+/** @param {Awaited<ReturnType<compress_chunk_column>>} compressed_column */
 export async function decompress_chunk_column(compressed_column) {
   if (!compressed_column.compressed_data) {
     return compressed_column.chunks_metadata.map(metadata => ({

@@ -13,7 +13,8 @@ export function compress_chunk_column(chunks: any): Promise<{
     chunk_lengths: any;
     compressed_data: string;
 }>;
-export function decompress_chunk_column(compressed_column: any): Promise<any>;
+/** @param {Awaited<ReturnType<compress_chunk_column>>} compressed_column */
+export function decompress_chunk_column(compressed_column: Awaited<ReturnType<typeof compress_chunk_column>>): Promise<any>;
 export function get_column_compression_stats(chunks: any, compressed_column: any): {
     original_size_bytes: any;
     compressed_size_bytes: number;
