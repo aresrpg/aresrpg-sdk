@@ -140,6 +140,22 @@ export async function compress_chunk_column(chunks) {
   return compressed_payload
 }
 
+/**
+ * @typedef {Object} ChunkBounds
+ * @property {boolean} isBox3
+ * @property {number} min
+ * @property {number} max
+ */
+
+/**
+ * @typedef {Object} Chunk
+ * @property {string} chunkKey
+ * @property {ChunkBounds} bounds
+ * @property {Uint16Array} rawData
+ * @property {number} margin
+ */
+
+/** @type {(compressed_payload: string) => Promise<Chunk[]>} */
 export async function decompress_chunk_column(compressed_payload) {
   if (!compressed_payload) return []
 
