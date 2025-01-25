@@ -172,7 +172,7 @@ export async function decompress_chunk_column(compressed_payload) {
 
   let offset = 0
   return metadata_list.map(meta => {
-    const chunk_data = new Uint16Array(combined_data.buffer, offset * 2, meta.l)
+    const chunk_data = combined_data.slice(offset, offset + meta.l)
     offset += meta.l
 
     return {
