@@ -69,22 +69,22 @@
     "spiralloop": "^1.0.2"
   },
   "peerDependencies": {
-    "@mysten/kiosk": "^0.10.2",
-    "@mysten/sui": "^1.17.0"
+    "@mysten/kiosk": "^0.10.4",
+    "@mysten/sui": "^1.21.0"
   },
   "devDependencies": {
-    "@types/node": "^22.10.5",
-    "@typescript-eslint/eslint-plugin": "^8.19.1",
-    "@typescript-eslint/parser": "^8.19.1",
+    "@types/node": "^22.10.10",
+    "@typescript-eslint/eslint-plugin": "^8.21.0",
+    "@typescript-eslint/parser": "^8.21.0",
     "dotenv": "^16.4.7",
     "eslint": "^8.57.1",
-    "eslint-config-prettier": "9.1.0",
+    "eslint-config-prettier": "10.0.1",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "husky": "^4.3.8",
-    "lint-staged": "15.3.0",
+    "lint-staged": "15.4.2",
     "prettier": "3.4.2",
     "typescript": "5.7.3"
   },

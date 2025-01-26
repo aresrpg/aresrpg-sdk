@@ -2,7 +2,7 @@ import { Buffer } from 'buffer'
 
 import spiral from 'spiralloop'
 
-export const CHUNK_SIZE = 100
+export const CHUNK_SIZE = 66
 
 export function to_chunk_position(position) {
   const x = Math.floor(position.x / CHUNK_SIZE)
