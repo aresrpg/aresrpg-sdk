@@ -17,7 +17,7 @@ export function get_compression_stats(chunks: any, compressed_payload: any): {
     compression_ratio: string;
     space_saved_percentage: string;
 };
-export const CHUNK_SIZE: 66;
+export const CHUNK_SIZE: 64;
 export type ChunkBounds = {
     isBox3: boolean;
     min: number;
