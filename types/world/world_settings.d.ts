@@ -32,4 +32,6 @@ export namespace LANDSCAPE {
     let temperate: {};
     let tropical: {};
 }
+/** @type {(schematics_files) => import("@aresrpg/aresrpg-world")["worldEnv"]} */
+export const create_world_settings: (schematics_files: any) => typeof import("@aresrpg/aresrpg-world")["worldEnv"];
 import { BlockType } from '@aresrpg/aresrpg-world';

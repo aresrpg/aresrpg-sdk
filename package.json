@@ -41,13 +41,8 @@
       "types": "./types/items.d.ts"
     },
     "./world": {
-      "import": "./src/world.js",
-      "types": "./types/world.d.ts"
-    },
-    "./schematics": {
-      "browser": "./src/world/schematics.browser.js",
-      "node": "./src/world/schematics.node.js",
-      "default": "./src/world/schematics.browser.js"
+      "browser": "./src/world.browser.js",
+      "node": "./src/world.node.js"
     }
   },
   "publishConfig": {
@@ -78,7 +73,7 @@
     "spiralloop": "^1.0.2"
   },
   "peerDependencies": {
-    "@aresrpg/aresrpg-world": "1.8.10",
+    "@aresrpg/aresrpg-world": "1.9.0",
     "@mysten/kiosk": "^0.10.4",
     "@mysten/sui": "^1.21.0"
   },

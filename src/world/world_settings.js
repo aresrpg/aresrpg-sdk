@@ -1,4 +1,4 @@
-import { BiomeType, BlockType } from '@aresrpg/aresrpg-world'
+import { BiomeType, BlockType, getWorldEnv } from '@aresrpg/aresrpg-world'
 
 import TEMPERATE from './biomes/temperate.js'
 import GRASSLAND from './biomes/grassland.js'
@@ -150,3 +150,38 @@ export const LANDSCAPE = {
   [BiomeType.Temperate]: map_blocks_to_type(TEMPERATE),
   [BiomeType.Tropical]: map_blocks_to_type(TROPICAL),
 }
+
+/** @type {(schematics_files) => import("@aresrpg/aresrpg-world")["worldEnv"]} */
+export const create_world_settings = schematics_files =>
+  getWorldEnv({
+    seeds: {
+      main: 'aresrpg',
+      overrides: {},
+    },
+
+    patchPowSize: 6,
+    cachePowLimit: 2, // 4 => 16 patches radius
+    distributionMapPeriod: 4,
+    patchViewRanges: {
+      near: 4, // undeground view dist
+      far: 8, // ground surface view dist
+    },
+
+    schematics: {
+      globalBlocksMapping: SCHEMATICS_BLOCKS_MAPPING,
+      localBlocksMapping: {},
+      filesIndex: schematics_files,
+    },
+
+    boards: {
+      boardRadius: 15,
+      boardThickness: 3,
+    },
+
+    biomes: {
+      rawConf: LANDSCAPE,
+      seaLevel: 76,
+      periodicity: 8,
+      bilinearInterpolationRange: 0.1, // from 0 to 0.1
+    },
+  })
