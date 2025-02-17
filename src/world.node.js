@@ -1,12 +1,12 @@
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 
-import glob_pkg from 'glob'
+import { glob } from 'glob'
 
 import { create_world_settings } from './world/world_settings.js'
 
 // Synchronously load all files at startup
-const schematic_files = glob_pkg.glob.sync(
+const schematic_files = glob.sync(
   join(dirname(fileURLToPath(import.meta.url)), 'world/schematics/**/*.schem'),
 )
 
