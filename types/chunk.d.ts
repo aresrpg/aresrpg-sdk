@@ -7,25 +7,47 @@ export function square_array(center: any, max_distance: any): {
     x: number;
     z: number;
 }[];
-export function encode_run_length(raw_data: any): Uint16Array<ArrayBuffer>;
-export function decode_run_length(encoded_data: any): Uint16Array<ArrayBuffer>;
-export function compress_chunk_column(chunks: any): Promise<string>;
+/**
+ * Compresses a column of chunks with optimized memory usage
+ * @param {Chunk[]} chunks
+ * @returns {Promise<string>}
+ */
+export function compress_chunk_column(chunks: Chunk[]): Promise<string>;
+/**
+ * Decompresses a base64 encoded chunk column back into an array of chunks
+ * @param {string} compressed_payload
+ * @returns {Promise<Chunk[]>}
+ */
 export function decompress_chunk_column(compressed_payload: string): Promise<Chunk[]>;
-export function get_compression_stats(chunks: any, compressed_payload: any): {
-    original_size_bytes: any;
-    compressed_size_bytes: number;
-    compression_ratio: string;
-    space_saved_percentage: string;
-};
 export const CHUNK_SIZE: 64;
-export type ChunkBounds = {
+export type Box3 = {
     isBox3: boolean;
-    min: number;
-    max: number;
+    min: {
+        x: number;
+        y: number;
+        z: number;
+    };
+    max: {
+        x: number;
+        y: number;
+        z: number;
+    };
+};
+export type Vector2 = {
+    x: number;
+    z: number;
+};
+export type ChunkMetadata = {
+    chunkKey?: string;
+    bounds: Box3;
+    margin?: number;
+    isEmpty?: boolean;
 };
 export type Chunk = {
-    chunkKey: string;
-    bounds: ChunkBounds;
-    rawData: Uint16Array;
-    margin: number;
+    metadata: ChunkMetadata;
+    rawdata: Uint16Array;
+};
+export type ChunkBuffer = {
+    pos: Vector2;
+    content: Uint16Array;
 };
