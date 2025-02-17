@@ -42,7 +42,8 @@
     },
     "./world": {
       "browser": "./src/world.browser.js",
-      "node": "./src/world.node.js"
+      "node": "./src/world.node.js",
+      "types": "./types/world.node.d.ts"
     }
   },
   "publishConfig": {
