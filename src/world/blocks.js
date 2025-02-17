@@ -80,4 +80,6 @@ export const SCHEMATICS_BLOCKS = {
   azalea_leaves: '#77ab2e',
   Spruce_leaves: '#173C17',
   Dark_oak_leaves: '#3F8C3F',
+
+  grass_block: '#41980a',
 }

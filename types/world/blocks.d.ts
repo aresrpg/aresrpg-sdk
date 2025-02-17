@@ -77,4 +77,5 @@ export namespace SCHEMATICS_BLOCKS {
     let azalea_leaves: string;
     let Spruce_leaves: string;
     let Dark_oak_leaves: string;
+    let grass_block: string;
 }
