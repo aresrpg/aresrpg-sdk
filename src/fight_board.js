@@ -1,8 +1,7 @@
-import alea from 'alea'
-
+import Alea from './utils/alea.js'
 import { vec2_dist, vec2_dot, vec2_sub } from './utils/math.js'
 
-const seeded_random = alea('aresrpg')
+const seeded_random = Alea('aresrpg')
 
 const get_board_center = board_bounds => {
   const { min: origin, max: end } = board_bounds
