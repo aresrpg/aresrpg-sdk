@@ -34,6 +34,9 @@ const SCHEMATICS_FILES = Object.fromEntries(
   }),
 )
 
+if (!SCHEMATICS_FILES.length)
+  throw new Error(`No schematics found, path: ${SCHEMATICS_DIR}`)
+
 export {
   hex_to_int,
   BLOCKS_COLOR_MAPPING,

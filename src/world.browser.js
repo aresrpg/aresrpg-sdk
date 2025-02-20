@@ -1,7 +1,7 @@
 import { create_world_settings } from './world/world_settings.js'
 
 // @ts-ignore
-const schematic_files = import.meta.glob('/src/world/schematics/**/*.schem', {
+const schematic_files = import.meta.glob('./world/schematics/**/*.schem', {
   eager: true,
   import: 'default',
   query: '?url',
@@ -9,12 +9,14 @@ const schematic_files = import.meta.glob('/src/world/schematics/**/*.schem', {
 
 const SCHEMATICS_FILES = Object.fromEntries(
   Object.entries(schematic_files).map(([path, url]) => {
-    // Extract the path after 'terrain/' and before '.schem'
-    const match = path.match(/terrain\/(.+)\.schem/)
-    const relative_path = match ? match[1] : path
-    return [relative_path, url]
+    // Extract everything after 'schematics/' and before '.schem'
+    const [, name] = path.match(/schematics\/(.+)\.schem/)
+    return [name, url]
   }),
 )
+
+if (!Object.keys(SCHEMATICS_FILES).length)
+  throw new Error('No schematics found')
 
 export {
   hex_to_int,
