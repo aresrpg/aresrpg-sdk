@@ -34,7 +34,7 @@ const SCHEMATICS_FILES = Object.fromEntries(
   }),
 )
 
-if (!SCHEMATICS_FILES.length)
+if (!Object.keys(SCHEMATICS_FILES).length)
   throw new Error(`No schematics found, path: ${SCHEMATICS_DIR}`)
 
 export {
