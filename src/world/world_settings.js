@@ -1,4 +1,9 @@
-import { BiomeType, BlockType, getWorldEnv } from '@aresrpg/aresrpg-world'
+import {
+  applyWorldEnv,
+  BiomeType,
+  BlockType,
+  getWorldEnv,
+} from '@aresrpg/aresrpg-world'
 
 import TEMPERATE from './biomes/temperate.js'
 import GRASSLAND from './biomes/grassland.js'
@@ -152,8 +157,8 @@ export const LANDSCAPE = {
 }
 
 /** @type {(schematics_files) => import("@aresrpg/aresrpg-world")["worldEnv"]} */
-export const create_world_settings = schematics_files =>
-  getWorldEnv({
+export const create_world_settings = schematics_files => {
+  const settings = getWorldEnv({
     seeds: {
       main: 'aresrpg',
       overrides: {},
@@ -185,3 +190,9 @@ export const create_world_settings = schematics_files =>
       bilinearInterpolationRange: 0.1, // from 0 to 0.1
     },
   })
+
+  // TODO: This is a global mutation and should be avoided
+  applyWorldEnv(settings.rawSettings)
+
+  return settings
+}
