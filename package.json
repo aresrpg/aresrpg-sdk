@@ -73,12 +73,12 @@
     "spiralloop": "^1.0.2"
   },
   "peerDependencies": {
-    "@aresrpg/aresrpg-world": "^1.9.15",
+    "@aresrpg/aresrpg-world": "1.9.19",
     "@mysten/kiosk": "^0.10.4",
     "@mysten/sui": "^1.21.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.4",
+    "@types/node": "^22.13.5",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "^8.24.1",
     "dotenv": "^16.4.7",
@@ -90,7 +90,7 @@
     "eslint-plugin-promise": "^6.6.0",
     "husky": "^4.3.8",
     "lint-staged": "15.4.3",
-    "prettier": "3.5.1",
+    "prettier": "3.5.2",
     "typescript": "5.7.3"
   },
   "husky": {

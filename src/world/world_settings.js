@@ -186,7 +186,7 @@ export const create_world_settings = schematics_files => {
     biomes: {
       rawConf: LANDSCAPE,
       seaLevel: 76,
-      periodicity: 8,
+      periodicity: 8, // size of the biomes
       bilinearInterpolationRange: 0.1, // from 0 to 0.1
     },
   })
