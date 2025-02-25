@@ -171,6 +171,8 @@ export function SDK({ rpc_url, network, }: {
     LATEST_PACKAGE_ID: string;
     sui_client: SuiClient;
     kiosk_client: KioskClient;
+    backup_sui_client: SuiClient;
+    backup_kiosk_client: KioskClient;
     gql_client: SuiGraphQLClient<{}>;
 }>;
 import { Network } from '@mysten/kiosk';

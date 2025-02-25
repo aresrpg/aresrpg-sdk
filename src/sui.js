@@ -53,6 +53,16 @@ export async function SDK({
         }
       : {}),
   })
+  const backup_sui_client = new SuiClient({
+    url:
+      network === Network.TESTNET
+        ? 'https://sui-testnet-rpc.publicnode.com'
+        : 'https://sui-mainnet-rpc.publicnode.com',
+  })
+  const backup_kiosk_client = new KioskClient({
+    client: backup_sui_client,
+    network,
+  })
 
   const gql_client = new SuiGraphQLClient({
     url: `https://sui-${network}.mystenlabs.com/graphql`,
@@ -85,6 +95,8 @@ export async function SDK({
   return {
     sui_client,
     kiosk_client,
+    backup_sui_client,
+    backup_kiosk_client,
     gql_client,
     ...types,
     SUPPORTED_TOKENS: supported_tokens,
