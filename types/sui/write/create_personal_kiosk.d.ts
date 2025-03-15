@@ -6,5 +6,5 @@ export function create_personal_kiosk({ kiosk_client }: import("../../../types.j
     kiosk_id: import("@mysten/sui/transactions").TransactionObjectArgument;
     kiosk_cap: import("@mysten/sui/transactions").TransactionObjectArgument;
 }>;
-import { Transaction } from '@mysten/sui/transactions';
 import { KioskTransaction } from '@mysten/kiosk';
+import { Transaction } from '@mysten/sui/transactions';
