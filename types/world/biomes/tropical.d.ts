@@ -70,6 +70,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G2': number;
             'trees/TROPICAL_NORMAL_TREE_G3': number;
             'trees/TROPICAL_NORMAL_TREE_G4': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -95,6 +97,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G2': number;
             'trees/TROPICAL_NORMAL_TREE_G3': number;
             'trees/TROPICAL_NORMAL_TREE_G4': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -121,6 +125,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G7': number;
             'trees/TROPICAL_NORMAL_TREE_G8': number;
             'trees/TROPICAL_NORMAL_TREE_G9': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -146,6 +152,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G11': number;
             'trees/TROPICAL_NORMAL_TREE_G12': number;
             'trees/TROPICAL_NORMAL_TREE_G13': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -166,6 +174,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     10: {
         x: number;
@@ -174,6 +194,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     11: {
         x: number;
@@ -182,6 +214,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     12: {
         x: number;
@@ -190,6 +234,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     13: {
         x: number;
@@ -198,6 +254,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     14: {
         x: number;
@@ -206,6 +274,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     15: {
         x: number;
@@ -214,6 +294,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     16: {
         x: number;
@@ -222,6 +314,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     17: {
         x: number;
@@ -230,6 +334,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     18: {
         x: number;
@@ -238,6 +354,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     19: {
         x: number;
@@ -246,6 +374,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     20: {
         x: number;
@@ -254,6 +394,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     21: {
         x: number;
@@ -262,6 +414,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_BUISSON_G1': number;
+            'trees/TROPICAL_BUISSON_G2': number;
+            'trees/TROPICAL_BUISSON_G3': number;
+            'trees/TROPICAL_BUISSON_G4': number;
+            'trees/TROPICAL_BUISSON_G5': number;
+            'trees/TROPICAL_BUISSON_G6': number;
+            'trees/TROPICAL_BUISSON_G7': number;
+            'trees/TROPICAL_BUISSON_G8': number;
+            'trees/TROPICAL_BUISSON_G9': number;
+            void: number;
+        };
     };
     22: {
         x: number;
@@ -275,6 +439,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G11': number;
             'trees/TROPICAL_NORMAL_TREE_G12': number;
             'trees/TROPICAL_NORMAL_TREE_G13': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -301,6 +467,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G7': number;
             'trees/TROPICAL_NORMAL_TREE_G8': number;
             'trees/TROPICAL_NORMAL_TREE_G9': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -326,6 +494,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G2': number;
             'trees/TROPICAL_NORMAL_TREE_G3': number;
             'trees/TROPICAL_NORMAL_TREE_G4': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;
@@ -351,6 +521,8 @@ declare const _default: {
             'trees/TROPICAL_NORMAL_TREE_G2': number;
             'trees/TROPICAL_NORMAL_TREE_G3': number;
             'trees/TROPICAL_NORMAL_TREE_G4': number;
+            'trees/TROPICAL_CARNIVOR_G1': number;
+            'trees/TROPICAL_PLANTE_G1': number;
             'trees/DESERT_TREE_G1': number;
             'trees/DESERT_TREE_G2': number;
             'trees/DESERT_TREE_G3': number;

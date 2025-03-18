@@ -46,6 +46,16 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_NORMAL_TREE_G2': number;
+            'trees/TROPICAL_NORMAL_TREE_G3': number;
+            'trees/TROPICAL_NORMAL_TREE_G4': number;
+            'trees/TROPICAL_NORMAL_TREE_G5': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     7: {
         x: number;
@@ -54,6 +64,16 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/TROPICAL_NORMAL_TREE_G2': number;
+            'trees/TROPICAL_NORMAL_TREE_G3': number;
+            'trees/TROPICAL_NORMAL_TREE_G4': number;
+            'trees/TROPICAL_NORMAL_TREE_G5': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     8: {
         x: number;
@@ -62,6 +82,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     9: {
         x: number;
@@ -70,6 +102,18 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     10: {
         x: number;
@@ -78,6 +122,26 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     11: {
         x: number;
@@ -86,6 +150,26 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     12: {
         x: number;
@@ -94,6 +178,20 @@ declare const _default: {
         subtype: string;
         fadeIn: number;
         fadeOut: number;
+        flora: {
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            'rocks/DESERT_PYRAMIDE_G1': number;
+            'rocks/DESERT_PYRAMIDE_G2': number;
+            'rocks/DESERT_PYRAMIDE_G3': number;
+            void: number;
+        };
     };
     13: {
         x: number;
@@ -240,6 +338,197 @@ declare const _default: {
         fadeOut: number;
     };
     31: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            void: number;
+        };
+    };
+    32: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            void: number;
+        };
+    };
+    33: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            void: number;
+        };
+    };
+    34: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_TREE_G1': number;
+            'trees/DESERT_TREE_G2': number;
+            'trees/DESERT_TREE_G3': number;
+            'trees/DESERT_TREE_G4': number;
+            'trees/DESERT_TREE_G5': number;
+            'trees/DESERT_TREE_G6': number;
+            void: number;
+        };
+    };
+    35: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+    };
+    36: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_CACTUS_G1': number;
+            'trees/DESERT_CACTUS_G2': number;
+            'trees/DESERT_CACTUS_G3': number;
+            'trees/DESERT_CACTUS_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            void: number;
+        };
+    };
+    37: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_CACTUS_G1': number;
+            'trees/DESERT_CACTUS_G2': number;
+            'trees/DESERT_CACTUS_G3': number;
+            'trees/DESERT_CACTUS_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            void: number;
+        };
+    };
+    38: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_CACTUS_G1': number;
+            'trees/DESERT_CACTUS_G2': number;
+            'trees/DESERT_CACTUS_G3': number;
+            'trees/DESERT_CACTUS_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            void: number;
+        };
+    };
+    39: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_CACTUS_G1': number;
+            'trees/DESERT_CACTUS_G2': number;
+            'trees/DESERT_CACTUS_G3': number;
+            'trees/DESERT_CACTUS_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            void: number;
+        };
+    };
+    40: {
+        x: number;
+        y: number;
+        type: string;
+        subtype: string;
+        fadeIn: number;
+        fadeOut: number;
+        flora: {
+            'trees/DESERT_CACTUS_G1': number;
+            'trees/DESERT_CACTUS_G2': number;
+            'trees/DESERT_CACTUS_G3': number;
+            'trees/DESERT_CACTUS_G4': number;
+            'trees/DESERT_DEAD_TREE_G1': number;
+            'trees/DESERT_DEAD_TREE_G2': number;
+            'trees/DESERT_DEAD_TREE_G3': number;
+            'trees/DESERT_DEAD_TREE_G4': number;
+            'rocks/DESERT_BIG_ROCK_G1': number;
+            'rocks/DESERT_BIG_ROCK_G2': number;
+            'rocks/DESERT_BIG_ROCK_G3': number;
+            'rocks/DESERT_BIG_ROCK_G4': number;
+            void: number;
+        };
+    };
+    41: {
         x: number;
         y: number;
         type: string;
