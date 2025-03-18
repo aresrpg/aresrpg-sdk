@@ -1,8 +1,8 @@
 import {
-  applyWorldEnv,
   BiomeType,
   BlockType,
-  getWorldEnv,
+  WorldLocals,
+  WorldSeed,
 } from '@aresrpg/aresrpg-world'
 
 import TEMPERATE from './biomes/temperate.js'
@@ -156,43 +156,67 @@ export const LANDSCAPE = {
   [BiomeType.Tropical]: map_blocks_to_type(TROPICAL),
 }
 
-/** @type {(schematics_files) => import("@aresrpg/aresrpg-world")["worldEnv"]} */
 export const create_world_settings = schematics_files => {
-  const settings = getWorldEnv({
+  const settings = new WorldLocals()
+  settings.rawSettings = {
     seeds: {
-      main: 'aresrpg',
-      overrides: {},
+      [WorldSeed.Global]: 'aresrpg',
+      [WorldSeed.Heightmap]: 'heightmap',
+      [WorldSeed.Amplitude]: 'amplitude',
+      [WorldSeed.Heatmap]: 'heatmap',
+      [WorldSeed.Rainmap]: 'rainmap',
+      [WorldSeed.RandomPos]: 'random_pos',
+      [WorldSeed.Spawn]: 'spawn',
+      [WorldSeed.Density]: 'density',
     },
 
-    patchPowSize: 6,
+    patchPowSize: 6, // as a power of two
+    // max cache radius as a power of two
     cachePowLimit: 2, // 4 => 16 patches radius
     distributionMapPeriod: 4,
+
+    // in patch unit
     patchViewRanges: {
       near: 4, // undeground view dist
       far: 8, // ground surface view dist
     },
 
-    schematics: {
-      globalBlocksMapping: SCHEMATICS_BLOCKS_MAPPING,
-      localBlocksMapping: {},
-      filesIndex: schematics_files,
+    chunks: {
+      verticalRange: {
+        bottomId: 0,
+        topId: 5,
+      },
     },
 
-    boards: {
-      boardRadius: 15,
-      boardThickness: 3,
+    items: {
+      schematics: {
+        globalBlocksMapping: SCHEMATICS_BLOCKS_MAPPING,
+        localBlocksMapping: {},
+        filesIndex: schematics_files,
+      },
+      proceduralConfigs: {},
+    },
+
+    heightmap: {
+      spreading: 0.42,
+      harmonics: 6,
     },
 
     biomes: {
       rawConf: LANDSCAPE,
       seaLevel: 76,
       periodicity: 8, // size of the biomes
-      bilinearInterpolationRange: 0.1, // from 0 to 0.1
+      repartition: {
+        centralHalfSegment: 0.15, // half range of central segment in proportion to first and last symetrical segments
+        transitionHalfRange: 0.05, // bilinear interpolation: 0 = no transition, 0.05 = max transition
+      },
     },
-  })
 
-  // TODO: This is a global mutation and should be avoided
-  applyWorldEnv(settings.rawSettings)
+    boards: {
+      radius: 15,
+      thickness: 3,
+    },
+  }
 
   return settings
 }

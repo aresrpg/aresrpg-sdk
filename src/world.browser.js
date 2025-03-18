@@ -24,5 +24,4 @@ export {
   color_to_block_type,
 } from './world/world_settings.js'
 
-/** @type {import("@aresrpg/aresrpg-world")["worldEnv"]} */
 export const world_settings = create_world_settings(SCHEMATICS_FILES)
