@@ -205,7 +205,7 @@ export const create_world_settings = schematics_files => {
     biomes: {
       rawConf: LANDSCAPE,
       seaLevel: 76,
-      periodicity: 8, // size of the biomes
+      periodicity: 10, // size of the biomes
       repartition: {
         centralHalfSegment: 0.15, // half range of central segment in proportion to first and last symetrical segments
         transitionHalfRange: 0.05, // bilinear interpolation: 0 = no transition, 0.05 = max transition

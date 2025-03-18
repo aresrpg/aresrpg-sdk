@@ -1,6 +1,9 @@
 export namespace BLOCKS {
     let TEMPO: string;
     let GRASS: string;
+    let GRASS_GRASSLAND: string;
+    let GRASS_GRASSLAND_V2: string;
+    let GRASS_SWAMP: string;
     namespace GRASS_TEMPERATE {
         let color: string;
         let emission: number;
@@ -16,7 +19,13 @@ export namespace BLOCKS {
     let VIBRANT_GRASS: string;
     let MUD: string;
     let BLACKSTONE: string;
-    let RED_CONCRETE: string;
+    let SCORCHED_STONE: string;
+    namespace RED_CONCRETE {
+        let color_1: string;
+        export { color_1 as color };
+        let emission_1: number;
+        export { emission_1 as emission };
+    }
     let COLD_WATER: string;
     let BROWN_GRASS: string;
     let LIGHT_ICE: string;
@@ -27,31 +36,52 @@ export namespace BLOCKS {
 export namespace SCHEMATICS_BLOCKS {
     let gray_stained_glass_pane: string;
     let stone_bricks: string;
-    let cyan_terracotta: string;
-    let clay: string;
     let light_gray_wool: string;
     let smoorth_quartz: string;
     let quartz_pillar: string;
     let prismarine_bricks: string;
     let nether_bricks: string;
-    let light_gray_concrete: string;
-    let basalt: string;
-    let smooth_basalt: string;
     let granit: string;
+    let pink_stained_glass: string;
+    let White_concrete: string;
+    let light_gray_concrete: string;
     let Green_concrete: string;
+    let Yellow_concrete: string;
     let Black_concrete: string;
+    let white_terracotta: string;
+    let Cyan_terracotta: string;
     let Green_terracotta: string;
+    let Lime_terracotta: string;
     let Orange_terracotta: string;
+    let cyan_terracotta: string;
+    let Light_gray_terracotta: string;
+    let Red_terracotta: string;
+    let Purple_terracotta: string;
+    let Magenta_terracotta: string;
+    let pink_terracotta: string;
+    let Terracotta: string;
+    let pink_wool: string;
     let Red_wool: string;
     let Lime_wool: string;
     let Magenta_wool: string;
     let Purple_wool: string;
     let Cyan_wool: string;
     let Yellow_wool: string;
-    let red_concrete: string;
+    namespace red_concrete {
+        let color_2: string;
+        export { color_2 as color };
+        let emission_2: number;
+        export { emission_2 as emission };
+    }
+    let Dirt: string;
+    let Podzol: string;
+    let Coarse_dirt: string;
     let Snow_block: string;
     let Andesite: string;
     let Gravel: string;
+    let clay: string;
+    let basalt: string;
+    let smooth_basalt: string;
     let Cobblestone: string;
     let Mossy_cobblestone: string;
     let Smooth_red_sandstone: string;
@@ -59,6 +89,7 @@ export namespace SCHEMATICS_BLOCKS {
     let Cut_sandstone: string;
     let Packed_ice: string;
     let Blue_ice: string;
+    let dark_oak_log: string;
     let jungle_wood: string;
     let Dark_oak_wood: string;
     let Spruce_wood: string;
