@@ -73,7 +73,7 @@
     "spiralloop": "^1.0.2"
   },
   "peerDependencies": {
-    "@aresrpg/aresrpg-world": "2.0.1",
+    "@aresrpg/aresrpg-world": "^2.0.2",
     "@mysten/kiosk": "^0.11.1",
     "@mysten/sui": "^1.21.0"
   },

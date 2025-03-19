@@ -207,7 +207,7 @@ export const create_world_settings = schematics_files => {
       seaLevel: 76,
       periodicity: 10, // size of the biomes
       repartition: {
-        centralHalfSegment: 0.15, // half range of central segment in proportion to first and last symetrical segments
+        centralHalfSegment: 0.07, // half range of central segment in proportion to first and last symetrical segments
         transitionHalfRange: 0.05, // bilinear interpolation: 0 = no transition, 0.05 = max transition
       },
     },
