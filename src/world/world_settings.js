@@ -159,6 +159,8 @@ export const LANDSCAPE = {
 export const create_world_settings = schematics_files => {
   const settings = new WorldLocals()
   settings.rawSettings = {
+    ...settings.rawSettings,
+
     seeds: {
       [WorldSeed.Global]: 'aresrpg',
       [WorldSeed.Heightmap]: 'heightmap',
@@ -170,18 +172,9 @@ export const create_world_settings = schematics_files => {
       [WorldSeed.Density]: 'density',
     },
 
-    patchPowSize: 6, // as a power of two
-    // max cache radius as a power of two
-    cachePowLimit: 2, // 4 => 16 patches radius
-    distributionMapPeriod: 4,
-
-    // in patch unit
-    patchViewRanges: {
-      near: 4, // undeground view dist
-      far: 8, // ground surface view dist
-    },
-
     chunks: {
+      powSize: 6,
+      // idRange
       verticalRange: {
         bottomId: 0,
         topId: 5,
