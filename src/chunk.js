@@ -123,7 +123,7 @@ function create_metadata_buffer(chunks) {
     k: chunk.metadata.chunkKey,
     b: { n: chunk.metadata.bounds.min, x: chunk.metadata.bounds.max },
     m: chunk.metadata.margin,
-    l: chunk.rawdata.length,
+    l: chunk.rawdata?.length || 0,
   }))
   return new TextEncoder().encode(JSON.stringify(metadata))
 }
@@ -139,7 +139,7 @@ function combine_chunks(chunks, total_length) {
   let offset = 0
 
   for (const chunk of chunks) {
-    combined.set(chunk.rawdata, offset)
+    combined.set(chunk.rawdata ?? [], offset)
     offset += chunk.rawdata.length
   }
 
@@ -156,7 +156,7 @@ export async function compress_chunk_column(chunks) {
 
   // Sum total length in a single pass
   const total_length = chunks.reduce(
-    (sum, chunk) => sum + chunk.rawdata.length,
+    (sum, chunk) => sum + (chunk.rawdata?.length || 0),
     0,
   )
 
