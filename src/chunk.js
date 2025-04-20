@@ -140,7 +140,7 @@ function combine_chunks(chunks, total_length) {
 
   for (const chunk of chunks) {
     combined.set(chunk.rawdata ?? [], offset)
-    offset += chunk.rawdata.length
+    offset += chunk.rawdata?.length ?? 0
   }
 
   return combined
