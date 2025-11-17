@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { writeFile } from 'fs/promises'
 
 const DamageEffect = ({
@@ -354,5 +353,5 @@ await writeFile(
   JSON.stringify({
     iop,
     sram,
-  }),
+  })
 )

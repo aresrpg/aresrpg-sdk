@@ -119,7 +119,7 @@ function encode_run_length(raw_data) {
  * @returns {Uint8Array}
  */
 function create_metadata_buffer(chunks) {
-  const metadata = chunks.map(chunk => ({
+  const metadata = chunks.map((chunk) => ({
     k: chunk.metadata.chunkKey,
     b: { n: chunk.metadata.bounds.min, x: chunk.metadata.bounds.max },
     m: chunk.metadata.margin,
@@ -157,7 +157,7 @@ export async function compress_chunk_column(chunks) {
   // Sum total length in a single pass
   const total_length = chunks.reduce(
     (sum, chunk) => sum + (chunk.rawdata?.length || 0),
-    0,
+    0
   )
 
   // Create metadata and combine chunks
@@ -176,9 +176,7 @@ export async function compress_chunk_column(chunks) {
 
   // Compress in one pass
   const compressed = await new Response(
-    new Blob([final_buffer])
-      .stream()
-      .pipeThrough(new CompressionStream('gzip')),
+    new Blob([final_buffer]).stream().pipeThrough(new CompressionStream('gzip'))
   ).arrayBuffer()
 
   return Buffer.from(compressed).toString('base64')
@@ -226,7 +224,7 @@ export async function decompress_chunk_column(compressed_payload) {
   const decompressed_buffer = await new Response(
     new Blob([compressed_buffer])
       .stream()
-      .pipeThrough(new DecompressionStream('gzip')),
+      .pipeThrough(new DecompressionStream('gzip'))
   ).arrayBuffer()
 
   const decompressed_data = new Uint8Array(decompressed_buffer)
@@ -234,7 +232,7 @@ export async function decompress_chunk_column(compressed_payload) {
   // Extract metadata length and content
   const [metadata_length] = new Uint32Array(decompressed_buffer, 0, 1)
   const metadata_json = new TextDecoder().decode(
-    decompressed_data.slice(4, 4 + metadata_length),
+    decompressed_data.slice(4, 4 + metadata_length)
   )
   const metadata_list = JSON.parse(metadata_json)
 
@@ -244,7 +242,7 @@ export async function decompress_chunk_column(compressed_payload) {
 
   // Reconstruct chunks
   let offset = 0
-  return metadata_list.map(meta => {
+  return metadata_list.map((meta) => {
     const chunk_data = combined_data.slice(offset, offset + meta.l)
     offset += meta.l
 

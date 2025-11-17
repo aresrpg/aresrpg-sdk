@@ -61,14 +61,14 @@ async function parse_created_objects(transaction_digest, client) {
 
           return [`${module_name}::${raw_type}`, objectId]
         })
-        .filter(([key]) => key !== null),
+        .filter(([key]) => key !== null)
     ),
   }
 }
 
 /** @typedef {ReturnType<typeof parse_result>} SuiIds */
 
-const parse_result = parsed => {
+const parse_result = (parsed) => {
   const result = {
     DISPLAY_CHARACTER: parsed['Display<character::Character>'],
     NAME_REGISTRY: parsed['character_registry::NameRegistry'],

@@ -3,7 +3,7 @@ import { vec2_dist, vec2_dot, vec2_sub } from './utils/math.js'
 
 const seeded_random = Alea('aresrpg')
 
-const get_board_center = board_bounds => {
+const get_board_center = (board_bounds) => {
   const { min: origin, max: end } = board_bounds
   const board_size = vec2_sub(end, origin)
   const board_center = {
@@ -34,19 +34,19 @@ export function* iter_board_data(board) {
   }
 }
 
-export const extract_border_blocks = board => {
+export const extract_border_blocks = (board) => {
   const { min: origin, max: end } = board.bounds
   const board_size = vec2_sub(end, origin)
   const border_blocks = []
   const blocks = iter_board_data(board)
-  const is_edge_block = block_index => {
+  const is_edge_block = (block_index) => {
     const neighbours = [
       block_index - 1,
       block_index + 1,
       block_index + board_size.x,
       block_index - board_size.x,
-    ].map(index => board.content[index])
-    return neighbours.filter(val => val).length < neighbours.length
+    ].map((index) => board.content[index])
+    return neighbours.filter((val) => val).length < neighbours.length
   }
 
   for (const block of blocks) {
@@ -57,7 +57,7 @@ export const extract_border_blocks = board => {
   return border_blocks
 }
 
-export const find_split_axis = board => {
+export const find_split_axis = (board) => {
   // find nearest edge block from board center
   const board_center = get_board_center(board.bounds)
   let nearest_edge = board.bounds.max
@@ -83,7 +83,7 @@ export const sort_by_side = (input_blocks, board) => {
   const board_center = get_board_center(board.bounds)
   const split_axis = find_split_axis(board)
   const project_axis = { x: split_axis.y, y: -split_axis.x }
-  const is_first_side = pos => {
+  const is_first_side = (pos) => {
     const diff = vec2_sub(pos, board_center)
     const projection = vec2_dot(diff, project_axis)
     return projection < 0
@@ -104,10 +104,10 @@ export function get_fight_start_positions({
   team_2_blocks = [],
   max_team_size = 0,
 }) {
-  const select_random_blocks = blocks => {
+  const select_random_blocks = (blocks) => {
     if (blocks.length <= max_team_size) {
       console.warn(
-        `bad input: max_team_size ${max_team_size} must be lower than provided blocks length ${blocks.length}`,
+        `bad input: max_team_size ${max_team_size} must be lower than provided blocks length ${blocks.length}`
       )
       return []
     }

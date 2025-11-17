@@ -2,7 +2,7 @@ import { Transaction } from '@mysten/sui/transactions'
 
 function borrow_kiosk_cap({ kiosk_client, tx, personal_kiosk_cap_id }) {
   const personal_kiosk_package_id = kiosk_client.getRulePackageId(
-    'personalKioskRulePackageId',
+    'personalKioskRulePackageId'
   )
 
   const [kiosk_cap, promise] = tx.moveCall({
@@ -50,7 +50,7 @@ export function get_user_kiosks({ kiosk_client }) {
         }
 
         return [kioskId, get_kiosk_cap]
-      }),
+      })
     )
     const kiosk_cap_ref = new Map()
 
@@ -66,7 +66,7 @@ export function get_user_kiosks({ kiosk_client }) {
       get_kiosk_cap_ref,
       kiosks,
       finalize() {
-        finalizations.forEach(finalize => finalize())
+        finalizations.forEach((finalize) => finalize())
       },
     }
   }

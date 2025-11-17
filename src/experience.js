@@ -112,7 +112,7 @@ const reversed_levels = [...levels.entries()].reverse()
  */
 export function experience_to_level(total_experience) {
   const [current_level] = reversed_levels.find(
-    ([, level_experience]) => level_experience <= total_experience,
+    ([, level_experience]) => level_experience <= total_experience
   ) ?? [levels.length]
 
   if (current_level + 1 >= levels.length) return levels.length - 1

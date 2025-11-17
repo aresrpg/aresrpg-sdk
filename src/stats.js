@@ -67,7 +67,7 @@ export function get_total_stat(character, stat) {
     relic_6,
     title,
   ]
-  const item_stats = items.map(item => get_item_stat(item, stat))
+  const item_stats = items.map((item) => get_item_stat(item, stat))
   return (
     get_base_stat(character, stat) +
     item_stats.reduce((acc, val) => acc + val, 0)

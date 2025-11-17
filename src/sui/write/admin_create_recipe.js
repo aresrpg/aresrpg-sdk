@@ -13,7 +13,7 @@ export function admin_create_recipe({ types }) {
   }) => {
     const admin = tx.object(admin_cap)
 
-    const ingredients_refs = ingredients.map(ingredient => {
+    const ingredients_refs = ingredients.map((ingredient) => {
       const [ingredient_ref] = tx.moveCall({
         target: `${types.LATEST_PACKAGE_ID}::item_recipe::admin_create_ingredient`,
         arguments: [
@@ -93,7 +93,7 @@ export function admin_create_recipe({ types }) {
           ],
         })
         return result
-      },
+      }
     )
 
     const [template_ref] = tx.moveCall({

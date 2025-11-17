@@ -38,7 +38,7 @@ export const ANIMA_CHARACTER = {
   mainnet: '',
 }
 
-export const SUPPORTED_NFTS = network => {
+export const SUPPORTED_NFTS = (network) => {
   const result = {
     [AFEGG[network]]: {
       item_category: ITEM_CATEGORY.PET,

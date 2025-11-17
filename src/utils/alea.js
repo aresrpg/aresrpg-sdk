@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 // From http://baagoe.com/en/RandomMusings/javascript/
 
 function Mash() {
   let n = 0xefc8249d
 
-  const mash = data => {
+  const mash = (data) => {
     const str = String(data)
     for (let i = 0; i < str.length; i++) {
       n += str.charCodeAt(i)
@@ -63,7 +62,7 @@ export default function Alea(...args) {
   random.args = args
 
   random.exportState = () => [s0, s1, s2, c]
-  random.importState = state => {
+  random.importState = (state) => {
     s0 = +state[0] || 0
     s1 = +state[1] || 0
     s2 = +state[2] || 0

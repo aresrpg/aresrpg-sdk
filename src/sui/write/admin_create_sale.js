@@ -75,7 +75,7 @@ export function admin_create_sale({ types }) {
           ],
         })
         return result
-      },
+      }
     )
 
     const [template_ref] = tx.moveCall({

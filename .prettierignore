@@ -1,3 +1,4 @@
-/world
-/types
-/data
+coverage/
+node_modules/
+dist/
+*.log

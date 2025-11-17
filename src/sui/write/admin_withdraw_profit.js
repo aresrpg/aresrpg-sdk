@@ -15,7 +15,7 @@ export function admin_withdraw_profit(context) {
       {
         type: `${types.PACKAGE_ID}::item::Item`,
         address,
-      },
+      }
     )
 
     const [vaporeon_policy_cap] =
@@ -27,7 +27,7 @@ export function admin_withdraw_profit(context) {
 
     console.dir(
       { character_policy_cap, item_policy_cap, vaporeon_policy_cap },
-      { depth: Infinity },
+      { depth: Infinity }
     )
 
     const character_ttx = new TransferPolicyTransaction({

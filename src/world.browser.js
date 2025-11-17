@@ -12,7 +12,7 @@ const SCHEMATICS_FILES = Object.fromEntries(
     // Extract everything after 'schematics/' and before '.schem'
     const [, name] = path.match(/schematics\/(.+)\.schem/)
     return [name, url]
-  }),
+  })
 )
 
 if (!Object.keys(SCHEMATICS_FILES).length)

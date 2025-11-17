@@ -1,6 +1,6 @@
 /** @param {import("../../../types.js").Context} context */
 export function get_royalty_fee({ sui_client, kiosk_client }) {
-  return async item_type => {
+  return async (item_type) => {
     try {
       const [policy] = await kiosk_client.getTransferPolicies({
         type: item_type,
@@ -10,7 +10,7 @@ export function get_royalty_fee({ sui_client, kiosk_client }) {
       })
       const {
         name: { type },
-      } = data.find(policy => policy.name.type.includes('royalty_rule'))
+      } = data.find((policy) => policy.name.type.includes('royalty_rule'))
 
       const dynamic_field = await sui_client.getDynamicFieldObject({
         parentId: policy.id,
