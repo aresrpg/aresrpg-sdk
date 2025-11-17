@@ -74,7 +74,7 @@ export class LineOfSight {
   compute_cells_visibility(origin, max_distance) {
     const result = {
       size: { ...this.grid.size },
-      cells: this.grid.cells.map(cell => ({
+      cells: this.grid.cells.map((cell) => ({
         x: cell.x,
         z: cell.z,
         visibility:
@@ -109,7 +109,7 @@ export class LineOfSight {
           const cell_center = { x: i_x + 0.5, z: i_z + 0.5 }
           const distance_from_viewer = distance_vec2(
             cell_center,
-            viewer_position,
+            viewer_position
           )
           if (
             distance_from_viewer >= min_distance &&
@@ -122,11 +122,11 @@ export class LineOfSight {
         }
       }
     }
-    for (const cell of this.grid.cells.filter(cell => cell.viewBlocking)) {
+    for (const cell of this.grid.cells.filter((cell) => cell.viewBlocking)) {
       const cell_center = { x: cell.x + 0.5, z: cell.z + 0.5 }
       const cell_distance_from_viewer = distance_vec2(
         viewer_position,
-        cell_center,
+        cell_center
       )
       if (cell_distance_from_viewer > max_distance) {
         continue
@@ -146,7 +146,7 @@ export class LineOfSight {
         apply_cast_shadow(
           segment[0],
           segment[1],
-          cell_distance_from_viewer + 0.001,
+          cell_distance_from_viewer + 0.001
         )
       }
     }

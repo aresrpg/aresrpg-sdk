@@ -4,7 +4,7 @@ import { Transaction } from '@mysten/sui/transactions'
 export function borrow_personal_kiosk_cap({ kiosk_client }) {
   return ({ personal_kiosk_cap_id, tx = new Transaction(), handler }) => {
     const personal_kiosk_package_id = kiosk_client.getRulePackageId(
-      'personalKioskRulePackageId',
+      'personalKioskRulePackageId'
     )
 
     const personal_kiosk_cap_ref = tx.object(personal_kiosk_cap_id)

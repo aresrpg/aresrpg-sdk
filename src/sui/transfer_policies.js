@@ -40,7 +40,7 @@ const POLICIES = {
   },
 }
 
-export const TRANSFER_POLICIES = network => ({
+export const TRANSFER_POLICIES = (network) => ({
   [VAPOREON[network]]: POLICIES.VAPOREON[network],
   [AFEGG[network]]: POLICIES.AFEGG[network],
   [CAPY[network]]: POLICIES.SUIFREN_CAPY[network],

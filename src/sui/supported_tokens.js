@@ -31,7 +31,7 @@ const AFSUI = {
   },
 }
 
-export const SUPPORTED_TOKENS = network => ({
+export const SUPPORTED_TOKENS = (network) => ({
   [HSUI[network].address]: HSUI[network],
   [AFSUI[network].address]: AFSUI[network],
 })

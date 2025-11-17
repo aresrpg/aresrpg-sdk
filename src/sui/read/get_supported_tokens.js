@@ -27,7 +27,7 @@ async function get_all_coins({
 export function get_supported_tokens(context) {
   const { sui_client } = context
   /** @type {(address: string) => Promise<import("../../../types.js").SuiToken[]>} */
-  return async address =>
+  return async (address) =>
     // @ts-ignore
     Promise.all(
       // @ts-ignore
@@ -46,11 +46,11 @@ export function get_supported_tokens(context) {
             ...token,
             amount: coins.reduce(
               (acc, { balance }) => acc + BigInt(balance),
-              0n,
+              0n
             ),
             ids: coins.map(({ coinObjectId }) => coinObjectId),
           }
-        },
-      ),
-    ).then(tokens => tokens.filter(Boolean))
+        }
+      )
+    ).then((tokens) => tokens.filter(Boolean))
 }

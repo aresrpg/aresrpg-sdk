@@ -72,7 +72,7 @@ export async function SDK({
   const supported_nfts = SUPPORTED_NFTS(network)
   const transfer_policies = TRANSFER_POLICIES(network)
 
-  Object.values(supported_tokens).forEach(async token => {
+  Object.values(supported_tokens).forEach(async (token) => {
     Object.assign(token, {
       is_token: true,
       item_set: 'none',

@@ -17,7 +17,7 @@ import GLACIER from './biomes/glacier.js'
 import { BLOCKS, SCHEMATICS_BLOCKS } from './blocks.js'
 
 // Convert hex string to number
-export const hex_to_int = value => {
+export const hex_to_int = (value) => {
   if (typeof value === 'number') return value
   if (typeof value === 'string') return parseInt(value.replace('#', ''), 16)
   if (typeof value === 'object' && value !== null) {
@@ -34,11 +34,11 @@ const unique_block_colors = [
     Object.values({
       ...BLOCKS,
       ...SCHEMATICS_BLOCKS,
-    }),
+    })
   ),
 ]
 
-const normalize_material = value => {
+const normalize_material = (value) => {
   if (typeof value === 'object' && value !== null) {
     return {
       color: hex_to_int(value.color),
@@ -54,7 +54,7 @@ const additional_block_types = unique_block_colors.reduce(
     ...mapping,
     [BlockType.LAST_PLACEHOLDER + index]: normalize_material(value),
   }),
-  {},
+  {}
 )
 
 function map_blocks_to_type(biome) {
@@ -109,7 +109,7 @@ export const color_to_block_type = Object.entries(BLOCKS_COLOR_MAPPING).reduce(
     ...type_lookup,
     [typeof material === 'object' ? material.color : material]: +type_id,
   }),
-  {},
+  {}
 )
 
 // TODO: maybe this is not needed and could be ignored in the world?
@@ -130,7 +130,7 @@ const ignored_blocks = [
 export const SCHEMATICS_BLOCKS_MAPPING = {
   air: BlockType.NONE,
   ...Object.fromEntries(
-    ignored_blocks.map(block_name => [block_name, BlockType.NONE]),
+    ignored_blocks.map((block_name) => [block_name, BlockType.NONE])
   ),
   ...Object.entries({
     ...BLOCKS,
@@ -140,7 +140,7 @@ export const SCHEMATICS_BLOCKS_MAPPING = {
       ...block_mappings,
       [block_name.toLowerCase()]: color_to_block_type[hex_to_int(color)],
     }),
-    {},
+    {}
   ),
 }
 
@@ -156,7 +156,7 @@ export const LANDSCAPE = {
   [BiomeType.Tropical]: map_blocks_to_type(TROPICAL),
 }
 
-export const create_world_settings = schematics_files => {
+export const create_world_settings = (schematics_files) => {
   const settings = new WorldLocals()
   settings.rawSettings = {
     ...settings.rawSettings,

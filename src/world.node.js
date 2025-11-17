@@ -28,10 +28,10 @@ const SCHEMATICS_DIR = join(BASE_DIR, 'world/schematics')
 const schematic_files = scan_directory(SCHEMATICS_DIR, /\.schem$/)
 
 const SCHEMATICS_FILES = Object.fromEntries(
-  schematic_files.map(path => {
+  schematic_files.map((path) => {
     const [, name] = path.match(/world\/schematics\/(.+)\.schem/)
     return [name, path]
-  }),
+  })
 )
 
 if (!Object.keys(SCHEMATICS_FILES).length)

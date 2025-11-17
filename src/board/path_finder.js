@@ -129,9 +129,9 @@ export class PathFinder {
       throw new Error('Must specify an origin before asking for a path.')
     }
     const reachable_cells = this.grid.cells.filter(
-      cell => cell.distance >= 0 && cell.distance <= max_distance,
+      (cell) => cell.distance >= 0 && cell.distance <= max_distance
     )
-    return reachable_cells.map(cell => ({ ...cell }))
+    return reachable_cells.map((cell) => ({ ...cell }))
   }
 
   /**
@@ -156,7 +156,7 @@ export class PathFinder {
       for (const neighbour of this.get_neighbouring_cells(last_cell)) {
         if (neighbour.distance === last_cell.distance - 1) {
           const neighbour_to_origin = normalize_vec2(
-            substract_vec2(neighbour, this.origin),
+            substract_vec2(neighbour, this.origin)
           )
           const alignment = dot_vec2(target_to_origin, neighbour_to_origin)
           potential_previous_steps.push({ cell: neighbour, alignment })
@@ -175,7 +175,7 @@ export class PathFinder {
       reverse_path.push(best_previous_step.cell)
       last_cell = best_previous_step.cell
     }
-    return reverse_path.reverse().map(cell => ({ x: cell.x, z: cell.z }))
+    return reverse_path.reverse().map((cell) => ({ x: cell.x, z: cell.z }))
   }
 
   /**
@@ -191,7 +191,7 @@ export class PathFinder {
       coords.z >= this.grid.size.z
     ) {
       throw new Error(
-        `Invalid grid coords ${coords.x}x${coords.z} (size is ${this.grid.size.x}x${this.grid.size.z})`,
+        `Invalid grid coords ${coords.x}x${coords.z} (size is ${this.grid.size.x}x${this.grid.size.z})`
       )
     }
     return this.grid.cells[coords.x + this.grid.size.x * coords.z]
@@ -205,7 +205,9 @@ export class PathFinder {
   try_get_cell(coords) {
     try {
       return this.get_cell(coords)
-    } catch {}
+    } catch {
+      // Return null if cell doesn't exist
+    }
     return null
   }
 
